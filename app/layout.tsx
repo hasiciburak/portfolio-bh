@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Geist_Mono, Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { TabAwayTitle } from "@/components/tab-away-title";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteNavigation } from "@/components/site-navigation";
@@ -50,6 +51,7 @@ export default function RootLayout({
           {children}
           <SiteFooter />
         </SmoothScrollProvider>
+        <Analytics />
       </body>
     </html>
   );
