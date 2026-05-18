@@ -122,3 +122,41 @@ html {
     padding-top: var(--site-mobile-header-h);
   }
 }
+
+/* GitHub graph: ~365 SVG cells — global fill/stroke transitions cause hover/scroll jank. */
+.github-graph-calendar,
+.github-graph-calendar * {
+  transition-property: none !important;
+}
+
+.github-graph-calendar article.react-activity-calendar {
+  width: 100% !important;
+  max-width: 100%;
+  margin-inline: auto;
+}
+
+.github-graph-calendar .react-activity-calendar__scroll-container {
+  display: flex;
+  justify-content: center;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+.github-graph-calendar .react-activity-calendar__scroll-container svg {
+  display: block;
+}
+
+.github-graph-calendar .react-activity-calendar__footer {
+  width: 100%;
+  flex-wrap: nowrap !important;
+  justify-content: space-between !important;
+  gap: 12px 24px !important;
+  margin-top: 10px;
+  color: #fafafa;
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.github-graph-calendar .react-activity-calendar__legend-colors {
+  margin-left: auto !important;
+}

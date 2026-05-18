@@ -18,7 +18,7 @@ export interface SiteSocialLink {
 export const SITE_SOCIAL_LINKS: readonly SiteSocialLink[] = [
   { id: "linkedIn", label: "LinkedIn", href: "#" },
   { id: "instagram", label: "Instagram", href: "#" },
-  { id: "github", label: "GitHub", href: "#" },
+  { id: "github", label: "GitHub", href: "https://github.com/hasiciburak" },
   { id: "email", label: "Email", href: "#" }, // e.g. mailto:hello@example.com
   { id: "whatsapp", label: "WhatsApp", href: "#" },
 ];
