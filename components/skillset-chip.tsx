@@ -48,7 +48,7 @@ function SkillIconOrMonogram({
 
 export function SkillsetChip({ skill }: { skill: SkillItem }) {
   return (
-    <div className="flex min-h-[52px] items-center gap-3 rounded-2xl border border-white/12 bg-white/[0.04] px-3.5 py-2.5 transition-[transform,background-color,border-color] duration-200 ease-out hover:scale-[1.015] hover:border-white/22 hover:bg-white/[0.07] motion-reduce:transition-none motion-reduce:hover:scale-100">
+    <div className="flex min-h-[52px] transform-gpu items-center gap-3 rounded-2xl border border-white/12 bg-white/[0.04] px-3.5 py-2.5 transition-[transform,background-color,border-color] duration-[350ms] ease-[cubic-bezier(0.33,1,0.68,1)] hover:scale-[1.015] hover:border-white/22 hover:bg-white/[0.07] motion-reduce:transform-none motion-reduce:transition-none motion-reduce:hover:scale-100">
       <SkillIconOrMonogram name={skill.name} icon={skill.icon} size={28} />
       <span className="min-w-0 text-sm font-medium leading-snug text-white/90 sm:text-[15px]">
         {skill.name}
