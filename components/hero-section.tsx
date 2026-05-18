@@ -54,9 +54,9 @@ export default function HeroSection({ variant = "home" }: HeroSectionProps) {
       className="flex w-full min-h-[100svh] flex-col overflow-x-clip scroll-mt-24 bg-zinc-950 font-sans text-white"
       aria-labelledby="hero-heading"
     >
-      <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-4 pb-24 pt-2 sm:pb-28 sm:pt-3 lg:pb-32 lg:pt-0">
+      <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-4 pb-16 pt-2 sm:pb-24 sm:pt-3 lg:pb-32 lg:pt-0">
         <div className="relative flex flex-1 flex-col">
-          <div className="flex flex-1 flex-col gap-8 sm:gap-10 lg:grid lg:min-h-[min(935px,100svh)] lg:grid-cols-2 lg:items-stretch lg:gap-16 xl:gap-20">
+          <div className="flex flex-1 flex-col gap-6 sm:gap-8 lg:grid lg:min-h-[min(935px,100svh)] lg:grid-cols-2 lg:items-stretch lg:gap-16 xl:gap-20">
             <div
               className={[
                 "relative flex w-full justify-center lg:col-start-2 lg:mr-[calc(50%-50vw)] lg:h-full lg:min-h-0 lg:justify-end lg:items-stretch",
@@ -64,7 +64,8 @@ export default function HeroSection({ variant = "home" }: HeroSectionProps) {
             >
               <div
                 className={[
-                  "relative mx-auto aspect-square w-full max-w-[371px] overflow-hidden rounded-br-[185.5px] rounded-tl-[32px] rounded-tr-[32px] rounded-bl-[32px]",
+                  "relative mx-auto aspect-square w-full max-w-[min(100%,304px)] overflow-hidden rounded-br-[148px] rounded-tl-[28px] rounded-tr-[28px] rounded-bl-[28px]",
+                  "sm:max-w-[371px] sm:rounded-br-[185.5px] sm:rounded-tl-[32px] sm:rounded-tr-[32px] sm:rounded-bl-[32px]",
                   "lg:mx-0 lg:aspect-auto lg:h-full lg:min-h-[100svh] lg:max-w-none lg:w-[min(100%,708px)] lg:shrink-0 lg:rounded-none",
                 ].join(" ")}
               >
@@ -73,24 +74,26 @@ export default function HeroSection({ variant = "home" }: HeroSectionProps) {
                   alt="Burak Haşıcı portrait"
                   fill
                   priority
-                  sizes="(max-width: 1024px) 371px, 708px"
+                  sizes="(max-width: 640px) 304px, (max-width: 1024px) 371px, 708px"
                   className="object-cover object-top max-lg:object-[50%_18%]"
                 />
               </div>
             </div>
 
-            <div className="flex min-h-0 min-w-0 flex-col lg:col-start-1 lg:row-start-1 lg:h-full">
-              <div className="flex flex-1 flex-col justify-center gap-6 lg:gap-7">
+            <div className="flex min-h-0 min-w-0 flex-none flex-col lg:col-start-1 lg:row-start-1 lg:h-full lg:flex-1">
+              <div className="flex w-full flex-col justify-start gap-5 sm:gap-6 lg:flex-1 lg:justify-center lg:gap-7">
                 <h1
                   id="hero-heading"
-                  className="max-w-xl font-nohemi font-extralight leading-[normal] tracking-tight text-[#fffffe] text-[48px] lg:text-7xl xl:text-8xl"
+                  className="max-w-xl font-nohemi font-extralight leading-[normal] tracking-tight text-[#fffffe] text-[44px] sm:text-[48px] lg:text-7xl xl:text-8xl"
                 >
                   Hi! You&apos;re in
                   <br />
                   BH&apos;s Page
                 </h1>
 
-                <p className="max-w-xl text-base leading-relaxed text-white/80 lg:hidden">{BIO_MOBILE}</p>
+                <p className="max-w-xl text-sm leading-snug text-white/80 sm:text-base sm:leading-relaxed lg:hidden">
+                  {BIO_MOBILE}
+                </p>
                 <p className="hidden max-w-xl text-lg leading-relaxed text-white/80 md:text-xl lg:block">
                   Burak Haşıcı — Software Developer, self-taught UI/UX designer based in Istanbul,
                   Turkey.
@@ -101,29 +104,26 @@ export default function HeroSection({ variant = "home" }: HeroSectionProps) {
                   <DownloadIcon className="size-4 shrink-0 opacity-90" />
                 </Link>
 
-                <nav
-                  aria-label="Social profiles"
-                  className="lg:hidden"
-                >
-                  <ul className="flex flex-wrap items-center gap-4">
-                    {MOBILE_SOCIAL.map(({ id, label, href }) => (
-                      <li key={id}>
-                        <a
-                          href={href}
-                          aria-label={label}
-                          className="block text-white/90 transition-opacity hover:opacity-100"
-                        >
-                          <SiteSocialIcon id={id} />
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </nav>
+                <div className="flex flex-col gap-4 sm:gap-5 lg:hidden">
+                  <nav aria-label="Social profiles">
+                    <ul className="flex flex-wrap items-center gap-4">
+                      {MOBILE_SOCIAL.map(({ id, label, href }) => (
+                        <li key={id}>
+                          <a
+                            href={href}
+                            aria-label={label}
+                            className="block text-white/90 transition-opacity hover:opacity-100"
+                          >
+                            <SiteSocialIcon id={id} />
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </nav>
 
-                <div className="mt-10 flex justify-center lg:hidden">
-                  <Link href={PLACEHOLDER} className={`${mobileResumePill}`}>
+                  <Link href={PLACEHOLDER} className={`${mobileResumePill} inline-flex w-fit max-w-full`}>
                     <span className="text-center font-nohemi font-normal leading-[1.2]">
-                      Downlaod my resume
+                      Download my resume
                     </span>
                     <DownloadIcon className="size-4 shrink-0 opacity-90" />
                   </Link>
