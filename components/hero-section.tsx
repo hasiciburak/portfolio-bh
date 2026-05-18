@@ -2,7 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { HomeFixedSocialDock } from "@/components/home-fixed-social-dock";
-import { SOCIAL_LINK_ITEMS } from "@/components/social-pill";
+import { SiteSocialIcon } from "@/components/social-icons";
+import { SITE_SOCIAL_LINKS } from "@/lib/social-links";
 
 const PLACEHOLDER = "#";
 
@@ -16,7 +17,7 @@ const glassPill =
 const mobileResumePill =
   "inline-flex items-center justify-center gap-2.5 rounded-full bg-[rgba(170,170,170,0.1)] px-[15px] py-[10px] text-base text-white backdrop-blur-[2px] transition-colors hover:bg-[rgba(170,170,170,0.16)]";
 
-const MOBILE_SOCIAL = SOCIAL_LINK_ITEMS.slice(0, 4);
+const MOBILE_SOCIAL = SITE_SOCIAL_LINKS.slice(0, 4);
 
 function DownloadIcon({ className }: { className?: string }) {
   return (
@@ -105,14 +106,14 @@ export default function HeroSection({ variant = "home" }: HeroSectionProps) {
                   className="lg:hidden"
                 >
                   <ul className="flex flex-wrap items-center gap-4">
-                    {MOBILE_SOCIAL.map(({ label, href, icon }) => (
-                      <li key={label}>
+                    {MOBILE_SOCIAL.map(({ id, label, href }) => (
+                      <li key={id}>
                         <a
                           href={href}
                           aria-label={label}
                           className="block text-white/90 transition-opacity hover:opacity-100"
                         >
-                          {icon}
+                          <SiteSocialIcon id={id} />
                         </a>
                       </li>
                     ))}
