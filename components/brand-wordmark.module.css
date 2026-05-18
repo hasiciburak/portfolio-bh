@@ -7,15 +7,16 @@
   text-decoration: none;
 }
 
-.wordmarkLink:hover .wordmarkText {
-  opacity: 0.92;
+.wordmarkLink:hover .wordmarkText.onLightStroke {
+  color: #27272a;
 }
 
 .wordmarkText {
   display: inline-block;
 
   /*
-   * Wordmark (#HSC): HK Grotesk Wide Black — hollow fill, glyph stroke = white @ 30%.
+   * Wordmark (#HSC): HK Grotesk Wide Black — dark pages: black fill + gray stroke;
+   * light pages: solid zinc-950 fill.
    */
   font-family: var(--font-brand-wordmark), ui-sans-serif, system-ui, sans-serif;
   font-weight: 900;
@@ -28,20 +29,19 @@
 
   -webkit-font-smoothing: antialiased;
 
-  transition: opacity 0.18s ease;
+  transition:
+    color 0.18s ease,
+    -webkit-text-stroke-color 0.18s ease;
 }
 
 .wordmarkText.onDarkStroke {
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-  -webkit-text-stroke-width: 2px;
-  -webkit-text-stroke-color: rgb(255 255 255 / 0.3);
+  /* Black fill + gray glyph outline on dark chrome. */
+  color: #000;
+  -webkit-text-fill-color: #000;
+  -webkit-text-stroke-width: 3px;
+  -webkit-text-stroke-color: #5c5c5f;
 }
 
 .wordmarkText.onLightStroke {
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-  -webkit-text-stroke-width: 2px;
-  /* Parallel treatment on light surfaces: ink @ ~30%. */
-  -webkit-text-stroke-color: rgb(24 24 27 / 0.3);
+  color: rgb(9 9 11);
 }
