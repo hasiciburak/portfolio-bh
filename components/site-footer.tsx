@@ -4,11 +4,11 @@ import { usePathname } from "next/navigation";
 
 import { BrandWordmark } from "@/components/brand-wordmark";
 import { SocialPill } from "@/components/social-pill";
-import { surfaceFromPathname } from "@/lib/site-chrome-variant";
+import { useSiteChromeSurface } from "@/lib/use-site-chrome-surface";
 
 export function SiteFooter() {
   const pathname = usePathname();
-  const surface = surfaceFromPathname();
+  const surface = useSiteChromeSurface();
 
   const surfaceBg =
     surface === "lightSurface" ? "bg-zinc-50" : "bg-zinc-950";

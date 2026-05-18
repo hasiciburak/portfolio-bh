@@ -107,7 +107,7 @@ export default function WhyHireMeSection() {
   const heading = (
     <h2
       id="why-hire-heading"
-      className="mb-10 text-center font-nohemi text-[40px] font-bold leading-[1.2] tracking-tight text-white sm:mb-12 sm:text-5xl lg:mb-14 lg:text-[64px]"
+      className="mb-10 text-center font-nohemi text-[40px] font-bold leading-[1.2] tracking-tight text-zinc-950 dark:text-white sm:mb-12 sm:text-5xl lg:mb-14 lg:text-[64px]"
     >
       Why Hire Me?
     </h2>
@@ -131,7 +131,7 @@ export default function WhyHireMeSection() {
   return (
     <section
       id="why-hire"
-      className="isolate w-full scroll-mt-24 bg-zinc-950 font-sans text-white"
+      className="isolate w-full scroll-mt-24 bg-zinc-50 font-sans text-zinc-950 dark:bg-zinc-950 dark:text-white"
       aria-labelledby="why-hire-heading"
     >
       {reduceMotion ? (
@@ -141,10 +141,10 @@ export default function WhyHireMeSection() {
             <div className="flex w-full max-w-[660px] flex-col gap-12 lg:max-w-none lg:justify-self-start">
               {HIRE_ME_REASONS.map((reason) => (
                 <div key={reason.id} className="flex flex-col gap-2.5 text-left">
-                  <h3 className="font-nohemi text-[28px] font-normal leading-[1.2] text-white sm:text-4xl lg:text-[48px]">
+                  <h3 className="font-nohemi text-[28px] font-normal leading-[1.2] text-zinc-950 dark:text-white sm:text-4xl lg:text-[48px]">
                     {reason.title}
                   </h3>
-                  <p className="max-w-[660px] text-base leading-[1.25] text-white/80 sm:text-lg lg:text-xl lg:leading-[1.2]">
+                  <p className="max-w-[660px] text-base leading-[1.25] text-zinc-600 dark:text-white/80 sm:text-lg lg:text-xl lg:leading-[1.2]">
                     {reason.body}
                   </p>
                 </div>
@@ -157,7 +157,7 @@ export default function WhyHireMeSection() {
         // Pin the whole block (heading + reasons + image). Heading + trophy stay; reason text scrubs through.
         <article
           ref={pinRootRef}
-          className="relative z-[1] mx-auto flex min-h-[100svh] w-full max-w-7xl flex-col justify-center bg-zinc-950 px-4 py-12 sm:py-16 lg:py-20"
+          className="relative z-[1] mx-auto flex min-h-[100svh] w-full max-w-7xl flex-col justify-center bg-zinc-50 px-4 py-12 sm:py-16 dark:bg-zinc-950 lg:py-20"
         >
           {heading}
           <div className={gridTemplate}>
@@ -167,10 +167,10 @@ export default function WhyHireMeSection() {
                   key={reason.id}
                   className="hire-me-panel absolute inset-x-0 top-0 flex flex-col gap-2.5 text-left"
                 >
-                  <h3 className="font-nohemi text-[28px] font-normal leading-[1.2] text-white sm:text-4xl lg:text-[48px]">
+                  <h3 className="font-nohemi text-[28px] font-normal leading-[1.2] text-zinc-950 dark:text-white sm:text-4xl lg:text-[48px]">
                     {reason.title}
                   </h3>
-                  <p className="max-w-[660px] text-base leading-[1.25] text-white/80 sm:text-lg lg:text-xl lg:leading-[1.2]">
+                  <p className="max-w-[660px] text-base leading-[1.25] text-zinc-600 dark:text-white/80 sm:text-lg lg:text-xl lg:leading-[1.2]">
                     {reason.body}
                   </p>
                 </div>

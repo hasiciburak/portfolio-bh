@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { BrandWordmark } from "@/components/brand-wordmark";
-import { surfaceFromPathname } from "@/lib/site-chrome-variant";
+import { ThemeSwitch } from "@/components/theme-switch";
+import { useSiteChromeSurface } from "@/lib/use-site-chrome-surface";
 
 import styles from "./site-navigation.module.css";
 
@@ -43,7 +45,8 @@ function CloseIcon({ className }: { className?: string }) {
 export function SiteNavigation() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
-  const surface = surfaceFromPathname();
+  const [portalReady, setPortalReady] = useState(false);
+  const surface = useSiteChromeSurface();
   const isLightSurface = surface === "lightSurface";
 
   const shellClassName = isLightSurface ? styles.navShellLight : styles.navShellDark;
@@ -53,7 +56,12 @@ export function SiteNavigation() {
   const segmentTone = isLightSurface ? styles.segmentLight : styles.segmentDark;
 
   useEffect(() => {
-    setMenuOpen(false);
+    const id = requestAnimationFrame(() => setPortalReady(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
+
+  useEffect(() => {
+    queueMicrotask(() => setMenuOpen(false));
   }, [pathname]);
 
   useEffect(() => {
@@ -96,11 +104,72 @@ export function SiteNavigation() {
     gridTemplateColumns: `repeat(${NAV_ITEMS.length}, minmax(0, 1fr))`,
   } as const;
 
+  const mobileMenu =
+    menuOpen && portalReady ? (
+      <>
+        <button
+          type="button"
+          aria-label="Dismiss navigation menu"
+          className={`fixed inset-0 z-[80] lg:hidden ${isLightSurface ? "bg-zinc-950/25" : "bg-black/55"}`}
+          onClick={() => setMenuOpen(false)}
+        />
+        <div
+          id="mobile-main-nav"
+          className={`fixed inset-y-0 right-0 z-[90] flex w-[min(100%,18rem)] flex-col lg:hidden ${drawerPanel}`}
+        >
+          <div
+            className={`flex items-center justify-between gap-3 border-b px-4 py-4 ${isLightSurface ? "border-zinc-200/80" : "border-white/15"}`}
+          >
+            <span className="text-sm font-medium opacity-90">Menu</span>
+            <button
+              type="button"
+              className={menuBtnClasses}
+              onClick={() => setMenuOpen(false)}
+            >
+              <span className="sr-only">Close menu</span>
+              <CloseIcon />
+            </button>
+          </div>
+          <nav aria-label="Main mobile" className="flex flex-1 flex-col gap-1 p-4">
+            {NAV_ITEMS.map(({ href, label }) => {
+              const active =
+                href === "/" ? pathname === "/" : pathname.startsWith(href);
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  aria-current={active ? "page" : undefined}
+                  className={`${drawerLinkBase} ${active ? drawerLinkActive : ""}`}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {label}
+                </Link>
+              );
+            })}
+          </nav>
+          <div
+            className={`mt-auto border-t px-4 py-4 ${
+              isLightSurface ? "border-zinc-200/80" : "border-white/15"
+            }`}
+          >
+            <span
+              className={`mb-2 block text-xs font-medium uppercase tracking-wide ${
+                isLightSurface ? "text-zinc-500" : "text-white/55"
+              }`}
+            >
+              Appearance
+            </span>
+            <ThemeSwitch variant="drawer" isLightChrome={isLightSurface} />
+          </div>
+        </div>
+      </>
+    ) : null;
+
   return (
     <header className="fixed inset-x-0 top-0 z-[65]">
       {/* Inner wrapper carries centering + horizontal padding so the outer fixed shell can span the full viewport. */}
       <div className="mx-auto w-full max-w-7xl px-4 pb-3 pt-6 lg:pb-4">
-        <div className="flex items-center justify-between lg:hidden">
+        <div className="flex min-h-11 items-center justify-between lg:hidden">
           <BrandWordmark surface={surface} />
           <button
             type="button"
@@ -114,100 +183,61 @@ export function SiteNavigation() {
           </button>
         </div>
 
-        {/* Logo absolutely left so the pill stays geometrically centered in the header */}
+        {/* Logo left + theme controls right — pill stays geometrically centered. */}
         <div className="relative hidden w-full lg:flex lg:min-h-[52px] lg:items-center lg:justify-center">
-        <div className="pointer-events-none absolute left-0 top-1/2 z-[2] flex -translate-y-1/2 items-center">
-          <div className="pointer-events-auto">
-            <BrandWordmark surface={surface} />
+          <div className="pointer-events-none absolute left-0 top-1/2 z-[2] flex -translate-y-1/2 items-center">
+            <div className="pointer-events-auto">
+              <BrandWordmark surface={surface} />
+            </div>
           </div>
-        </div>
-        <nav
-          aria-label="Main"
-          style={pillNavGridStyle}
-          className={`relative z-[1] ${pillNavClassName}`}
-        >
-          {NAV_ITEMS.map(({ href, label }) => {
-            const active =
-              href === "/" ? pathname === "/" : pathname.startsWith(href);
+          <div className="pointer-events-none absolute right-0 top-1/2 z-[2] flex -translate-y-1/2 items-center">
+            <div className="pointer-events-auto">
+              <ThemeSwitch variant="header" isLightChrome={isLightSurface} />
+            </div>
+          </div>
+          <nav
+            aria-label="Main"
+            style={pillNavGridStyle}
+            className={`relative z-[1] ${pillNavClassName}`}
+          >
+            {NAV_ITEMS.map(({ href, label }) => {
+              const active =
+                href === "/" ? pathname === "/" : pathname.startsWith(href);
 
-            const textTone = isLightSurface
-              ? active
-                ? "font-bold text-zinc-950"
-                : "font-normal text-zinc-950/88"
-              : active
-                ? "font-bold text-white"
-                : "font-normal text-white/88";
+              const textTone = isLightSurface
+                ? active
+                  ? "font-bold text-zinc-950"
+                  : "font-normal text-zinc-950/88"
+                : active
+                  ? "font-bold text-white"
+                  : "font-normal text-white/88";
 
-            return (
-              <Link
-                key={href}
-                href={href}
-                aria-current={active ? "page" : undefined}
-                className={[
-                  styles.segment,
-                  segmentTone,
-                  active ? styles.segmentActive : "",
-                  "flex min-h-[42px] min-w-0 items-center justify-center whitespace-nowrap rounded-full border border-transparent px-2 text-center text-base leading-normal",
-                  textTone,
-                  "focus-visible:z-[2] focus-visible:outline-none focus-visible:ring-2",
-                  isLightSurface
-                    ? "focus-visible:ring-teal-500/35 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-50"
-                    : "focus-visible:ring-white/35 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950",
-                ].join(" ")}
-              >
-                {label}
-              </Link>
-            );
-          })}
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  aria-current={active ? "page" : undefined}
+                  className={[
+                    styles.segment,
+                    segmentTone,
+                    active ? styles.segmentActive : "",
+                    "flex min-h-[42px] min-w-0 items-center justify-center whitespace-nowrap rounded-full border border-transparent px-2 text-center text-base leading-normal",
+                    textTone,
+                    "focus-visible:z-[2] focus-visible:outline-none focus-visible:ring-2",
+                    isLightSurface
+                      ? "focus-visible:ring-teal-500/35 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-50"
+                      : "focus-visible:ring-white/35 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950",
+                  ].join(" ")}
+                >
+                  {label}
+                </Link>
+              );
+            })}
           </nav>
         </div>
       </div>
 
-      {menuOpen ? (
-        <>
-          <button
-            type="button"
-            aria-label="Dismiss navigation menu"
-            className={`fixed inset-0 z-[60] lg:hidden ${isLightSurface ? "bg-zinc-950/25" : "bg-black/55"}`}
-            onClick={() => setMenuOpen(false)}
-          />
-          <div
-            id="mobile-main-nav"
-            className={`fixed inset-y-0 right-0 z-[70] flex w-[min(100%,18rem)] flex-col lg:hidden ${drawerPanel}`}
-          >
-            <div
-              className={`flex items-center justify-between gap-3 border-b px-4 py-4 ${isLightSurface ? "border-zinc-200/80" : "border-white/15"}`}
-            >
-              <span className="text-sm font-medium opacity-90">Menu</span>
-              <button
-                type="button"
-                className={menuBtnClasses}
-                onClick={() => setMenuOpen(false)}
-              >
-                <span className="sr-only">Close menu</span>
-                <CloseIcon />
-              </button>
-            </div>
-            <nav aria-label="Main mobile" className="flex flex-col gap-1 p-4">
-              {NAV_ITEMS.map(({ href, label }) => {
-                const active =
-                  href === "/" ? pathname === "/" : pathname.startsWith(href);
-                return (
-                  <Link
-                    key={href}
-                    href={href}
-                    aria-current={active ? "page" : undefined}
-                    className={`${drawerLinkBase} ${active ? drawerLinkActive : ""}`}
-                    onClick={() => setMenuOpen(false)}
-                  >
-                    {label}
-                  </Link>
-                );
-              })}
-            </nav>
-          </div>
-        </>
-      ) : null}
+      {portalReady && mobileMenu ? createPortal(mobileMenu, document.body) : null}
     </header>
   );
 }

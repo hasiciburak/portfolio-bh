@@ -6,6 +6,7 @@ import { TabAwayTitle } from "@/components/tab-away-title";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteNavigation } from "@/components/site-navigation";
 import { SmoothScrollProvider } from "@/components/smooth-scroll-provider";
+import { ThemeProvider } from "@/components/theme-provider";
 import { SITE_TAB_TITLE } from "@/lib/site-tab-title";
 import "./globals.css";
 
@@ -42,16 +43,19 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${inter.variable} ${geistMono.variable} ${brandWordmark.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col font-sans antialiased">
-        <TabAwayTitle />
-        <SiteNavigation />
-        <SmoothScrollProvider>
-          {children}
-          <SiteFooter />
-        </SmoothScrollProvider>
-        <Analytics />
+      <body className="flex min-h-full flex-col bg-background font-sans text-foreground antialiased">
+        <ThemeProvider>
+          <TabAwayTitle />
+          <SiteNavigation />
+          <SmoothScrollProvider>
+            {children}
+            <SiteFooter />
+          </SmoothScrollProvider>
+          <Analytics />
+        </ThemeProvider>
       </body>
     </html>
   );

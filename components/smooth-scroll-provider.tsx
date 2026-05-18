@@ -69,10 +69,10 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
         Using flex *inside* #smooth-content (column + flex-1 main) is fine: the content box still
         sizes to its children for GSAP.
       */}
-      <div id="smooth-wrapper" className="bg-zinc-950">
+      <div id="smooth-wrapper" className="bg-background">
         <div
           id="smooth-content"
-          className="relative flex min-h-[100svh] w-full flex-col bg-zinc-950"
+          className="relative flex min-h-[100svh] w-full flex-col bg-background"
         >
           {children}
         </div>

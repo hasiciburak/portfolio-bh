@@ -12,10 +12,10 @@ const BIO_MOBILE =
   "Burak Haşıcı - Frontend Developer, Industrial Engineer & Self Paced UI/UX Designer based in Istanbul Turkey";
 
 const glassPill =
-  "inline-flex items-center justify-center gap-2.5 rounded-full border border-white/35 bg-white/10 px-4 py-2.5 text-base text-white shadow-[0_10px_40px_rgba(0,0,0,0.18),inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-1px_0_rgba(0,0,0,0.08)] backdrop-blur-xl backdrop-saturate-150 transition-colors hover:bg-white/15";
+  "inline-flex items-center justify-center gap-2.5 rounded-full border border-zinc-900/18 bg-white/72 px-4 py-2.5 text-base text-zinc-950 shadow-[0_10px_40px_rgb(15_23_42_/_0.08),inset_0_1px_0_rgb(255_255_255_/_0.92),inset_0_-1px_0_rgb(15_23_42_/_0.06)] backdrop-blur-xl backdrop-saturate-150 transition-colors hover:bg-white/90 dark:border-white/35 dark:bg-white/10 dark:text-white dark:shadow-[0_10px_40px_rgb(0_0_0_/_0.18),inset_0_1px_0_rgb(255_255_255_/_0.35),inset_0_-1px_0_rgb(0_0_0_/_0.08)] dark:hover:bg-white/15";
 
 const mobileResumePill =
-  "inline-flex items-center justify-center gap-2.5 rounded-full bg-[rgba(170,170,170,0.1)] px-[15px] py-[10px] text-base text-white backdrop-blur-[2px] transition-colors hover:bg-[rgba(170,170,170,0.16)]";
+  "inline-flex items-center justify-center gap-2.5 rounded-full bg-zinc-950/[0.065] px-[15px] py-[10px] text-base text-zinc-950 backdrop-blur-[2px] transition-colors hover:bg-zinc-950/[0.1] dark:bg-[rgba(170,170,170,0.1)] dark:text-white dark:hover:bg-[rgba(170,170,170,0.16)]";
 
 const MOBILE_SOCIAL = SITE_SOCIAL_LINKS.slice(0, 4);
 
@@ -51,10 +51,10 @@ export default function HeroSection({ variant = "home" }: HeroSectionProps) {
   return (
     <section
       id="hero"
-      className="flex w-full min-h-[100svh] flex-col overflow-x-clip scroll-mt-24 bg-zinc-950 font-sans text-white"
+      className="flex w-full min-h-[100svh] flex-col overflow-x-clip scroll-mt-24 bg-zinc-50 font-sans text-zinc-950 dark:bg-zinc-950 dark:text-white"
       aria-labelledby="hero-heading"
     >
-      <div className="flex w-full flex-1 flex-col pb-16 pt-2 sm:pb-24 sm:pt-3 lg:pb-32 lg:pt-0">
+      <div className="flex w-full flex-1 flex-col pb-16 sm:pb-24 lg:pb-32">
         <div className="relative flex flex-1 flex-col">
           <div className="flex flex-1 flex-col gap-6 sm:gap-8 lg:grid lg:min-h-[min(935px,100svh)] lg:grid-cols-2 lg:items-stretch lg:gap-16 xl:gap-20">
             <div
@@ -84,17 +84,17 @@ export default function HeroSection({ variant = "home" }: HeroSectionProps) {
               <div className="flex w-full flex-col justify-start gap-5 sm:gap-6 lg:flex-1 lg:justify-center lg:gap-7">
                 <h1
                   id="hero-heading"
-                  className="max-w-xl font-nohemi font-extralight leading-[normal] tracking-tight text-[#fffffe] text-[44px] sm:text-[48px] lg:text-7xl xl:text-8xl"
+                  className="max-w-xl font-nohemi font-extralight leading-[normal] tracking-tight text-zinc-950 text-[44px] sm:text-[48px] lg:text-7xl xl:text-8xl dark:text-[#fffffe]"
                 >
                   Hi! You&apos;re in
                   <br />
                   BH&apos;s Page
                 </h1>
 
-                <p className="max-w-xl text-sm leading-snug text-white/80 sm:text-base sm:leading-relaxed lg:hidden">
+                <p className="max-w-xl text-sm leading-snug text-zinc-600 dark:text-white/80 sm:text-base sm:leading-relaxed lg:hidden">
                   {BIO_MOBILE}
                 </p>
-                <p className="hidden max-w-xl text-lg leading-relaxed text-white/80 md:text-xl lg:block">
+                <p className="hidden max-w-xl text-lg leading-relaxed text-zinc-600 dark:text-white/80 md:text-xl lg:block">
                   Burak Haşıcı — Software Developer, self-taught UI/UX designer based in Istanbul,
                   Turkey.
                 </p>
@@ -112,7 +112,7 @@ export default function HeroSection({ variant = "home" }: HeroSectionProps) {
                           <a
                             href={href}
                             aria-label={label}
-                            className="block text-white/90 transition-opacity hover:opacity-100"
+                            className="block text-zinc-700 transition-opacity hover:opacity-100 dark:text-white/90"
                           >
                             <SiteSocialIcon id={id} />
                           </a>

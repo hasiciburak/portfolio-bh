@@ -5,7 +5,7 @@ import WhyHireMeSection from "@/components/why-hire-me-section";
 
 export default function Home() {
   return (
-    <div className="flex w-full flex-1 flex-col bg-zinc-950">
+    <div className="flex w-full flex-1 flex-col bg-background">
       <HomeSectionIndex />
       <HeroSection variant="home" />
       <WhyHireMeSection />

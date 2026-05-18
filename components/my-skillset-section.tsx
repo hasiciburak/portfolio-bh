@@ -72,13 +72,13 @@ export default function MySkillsetSection() {
     <section
       id="skillset"
       ref={sectionRef}
-      className="isolate w-full scroll-mt-24 bg-zinc-950 font-sans text-white"
+      className="isolate w-full scroll-mt-24 bg-zinc-50 font-sans text-zinc-950 dark:bg-zinc-950 dark:text-white"
       aria-labelledby="skillset-heading"
     >
       <div className="mx-auto w-full max-w-7xl px-4 py-16 sm:py-20 lg:py-28">
         <h2
           id="skillset-heading"
-          className="skillset-stagger-item mb-12 text-center font-nohemi text-[40px] font-bold leading-[1.2] tracking-tight text-white sm:mb-14 sm:text-5xl lg:mb-16 lg:text-[64px]"
+          className="skillset-stagger-item mb-12 text-center font-nohemi text-[40px] font-bold leading-[1.2] tracking-tight text-zinc-950 dark:text-white sm:mb-14 sm:text-5xl lg:mb-16 lg:text-[64px]"
         >
           My Skillset
         </h2>
@@ -91,7 +91,7 @@ export default function MySkillsetSection() {
             >
               <h3
                 id={`skillset-cat-${category.id}`}
-                className="skillset-stagger-item mb-5 font-nohemi text-xl font-semibold tracking-tight text-white sm:text-2xl"
+                className="skillset-stagger-item mb-5 font-nohemi text-xl font-semibold tracking-tight text-zinc-950 dark:text-white sm:text-2xl"
               >
                 {category.title}
               </h3>

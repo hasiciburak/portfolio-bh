@@ -129,8 +129,8 @@ export function HomeSectionIndex() {
             <div key={id} className="group relative flex items-center">
               <span
                 className={[
-                  "pointer-events-none absolute right-full mr-3 top-1/2 -translate-y-1/2 whitespace-nowrap rounded-full border border-white/35 bg-white/10 px-3 py-1.5 text-xs font-medium text-white shadow-[0_10px_40px_rgba(0,0,0,0.18),inset_0_1px_0_rgba(255,255,255,0.35)] backdrop-blur-xl backdrop-saturate-150 transition-opacity",
-                  "opacity-0 group-hover:opacity-100 group-focus-within:opacity-100",
+                  "pointer-events-none absolute right-full mr-3 top-1/2 -translate-y-1/2 whitespace-nowrap rounded-full border border-zinc-300/95 bg-white/92 px-3 py-1.5 text-xs font-medium text-zinc-900 shadow-[0_10px_40px_rgb(15_23_42_/_0.1),inset_0_1px_0_rgb(255_255_255_/_0.92)] backdrop-blur-xl backdrop-saturate-150 transition-opacity",
+                  "opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 dark:border-white/35 dark:bg-white/10 dark:text-white dark:shadow-[0_10px_40px_rgba(0,0,0,0.18),inset_0_1px_0_rgba(255,255,255,0.35)]",
                 ].join(" ")}
               >
                 {label}
@@ -142,10 +142,10 @@ export function HomeSectionIndex() {
                 title={label}
                 onClick={() => scrollToSectionId(id, prefersReducedMotion)}
                 className={[
-                  "relative size-3 rounded-full border transition-[box-shadow,background-color,border-color] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950",
+                  "relative size-3 rounded-full border transition-[box-shadow,background-color,border-color] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500/55 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-50 dark:focus-visible:ring-white/70 dark:focus-visible:ring-offset-zinc-950",
                   isActive
-                    ? "border-white bg-white shadow-[0_0_14px_rgba(255,255,255,0.5)]"
-                    : "border-white/45 bg-transparent hover:border-white/70 hover:bg-white/15",
+                    ? "border-zinc-900 bg-zinc-900 shadow-[0_0_12px_rgb(39_39_42_/_0.35)] dark:border-white dark:bg-white dark:shadow-[0_0_14px_rgba(255,255,255,0.5)]"
+                    : "border-zinc-400 bg-transparent hover:border-zinc-600 hover:bg-zinc-200 dark:border-white/45 dark:hover:border-white/70 dark:hover:bg-white/15",
                 ].join(" ")}
               />
             </div>
