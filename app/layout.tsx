@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Geist_Mono, Inter } from "next/font/google";
+import { TabAwayTitle } from "@/components/tab-away-title";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteNavigation } from "@/components/site-navigation";
 import { SmoothScrollProvider } from "@/components/smooth-scroll-provider";
+import { SITE_TAB_TITLE } from "@/lib/site-tab-title";
 import "./globals.css";
 
 const inter = Inter({
@@ -26,7 +28,7 @@ const brandWordmark = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Burak Haşıcı — Portfolio",
+  title: SITE_TAB_TITLE,
   description:
     "Software developer and UI/UX designer based in Istanbul, Turkey.",
 };
@@ -42,6 +44,7 @@ export default function RootLayout({
       className={`${inter.variable} ${geistMono.variable} ${brandWordmark.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col font-sans antialiased">
+        <TabAwayTitle />
         <SiteNavigation />
         <SmoothScrollProvider>
           {children}
