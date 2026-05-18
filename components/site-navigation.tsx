@@ -87,10 +87,14 @@ export function SiteNavigation() {
       : "rounded-xl px-3 py-3 text-base font-medium text-white hover:bg-white/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/35";
 
   const pillNavClassName = [
-    "grid w-full max-w-[24rem] shrink-0 grid-cols-3 gap-1 rounded-full p-1 sm:w-auto",
+    "grid w-full max-w-[24rem] shrink-0 gap-1 rounded-full p-1 sm:w-auto",
     shellClassName,
     navTone,
   ].join(" ");
+
+  const pillNavGridStyle = {
+    gridTemplateColumns: `repeat(${NAV_ITEMS.length}, minmax(0, 1fr))`,
+  } as const;
 
   return (
     <header className="fixed inset-x-0 top-0 z-[65]">
@@ -117,7 +121,11 @@ export function SiteNavigation() {
             <BrandWordmark surface={surface} />
           </div>
         </div>
-        <nav aria-label="Main" className={`relative z-[1] ${pillNavClassName}`}>
+        <nav
+          aria-label="Main"
+          style={pillNavGridStyle}
+          className={`relative z-[1] ${pillNavClassName}`}
+        >
           {NAV_ITEMS.map(({ href, label }) => {
             const active =
               href === "/" ? pathname === "/" : pathname.startsWith(href);
