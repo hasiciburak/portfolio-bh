@@ -49,7 +49,8 @@ export default function HeroSection({ variant = "home" }: HeroSectionProps) {
 
   return (
     <section
-      className="flex w-full min-h-[100svh] flex-col overflow-x-clip bg-zinc-950 font-sans text-white"
+      id="hero"
+      className="flex w-full min-h-[100svh] flex-col overflow-x-clip scroll-mt-24 bg-zinc-950 font-sans text-white"
       aria-labelledby="hero-heading"
     >
       <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-4 pb-24 pt-2 sm:pb-28 sm:pt-3 lg:pb-32 lg:pt-0">

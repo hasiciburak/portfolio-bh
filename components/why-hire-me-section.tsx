@@ -130,7 +130,8 @@ export default function WhyHireMeSection() {
 
   return (
     <section
-      className="isolate w-full bg-zinc-950 font-sans text-white"
+      id="why-hire"
+      className="isolate w-full scroll-mt-24 bg-zinc-950 font-sans text-white"
       aria-labelledby="why-hire-heading"
     >
       {reduceMotion ? (
