@@ -66,9 +66,14 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
         wrapper's height. ScrollSmoother.refreshHeight() reads smooth-content.clientHeight, so a shrunk
         content yields ~0 scroll range and the footer becomes unreachable. Block layout lets content
         grow to the natural sum of its children's heights, which is what ScrollSmoother needs.
+        Using flex *inside* #smooth-content (column + flex-1 main) is fine: the content box still
+        sizes to its children for GSAP.
       */}
-      <div id="smooth-wrapper">
-        <div id="smooth-content" className="relative w-full min-h-[100svh]">
+      <div id="smooth-wrapper" className="bg-zinc-950">
+        <div
+          id="smooth-content"
+          className="relative flex min-h-[100svh] w-full flex-col bg-zinc-950"
+        >
           {children}
         </div>
       </div>

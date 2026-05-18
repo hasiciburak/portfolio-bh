@@ -44,7 +44,7 @@ function CloseIcon({ className }: { className?: string }) {
 export function SiteNavigation() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
-  const surface = surfaceFromPathname(pathname);
+  const surface = surfaceFromPathname();
   const isLightSurface = surface === "lightSurface";
 
   const shellClassName = isLightSurface ? styles.navShellLight : styles.navShellDark;

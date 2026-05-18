@@ -8,7 +8,10 @@ import { surfaceFromPathname } from "@/lib/site-chrome-variant";
 
 export function SiteFooter() {
   const pathname = usePathname();
-  const surface = surfaceFromPathname(pathname);
+  const surface = surfaceFromPathname();
+
+  const surfaceBg =
+    surface === "lightSurface" ? "bg-zinc-50" : "bg-zinc-950";
 
   const borderMuted = surface === "lightSurface"
     ? "border-t border-zinc-900/[0.08]"
@@ -21,7 +24,7 @@ export function SiteFooter() {
   return (
     <footer
       aria-label="Site"
-      className={`mt-auto flex flex-col items-center gap-4 px-4 py-10 ${borderMuted}`}
+      className={`mt-auto flex flex-col items-center gap-4 px-4 py-10 ${surfaceBg} ${borderMuted}`}
     >
       {showSocialPill ? <SocialPill surface={surface} /> : null}
       <BrandWordmark surface={surface} />
