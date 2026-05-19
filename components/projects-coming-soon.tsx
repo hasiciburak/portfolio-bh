@@ -1,5 +1,8 @@
+"use client";
+
 import { SiteSocialIcon } from "@/components/social-icons";
 import { SITE_SOCIAL_LINKS } from "@/lib/social-links";
+import { useTranslation } from "@/components/language-provider";
 
 const skeletonPulse =
   "animate-pulse motion-reduce:animate-none motion-reduce:opacity-80";
@@ -28,18 +31,19 @@ const ProjectSkeletonCard = ({ className = "" }: { className?: string }) => {
 }
 
 export const ProjectsComingSoon = () => {
+  const { lang, dict } = useTranslation();
+
   return (
     <div className="flex flex-col gap-12 lg:gap-14">
       <header className="max-w-2xl">
         <p className="text-sm font-medium tracking-wide text-zinc-500 dark:text-white/45">
-          Case studies
+          {lang === "tr" ? "Vaka incelemeleri" : "Case studies"}
         </p>
         <h1 className="mt-2 text-4xl font-semibold tracking-tight text-zinc-950 dark:text-white sm:text-5xl">
-          Projects
+          {dict.projects.title}
         </h1>
         <p className="mt-4 text-lg leading-relaxed text-zinc-600 dark:text-white/70">
-          Selected shipped work and deeper write-ups are on the way. I&apos;m polishing narratives,
-          metrics, and visuals so each piece reads clearly end to end.
+          {dict.projects.subtitle}
         </p>
       </header>
 
@@ -49,10 +53,10 @@ export const ProjectsComingSoon = () => {
             id="projects-preview-heading"
             className="text-sm font-medium uppercase tracking-wider text-zinc-500 dark:text-white/45"
           >
-            Preview
+            {lang === "tr" ? "Önizleme" : "Preview"}
           </h2>
           <p className="text-xs text-zinc-400 dark:text-white/35">
-            Placeholders — not active projects
+            {lang === "tr" ? "Yer tutucular — aktif projeler değil" : "Placeholders — not active projects"}
           </p>
         </div>
         <div
@@ -73,10 +77,10 @@ export const ProjectsComingSoon = () => {
           id="projects-connect-heading"
           className="text-lg font-semibold text-zinc-950 dark:text-white"
         >
-          Meanwhile
+          {lang === "tr" ? "İletişim" : "Meanwhile"}
         </h2>
         <p className="mt-2 max-w-xl text-sm leading-relaxed text-zinc-600 dark:text-white/65">
-          Reach out on any channel below — same links as in the footer.
+          {lang === "tr" ? "Aşağıdaki kanallardan herhangi birinden bana ulaşın — footer'daki bağlantılarla aynı." : "Reach out on any channel below — same links as in the footer."}
         </p>
         <nav aria-label="Social profiles" className="mt-6">
           <ul className="flex flex-wrap items-center gap-x-7 gap-y-4">

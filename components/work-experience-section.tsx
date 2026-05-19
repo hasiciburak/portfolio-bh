@@ -1,9 +1,25 @@
+"use client";
+
 import Image from "next/image";
 
 import { NonpublicLogo } from "@/components/nonpublic-logo";
 import { WORK_EXPERIENCE_ENTRIES } from "@/lib/work-experience";
+import { useTranslation } from "@/components/language-provider";
 
 const WorkExperienceSection = () => {
+  const { dict } = useTranslation();
+
+  const entries = WORK_EXPERIENCE_ENTRIES.map((entry) => {
+    const key = entry.id as keyof typeof dict.work_experience.entries;
+    const localized = dict.work_experience.entries[key];
+    return {
+      ...entry,
+      title: localized?.title || entry.title,
+      date: localized?.date || entry.date,
+      bullets: localized?.bullets || entry.bullets,
+    };
+  });
+
   return (
     <section
       id="work-experience"
@@ -15,11 +31,11 @@ const WorkExperienceSection = () => {
           id="work-experience-heading"
           className="mb-10 text-center font-nohemi text-[40px] font-bold leading-[1.2] tracking-tight text-zinc-950 dark:text-white sm:mb-12 sm:text-5xl lg:mb-16 lg:text-[48px]"
         >
-          Work Experience
+          {dict.work_experience.title}
         </h2>
 
         <div className="flex flex-col gap-14 sm:gap-16 lg:gap-[68px]">
-          {WORK_EXPERIENCE_ENTRIES.map((entry) => (
+          {entries.map((entry) => (
             <article key={entry.id} aria-labelledby={`work-${entry.id}-title`}>
               <div className="mb-4 flex min-h-12 items-end sm:mb-5 sm:min-h-[52px]">
                 {entry.id === "nonpublic" ? (

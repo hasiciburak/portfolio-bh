@@ -1,8 +1,10 @@
 import { GithubActivityCalendar } from "@/components/github-activity-calendar";
 import { fetchGitHubContributions } from "@/lib/github-contributions";
+import { getDictionary, Locale } from "@/app/[lang]/dictionaries";
 
-const GithubGraphSection = async () => {
+const GithubGraphSection = async ({ lang }: { lang: string }) => {
   const data = await fetchGitHubContributions();
+  const dict = await getDictionary(lang as Locale);
 
   return (
     <section
@@ -15,7 +17,7 @@ const GithubGraphSection = async () => {
           id="github-graph-heading"
           className="mb-10 text-center font-nohemi text-[40px] font-bold leading-[1.2] tracking-tight text-zinc-950 dark:text-white sm:mb-12 sm:text-5xl lg:mb-16 lg:text-[48px]"
         >
-          My Github Graph
+          {dict.github_graph.title}
         </h2>
 
         <div className="overflow-hidden rounded-[23px] bg-black px-5 py-6 sm:px-8 sm:py-7 lg:px-10 lg:py-8">
@@ -23,7 +25,9 @@ const GithubGraphSection = async () => {
             <GithubActivityCalendar contributions={data.contributions} />
           ) : (
             <p className="py-12 text-center text-base text-zinc-400">
-              Unable to load GitHub activity. Please try again later.
+              {lang === "tr"
+                ? "GitHub aktivitesi yüklenemedi. Lütfen daha sonra tekrar deneyin."
+                : "Unable to load GitHub activity. Please try again later."}
             </p>
           )}
         </div>

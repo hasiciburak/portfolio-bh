@@ -1,9 +1,12 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 
 import { HomeFixedSocialDock } from "@/components/home-fixed-social-dock";
 import { SiteSocialIcon } from "@/components/social-icons";
 import { SITE_SOCIAL_LINKS } from "@/lib/social-links";
+import { useTranslation } from "@/components/language-provider";
 
 const PLACEHOLDER = "#";
 
@@ -47,6 +50,7 @@ export interface HeroSectionProps {
 
 const HeroSection = ({ variant = "home" }: HeroSectionProps) => {
   const isHome = variant === "home";
+  const { dict } = useTranslation();
 
   return (
     <section
@@ -86,21 +90,20 @@ const HeroSection = ({ variant = "home" }: HeroSectionProps) => {
                   id="hero-heading"
                   className="max-w-xl font-nohemi font-extralight leading-[normal] tracking-tight text-zinc-950 text-[44px] sm:text-[48px] lg:text-7xl xl:text-8xl dark:text-[#fffffe]"
                 >
-                  Hi! You&apos;re in
+                  {dict.hero.title_part1}
                   <br />
-                  BH&apos;s Page
+                  {dict.hero.title_part2}
                 </h1>
 
                 <p className="max-w-xl text-sm leading-snug text-zinc-600 dark:text-white/80 sm:text-base sm:leading-relaxed lg:hidden">
-                  {BIO_MOBILE}
+                  {dict.hero.bio_mobile}
                 </p>
                 <p className="hidden max-w-xl text-lg leading-relaxed text-zinc-600 dark:text-white/80 md:text-xl lg:block">
-                  Burak Haşıcı — Software Developer, self-taught UI/UX designer based in Istanbul,
-                  Turkey.
+                  {dict.hero.bio_desktop}
                 </p>
 
                 <Link href={PLACEHOLDER} className={`${glassPill} w-fit max-lg:hidden lg:inline-flex`}>
-                  <span className="font-normal leading-tight">Download my resume</span>
+                  <span className="font-normal leading-tight">{dict.hero.download_resume}</span>
                   <DownloadIcon className="size-4 shrink-0 opacity-90" />
                 </Link>
 
@@ -124,7 +127,7 @@ const HeroSection = ({ variant = "home" }: HeroSectionProps) => {
 
                   <Link href={PLACEHOLDER} className={`${mobileResumePill} inline-flex w-fit max-w-full`}>
                     <span className="text-center font-nohemi font-normal leading-[1.2]">
-                      Download my resume
+                      {dict.hero.download_resume}
                     </span>
                     <DownloadIcon className="size-4 shrink-0 opacity-90" />
                   </Link>

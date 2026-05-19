@@ -5,10 +5,12 @@ import { usePathname } from "next/navigation";
 import { BrandWordmark } from "@/components/brand-wordmark";
 import { SocialPill } from "@/components/social-pill";
 import { useSiteChromeSurface } from "@/lib/use-site-chrome-surface";
+import { useTranslation } from "@/components/language-provider";
 
 export const SiteFooter = () => {
   const pathname = usePathname();
   const surface = useSiteChromeSurface();
+  const { dict } = useTranslation();
 
   const surfaceBg =
     surface === "lightSurface" ? "bg-zinc-50" : "bg-zinc-950";
@@ -19,7 +21,7 @@ export const SiteFooter = () => {
 
   const mutedText = surface === "lightSurface" ? "text-zinc-500" : "text-white/65";
 
-  const showSocialPill = pathname !== "/";
+  const showSocialPill = pathname !== "/" && pathname !== "/tr";
 
   return (
     <footer
@@ -29,7 +31,7 @@ export const SiteFooter = () => {
       {showSocialPill ? <SocialPill surface={surface} /> : null}
       <BrandWordmark surface={surface} />
       <p className={`max-w-xl text-center text-xs ${mutedText}`}>
-        © {new Date().getFullYear()} Burak Haşıcı. All rights reserved.
+        {dict.footer.copyright.replace("2026", new Date().getFullYear().toString())}
       </p>
     </footer>
   );

@@ -8,6 +8,7 @@ import { useLayoutEffect, useRef, useState } from "react";
 
 import { useSmoothScrollReady } from "@/components/smooth-scroll-provider";
 import { HIRE_ME_REASONS } from "@/lib/hire-me-reasons";
+import { useTranslation } from "@/components/language-provider";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -29,6 +30,17 @@ const WhyHireMeSection = () => {
   const pinRootRef = useRef<HTMLElement>(null);
   const reduceMotion = usePrefersReducedMotion();
   const smootherReady = useSmoothScrollReady();
+  const { dict } = useTranslation();
+
+  const reasons = HIRE_ME_REASONS.map((reason) => {
+    const key = reason.id.replace("-", "_") as keyof typeof dict.why_hire_me.reasons;
+    const localized = dict.why_hire_me.reasons[key] || reason;
+    return {
+      id: reason.id,
+      title: localized.title,
+      body: localized.body,
+    };
+  });
 
   useGSAP(
     () => {
@@ -109,7 +121,7 @@ const WhyHireMeSection = () => {
       id="why-hire-heading"
       className="mb-10 text-center font-nohemi text-[40px] font-bold leading-[1.2] tracking-tight text-zinc-950 dark:text-white sm:mb-12 sm:text-5xl lg:mb-14 lg:text-[64px]"
     >
-      Why Hire Me?
+      {dict.why_hire_me.title}
     </h2>
   );
 
@@ -139,7 +151,7 @@ const WhyHireMeSection = () => {
           {heading}
           <div className={gridTemplate}>
             <div className="flex w-full max-w-[660px] flex-col gap-12 lg:max-w-none lg:justify-self-start">
-              {HIRE_ME_REASONS.map((reason) => (
+              {reasons.map((reason) => (
                 <div key={reason.id} className="flex flex-col gap-2.5 text-left">
                   <h3 className="font-nohemi text-[28px] font-normal leading-[1.2] text-zinc-950 dark:text-white sm:text-4xl lg:text-[48px]">
                     {reason.title}
@@ -162,7 +174,7 @@ const WhyHireMeSection = () => {
           {heading}
           <div className={gridTemplate}>
             <div className="relative w-full max-w-[660px] min-h-[280px] sm:min-h-[260px] lg:min-h-[260px] lg:max-w-none lg:justify-self-start">
-              {HIRE_ME_REASONS.map((reason) => (
+              {reasons.map((reason) => (
                 <div
                   key={reason.id}
                   className="hire-me-panel absolute inset-x-0 top-0 flex flex-col gap-2.5 text-left"

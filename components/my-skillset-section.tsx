@@ -8,6 +8,7 @@ import { useLayoutEffect, useRef, useState } from "react";
 import { useSmoothScrollReady } from "@/components/smooth-scroll-provider";
 import { SkillsetChip } from "@/components/skillset-chip";
 import { SKILLSET_CATEGORIES } from "@/lib/skillset-data";
+import { useTranslation } from "@/components/language-provider";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -29,6 +30,16 @@ const MySkillsetSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const reduceMotion = usePrefersReducedMotion();
   const smootherReady = useSmoothScrollReady();
+  const { dict } = useTranslation();
+
+  const categories = SKILLSET_CATEGORIES.map((category) => {
+    const key = category.id as keyof typeof dict.skillset.categories;
+    const title = dict.skillset.categories[key] || category.title;
+    return {
+      ...category,
+      title,
+    };
+  });
 
   useGSAP(
     () => {
@@ -80,11 +91,11 @@ const MySkillsetSection = () => {
           id="skillset-heading"
           className="skillset-stagger-item mb-12 text-center font-nohemi text-[40px] font-bold leading-[1.2] tracking-tight text-zinc-950 dark:text-white sm:mb-14 sm:text-5xl lg:mb-16 lg:text-[64px]"
         >
-          My Skillset
+          {dict.skillset.title}
         </h2>
 
         <div className="flex flex-col gap-14 lg:gap-16">
-          {SKILLSET_CATEGORIES.map((category) => (
+          {categories.map((category) => (
             <section
               key={category.id}
               aria-labelledby={`skillset-cat-${category.id}`}

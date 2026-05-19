@@ -1,0 +1,98 @@
+{
+  "navigation": {
+    "home": "Home",
+    "projects": "Projects",
+    "appearance": "Appearance",
+    "menu": "Menu",
+    "dismiss": "Dismiss navigation menu"
+  },
+  "hero": {
+    "title_part1": "Hi! You're in",
+    "title_part2": "BH's Page",
+    "bio_mobile": "Burak Haşıcı - Frontend Developer, Industrial Engineer & Self Paced UI/UX Designer based in Istanbul Turkey",
+    "bio_desktop": "Burak Haşıcı — Software Developer, self-taught UI/UX designer based in Istanbul, Turkey.",
+    "download_resume": "Download my resume"
+  },
+  "why_hire_me": {
+    "title": "Why Hire Me?",
+    "reasons": {
+      "interfaces": {
+        "title": "I build interfaces that users “get” on the first tap",
+        "body": "Shipping React/TypeScript experiences for nearly 4 years—fast, accessible, and production-ready."
+      },
+      "performance": {
+        "title": "Performance and UX aren’t trade-offs—I chase both",
+        "body": "From Lighthouse-focused builds to trimming legacy UI cost in regulated stacks; measurable gains beat vibes."
+      },
+      "design_collab": {
+        "title": "I bridge design intent with resilient frontend architecture",
+        "body": "Comfortable in Figma, fluent in component APIs—fewer hand-off surprises and cleaner iteration loops."
+      },
+      "ownership": {
+        "title": "I ship like someone responsible for the next refactor too",
+        "body": "Documentation (Storybook, Confluence), testing-minded workflows, and clear tickets—not silent shortcuts."
+      }
+    }
+  },
+  "skillset": {
+    "title": "My Skillset",
+    "categories": {
+      "languages": "Programming Languages",
+      "frontend": "Frontend Frameworks & Libraries",
+      "ui": "UI & Styling",
+      "state-data": "State Management & Data Handling",
+      "testing": "Testing",
+      "databases": "Databases",
+      "devtools": "Tools & DevOps",
+      "design": "Design & Collaboration"
+    }
+  },
+  "work_experience": {
+    "title": "Work Experience",
+    "entries": {
+      "nonpublic": {
+        "title": "Nonpublic - Frontend Developer",
+        "date": "May - Nov 25’",
+        "bullets": [
+          "Contributed to the development of customer-facing and back-office applications in collaboration with a globally distributed team (HQ in Sydney, Australia).",
+          "Built and maintained web and mobile applications, including onboarding flows, using React, React Native, TypeScript, React Query, and SASS, with Figma for UI design.",
+          "Developed an investor-focused mobile application with React Native.",
+          "Partnered with the marketing team to deliver a high-performance company website (achieved 100 performance score in Lighthouse) using Next.js, TypeScript, SASS, and Sanity CMS."
+        ]
+      },
+      "fibabanka": {
+        "title": "Fibabanka (via Veriport) - Frontend Developer",
+        "date": "Jul 24’ - May 25’",
+        "bullets": [
+          "Transformed core banking applications originally developed in Java/XML, used across all branches for accounting, customer services, and EFT, by implementing React, Redux, and a customized version of Material UI.",
+          "Analyzed legacy screens built with XML and Java on the backend and documented findings in Confluence.",
+          "Improved UI performance by up to two times in certain areas compared to the XML-based applications.",
+          "Developed custom UI components for the company’s UI library, documented them with Storybook, and used JSDoc for component documentation."
+        ]
+      },
+      "elephantapps": {
+        "title": "ElephantApps (contracted to Leesman) - Frontend Developer",
+        "date": "Jul 24’ - May 25’",
+        "bullets": [
+          "Developed custom web applications using React and Next.js.",
+          "Optimized React applications, achieving up to 80% performance improvements. Managed and resolved client requests via Jira.",
+          "Built scalable solutions using Redux, Styled Components, Axios, and Redux Thunk.",
+          "Collaborated with UK-based international clients, ensuring timely delivery of features.",
+          "Documented workflows and applications using Jira and Confluence."
+        ]
+      }
+    }
+  },
+  "github_graph": {
+    "title": "Contributions",
+    "subtitle": "My GitHub contribution graph."
+  },
+  "footer": {
+    "credits": "Designed in Figma, built with Next.js & Tailwind CSS.",
+    "copyright": "© 2026 Burak Haşıcı. All rights reserved."
+  },
+  "projects": {
+    "title": "Projects coming soon",
+    "subtitle": "I'm currently polishing some of my work to present here. Stay tuned!"
+  }
+}

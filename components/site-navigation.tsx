@@ -7,14 +7,11 @@ import { usePathname } from "next/navigation";
 
 import { BrandWordmark } from "@/components/brand-wordmark";
 import { ThemeSwitch } from "@/components/theme-switch";
+import { LanguageSwitch } from "@/components/language-switch";
+import { useTranslation } from "@/components/language-provider";
 import { useSiteChromeSurface } from "@/lib/use-site-chrome-surface";
 
 import styles from "./site-navigation.module.css";
-
-const NAV_ITEMS = [
-  { href: "/", label: "Home" },
-  { href: "/projects", label: "Projects" },
-] as const;
 
 const MenuIcon = ({ className }: { className?: string }) => {
   return (
@@ -48,6 +45,13 @@ export const SiteNavigation = () => {
   const [portalReady, setPortalReady] = useState(false);
   const surface = useSiteChromeSurface();
   const isLightSurface = surface === "lightSurface";
+
+  const { lang, dict } = useTranslation();
+
+  const NAV_ITEMS = [
+    { href: lang === "tr" ? "/tr" : "/", label: dict.navigation.home },
+    { href: lang === "tr" ? "/tr/projects" : "/projects", label: dict.navigation.projects },
+  ];
 
   const shellClassName = isLightSurface ? styles.navShellLight : styles.navShellDark;
 
@@ -132,8 +136,10 @@ export const SiteNavigation = () => {
           </div>
           <nav aria-label="Main mobile" className="flex flex-1 flex-col gap-1 p-4">
             {NAV_ITEMS.map(({ href, label }) => {
-              const active =
-                href === "/" ? pathname === "/" : pathname.startsWith(href);
+              const isHomeLink = href === "/" || href === "/tr";
+              const active = isHomeLink
+                ? pathname === "/" || pathname === "/tr"
+                : pathname === href || (pathname.startsWith(href) && href !== "/" && href !== "/tr");
               return (
                 <Link
                   key={href}
@@ -152,14 +158,26 @@ export const SiteNavigation = () => {
               isLightSurface ? "border-zinc-200/80" : "border-white/15"
             }`}
           >
-            <span
-              className={`mb-2 block text-xs font-medium uppercase tracking-wide ${
-                isLightSurface ? "text-zinc-500" : "text-white/55"
-              }`}
-            >
-              Appearance
-            </span>
-            <ThemeSwitch variant="drawer" isLightChrome={isLightSurface} />
+            <div className="mb-4">
+              <span
+                className={`mb-2 block text-xs font-medium uppercase tracking-wide ${
+                  isLightSurface ? "text-zinc-500" : "text-white/55"
+                }`}
+              >
+                {dict.navigation.appearance.toLowerCase() === "görünüm" ? "Dil" : "Language"}
+              </span>
+              <LanguageSwitch variant="drawer" isLightChrome={isLightSurface} />
+            </div>
+            <div>
+              <span
+                className={`mb-2 block text-xs font-medium uppercase tracking-wide ${
+                  isLightSurface ? "text-zinc-500" : "text-white/55"
+                }`}
+              >
+                {dict.navigation.appearance}
+              </span>
+              <ThemeSwitch variant="drawer" isLightChrome={isLightSurface} />
+            </div>
           </div>
         </div>
       </>
@@ -190,8 +208,9 @@ export const SiteNavigation = () => {
               <BrandWordmark surface={surface} />
             </div>
           </div>
-          <div className="pointer-events-none absolute right-0 top-1/2 z-[2] flex -translate-y-1/2 items-center">
-            <div className="pointer-events-auto">
+          <div className="pointer-events-none absolute right-0 top-1/2 z-[2] flex -translate-y-1/2 items-center gap-3">
+            <div className="pointer-events-auto flex items-center gap-3">
+              <LanguageSwitch variant="header" isLightChrome={isLightSurface} />
               <ThemeSwitch variant="header" isLightChrome={isLightSurface} />
             </div>
           </div>
@@ -201,8 +220,10 @@ export const SiteNavigation = () => {
             className={`relative z-[1] ${pillNavClassName}`}
           >
             {NAV_ITEMS.map(({ href, label }) => {
-              const active =
-                href === "/" ? pathname === "/" : pathname.startsWith(href);
+              const isHomeLink = href === "/" || href === "/tr";
+              const active = isHomeLink
+                ? pathname === "/" || pathname === "/tr"
+                : pathname === href || (pathname.startsWith(href) && href !== "/" && href !== "/tr");
 
               const textTone = isLightSurface
                 ? active

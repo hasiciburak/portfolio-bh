@@ -1,0 +1,98 @@
+{
+  "navigation": {
+    "home": "Ana Sayfa",
+    "projects": "Projeler",
+    "appearance": "Görünüm",
+    "menu": "Menü",
+    "dismiss": "Gezinme menüsünü kapat"
+  },
+  "hero": {
+    "title_part1": "Merhaba! Burası",
+    "title_part2": "BH'nin Sayfası",
+    "bio_mobile": "Burak Haşıcı - İstanbul'da yaşayan Frontend Geliştirici, Endüstri Mühendisi ve Kendi Kendini Yetiştirmiş UI/UX Tasarımcısı",
+    "bio_desktop": "Burak Haşıcı — İstanbul'da yaşayan Yazılım Geliştirici ve Kendi Kendini Yetiştirmiş UI/UX Tasarımcısı.",
+    "download_resume": "Özgeçmişimi İndir"
+  },
+  "why_hire_me": {
+    "title": "Neden Beni İşe Almalısınız?",
+    "reasons": {
+      "interfaces": {
+        "title": "Kullanıcıların ilk dokunuşta “anladığı” arayüzler inşa ederim",
+        "body": "Yaklaşık 4 yıldır hızlı, erişilebilir ve üretime hazır React/TypeScript deneyimleri sunuyorum."
+      },
+      "performance": {
+        "title": "Performans ve Kullanıcı Deneyimi ödün verilmesi gereken şeyler değildir—Her ikisini de hedeflerim",
+        "body": "Lighthouse odaklı yapılardan regüle edilen yığınlardaki eski arayüz maliyetlerini düşürmeye kadar; ölçülebilir kazanımların hislerden daha önemli olduğuna inanıyorum."
+      },
+      "design_collab": {
+        "title": "Tasarım amacını esnek frontend mimarisiyle birleştiririm",
+        "body": "Figma'da rahatça çalışır, bileşen API'lerini akıcı şekilde yazarım—böylece teslim aşamasında sürprizler azalır ve yineleme döngüleri daha temiz olur."
+      },
+      "ownership": {
+        "title": "Bir sonraki yeniden düzenlemeden de kendim sorumluymuş gibi kod geliştiririm",
+        "body": "Dökümantasyon (Storybook, Confluence), test odaklı iş akışları ve net iş biletleri kullanırım—asla geçici ve sessiz kısayollara başvurmam."
+      }
+    }
+  },
+  "skillset": {
+    "title": "Yeteneklerim",
+    "categories": {
+      "languages": "Programlama Dilleri",
+      "frontend": "Frontend Çatıları ve Kütüphaneleri",
+      "ui": "Arayüz ve Stil",
+      "state-data": "Durum Yönetimi ve Veri İşleme",
+      "testing": "Test",
+      "databases": "Veritabanları",
+      "devtools": "Araçlar ve DevOps",
+      "design": "Tasarım ve İş Birliği"
+    }
+  },
+  "work_experience": {
+    "title": "İş Deneyimi",
+    "entries": {
+      "nonpublic": {
+        "title": "Nonpublic - Frontend Geliştirici",
+        "date": "Mayıs - Kasım 25’",
+        "bullets": [
+          "Sidney, Avustralya merkezli, küresel olarak dağıtılmış bir ekiple iş birliği içinde müşteri odaklı ve arka ofis uygulamalarının geliştirilmesine katkıda bulundum.",
+          "Arayüz tasarımı için Figma kullanarak React, React Native, TypeScript, React Query ve SASS ile kullanıcı kayıt/başlangıç (onboarding) akışları dahil olmak üzere web ve mobil uygulamalar geliştirip bakımını üstlendim.",
+          "React Native ile yatırımcı odaklı bir mobil uygulama geliştirdim.",
+          "Pazarlama ekibiyle ortaklaşa çalışarak Next.js, TypeScript, SASS ve Sanity CMS kullanarak yüksek performanslı şirket web sitesini (Lighthouse'ta 100 performans puanı) hayata geçirdim."
+        ]
+      },
+      "fibabanka": {
+        "title": "Fibabanka (Veriport aracılığıyla) - Frontend Geliştirici",
+        "date": "Temmuz 24’ - Mayıs 25’",
+        "bullets": [
+          "Tüm şubelerde muhasebe, müşteri hizmetleri ve EFT için kullanılan ve orijinal olarak Java/XML ile geliştirilmiş temel bankacılık uygulamalarını; React, Redux ve özelleştirilmiş bir Material UI sürümü uygulayarak dönüştürdüm.",
+          "Arka uçta XML ve Java ile oluşturulmuş eski ekranları analiz ettim ve bulguları Confluence üzerinde belgeledim.",
+          "Arayüz performansını, XML tabanlı uygulamalara kıyasla belirli alanlarda iki kata kadar iyileştirdim.",
+          "Şirketin arayüz kütüphanesi için özel bileşenler geliştirdim, bunları Storybook ile belgeledim ve bileşen belgeleri için JSDoc kullandım."
+        ]
+      },
+      "elephantapps": {
+        "title": "ElephantApps (Leesman için sözleşmeli) - Frontend Geliştirici",
+        "date": "Temmuz 24’ - Mayıs 25’",
+        "bullets": [
+          "React ve Next.js kullanarak özel web uygulamaları geliştirdim.",
+          "React uygulamalarını optimize ederek %80'e varan performans artışları sağladım. Müşteri taleplerini Jira üzerinden yönettim ve çözdüm.",
+          "Redux, Styled Components, Axios ve Redux Thunk kullanarak ölçeklenebilir çözümler inşa ettim.",
+          "İngiltere merkezli uluslararası müşterilerle iş birliği yaparak özelliklerin zamanında teslim edilmesini sağladım.",
+          "İş akışlarını ve uygulamaları Jira ile Confluence kullanarak belgeledim."
+        ]
+      }
+    }
+  },
+  "github_graph": {
+    "title": "Katkılar",
+    "subtitle": "GitHub katkı grafiğim."
+  },
+  "footer": {
+    "credits": "Figma ile tasarlandı, Next.js ve Tailwind CSS ile geliştirildi.",
+    "copyright": "© 2026 Burak Haşıcı. Tüm hakları saklıdır."
+  },
+  "projects": {
+    "title": "Projeler yakında burada",
+    "subtitle": "Burada sunmak üzere bazı çalışmalarımı parlatıyorum. Takipte kalın!"
+  }
+}
