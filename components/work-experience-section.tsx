@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+import { NonpublicLogo } from "@/components/nonpublic-logo";
 import { WORK_EXPERIENCE_ENTRIES } from "@/lib/work-experience";
 
 export default function WorkExperienceSection() {
@@ -21,15 +22,24 @@ export default function WorkExperienceSection() {
           {WORK_EXPERIENCE_ENTRIES.map((entry) => (
             <article key={entry.id} aria-labelledby={`work-${entry.id}-title`}>
               <div className="mb-4 flex min-h-12 items-end sm:mb-5 sm:min-h-[52px]">
-                <Image
-                  src={entry.logo.src}
-                  alt={entry.logo.alt}
-                  width={entry.logo.width}
-                  height={entry.logo.height}
-                  sizes={`${entry.logo.width}px`}
-                  className="h-auto max-w-full object-contain"
-                />
+                {entry.id === "nonpublic" ? (
+                  <NonpublicLogo
+                    width={entry.logo.width}
+                    height={entry.logo.height}
+                    className="text-zinc-950 dark:text-white h-auto max-w-full"
+                  />
+                ) : (
+                  <Image
+                    src={entry.logo.src}
+                    alt={entry.logo.alt}
+                    width={entry.logo.width}
+                    height={entry.logo.height}
+                    sizes={`${entry.logo.width}px`}
+                    className="h-auto max-w-full object-contain"
+                  />
+                )}
               </div>
+
 
               <div className="mb-5 flex flex-col gap-2 sm:mb-6 lg:flex-row lg:items-center lg:justify-between lg:gap-8">
                 <h3
