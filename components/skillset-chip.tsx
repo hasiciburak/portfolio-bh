@@ -4,7 +4,7 @@ import type { SkillItem } from "@/lib/skillset-data";
 import { SKILL_ICON_COMPONENTS, type SkillIconId } from "@/lib/skillset-icons";
 
 /** 2–3 letter monogram when no brand icon exists in developer-icons */
-function monogramLabel(name: string): string {
+const monogramLabel = (name: string): string => {
   const cleaned = name
     .replace(/\([^)]*\)/g, "")
     .replace(/[^\w\s]/g, " ")
@@ -21,7 +21,7 @@ function monogramLabel(name: string): string {
   return cleaned.slice(0, 2).toUpperCase() || "?";
 }
 
-function SkillIconOrMonogram({
+const SkillIconOrMonogram = ({
   name,
   icon,
   size,
@@ -29,7 +29,7 @@ function SkillIconOrMonogram({
   name: string;
   icon: SkillIconId | null;
   size: number;
-}) {
+}) => {
   if (icon) {
     const Icon = SKILL_ICON_COMPONENTS[icon];
     return (
@@ -46,7 +46,7 @@ function SkillIconOrMonogram({
   );
 }
 
-export function SkillsetChip({ skill }: { skill: SkillItem }) {
+export const SkillsetChip = ({ skill }: { skill: SkillItem }) => {
   return (
     <div className="flex min-h-[52px] transform-gpu items-center gap-3 rounded-2xl border border-zinc-200/95 bg-white/75 px-3.5 py-2.5 shadow-sm transition-[transform,background-color,border-color] duration-[350ms] ease-[cubic-bezier(0.33,1,0.68,1)] hover:scale-[1.015] hover:border-zinc-300 hover:bg-white motion-reduce:transform-none motion-reduce:transition-none motion-reduce:hover:scale-100 dark:border-white/12 dark:bg-white/[0.04] dark:shadow-none dark:hover:border-white/22 dark:hover:bg-white/[0.07]">
       <SkillIconOrMonogram name={skill.name} icon={skill.icon} size={28} />

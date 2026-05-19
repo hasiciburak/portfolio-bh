@@ -5,7 +5,7 @@ export interface SiteSocialIconProps {
   className?: string;
 }
 
-export function SiteSocialIcon({ id, className = "h-6 w-6 shrink-0" }: SiteSocialIconProps) {
+export const SiteSocialIcon = ({ id, className = "h-6 w-6 shrink-0" }: SiteSocialIconProps) => {
   switch (id) {
     case "linkedIn":
       return (

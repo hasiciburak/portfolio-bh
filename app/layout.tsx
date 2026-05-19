@@ -23,7 +23,7 @@ const geistMono = Geist_Mono({
 
 /** Wordmark (#HSC): HK Grotesk Wide Black — licensed font bundled under fonts/. */
 const brandWordmark = localFont({
-  src: "../fonts/hkgroteskwide-black.otf",
+  src: "../public/fonts/hkgroteskwide-black.otf",
   variable: "--font-brand-wordmark",
   weight: "900",
   display: "swap",
@@ -35,11 +35,11 @@ export const metadata: Metadata = {
     "Software developer and UI/UX designer based in Istanbul, Turkey.",
 };
 
-export default function RootLayout({
+const RootLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>) => {
   return (
     <html
       lang="en"
@@ -59,4 +59,7 @@ export default function RootLayout({
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;
+

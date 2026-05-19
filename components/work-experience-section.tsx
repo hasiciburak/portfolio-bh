@@ -3,7 +3,7 @@ import Image from "next/image";
 import { NonpublicLogo } from "@/components/nonpublic-logo";
 import { WORK_EXPERIENCE_ENTRIES } from "@/lib/work-experience";
 
-export default function WorkExperienceSection() {
+const WorkExperienceSection = () => {
   return (
     <section
       id="work-experience"
@@ -66,4 +66,7 @@ export default function WorkExperienceSection() {
       </div>
     </section>
   );
-}
+};
+
+export default WorkExperienceSection;
+

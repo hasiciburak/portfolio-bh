@@ -1,7 +1,7 @@
 import { GithubActivityCalendar } from "@/components/github-activity-calendar";
 import { fetchGitHubContributions } from "@/lib/github-contributions";
 
-export default async function GithubGraphSection() {
+const GithubGraphSection = async () => {
   const data = await fetchGitHubContributions();
 
   return (
@@ -30,4 +30,7 @@ export default async function GithubGraphSection() {
       </div>
     </section>
   );
-}
+};
+
+export default GithubGraphSection;
+

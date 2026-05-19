@@ -5,7 +5,7 @@ import GithubGraphSection from "@/components/github-graph-section";
 import WorkExperienceSection from "@/components/work-experience-section";
 import WhyHireMeSection from "@/components/why-hire-me-section";
 
-export default function Home() {
+const Home = () => {
   return (
     <div className="flex w-full flex-1 flex-col bg-background">
       <HomeSectionIndex />
@@ -16,4 +16,7 @@ export default function Home() {
       <GithubGraphSection />
     </div>
   );
-}
+};
+
+export default Home;
+

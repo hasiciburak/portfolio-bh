@@ -11,7 +11,7 @@ import { HIRE_ME_REASONS } from "@/lib/hire-me-reasons";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-function usePrefersReducedMotion(): boolean {
+const usePrefersReducedMotion = (): boolean => {
   const [reduce, setReduce] = useState(false);
 
   useLayoutEffect(() => {
@@ -25,7 +25,7 @@ function usePrefersReducedMotion(): boolean {
   return reduce;
 }
 
-export default function WhyHireMeSection() {
+const WhyHireMeSection = () => {
   const pinRootRef = useRef<HTMLElement>(null);
   const reduceMotion = usePrefersReducedMotion();
   const smootherReady = useSmoothScrollReady();
@@ -182,4 +182,7 @@ export default function WhyHireMeSection() {
       )}
     </section>
   );
-}
+};
+
+export default WhyHireMeSection;
+

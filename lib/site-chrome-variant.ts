@@ -1,8 +1,8 @@
 export type SiteChromeSurface = "lightSurface" | "darkSurface";
 
-export function surfaceFromResolvedTheme(
+export const surfaceFromResolvedTheme = (
   resolvedTheme: string | undefined,
-): SiteChromeSurface {
+): SiteChromeSurface => {
   // Dark-first default while `resolvedTheme` is undefined (SSR / pre-hydration).
   return resolvedTheme === "light" ? "lightSurface" : "darkSurface";
-}
+};

@@ -19,7 +19,7 @@ const mobileResumePill =
 
 const MOBILE_SOCIAL = SITE_SOCIAL_LINKS.slice(0, 4);
 
-function DownloadIcon({ className }: { className?: string }) {
+const DownloadIcon = ({ className }: { className?: string }) => {
   return (
     <svg
       className={className}
@@ -45,7 +45,7 @@ export interface HeroSectionProps {
   variant?: "home";
 }
 
-export default function HeroSection({ variant = "home" }: HeroSectionProps) {
+const HeroSection = ({ variant = "home" }: HeroSectionProps) => {
   const isHome = variant === "home";
 
   return (
@@ -137,4 +137,7 @@ export default function HeroSection({ variant = "home" }: HeroSectionProps) {
       </div>
     </section>
   );
-}
+};
+
+export default HeroSection;
+

@@ -7,7 +7,7 @@ export interface SocialPillProps {
   className?: string;
 }
 
-export function SocialPill({ surface, className = "" }: SocialPillProps) {
+export const SocialPill = ({ surface, className = "" }: SocialPillProps) => {
   const isLight = surface === "lightSurface";
 
   const shell = isLight

@@ -11,7 +11,7 @@ import { SKILLSET_CATEGORIES } from "@/lib/skillset-data";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-function usePrefersReducedMotion(): boolean {
+const usePrefersReducedMotion = (): boolean => {
   const [reduce, setReduce] = useState(false);
 
   useLayoutEffect(() => {
@@ -25,7 +25,7 @@ function usePrefersReducedMotion(): boolean {
   return reduce;
 }
 
-export default function MySkillsetSection() {
+const MySkillsetSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const reduceMotion = usePrefersReducedMotion();
   const smootherReady = useSmoothScrollReady();
@@ -114,4 +114,7 @@ export default function MySkillsetSection() {
       </div>
     </section>
   );
-}
+};
+
+export default MySkillsetSection;
+

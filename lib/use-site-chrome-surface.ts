@@ -14,7 +14,7 @@ const SSR_CHROME_SURFACE: SiteChromeSurface = "darkSurface";
  * Mirrors next-themes `resolvedTheme` after mount. Until then, returns a fixed
  * dark-first surface so SSR HTML matches the first client render (no hydration mismatch).
  */
-export function useSiteChromeSurface(): SiteChromeSurface {
+export const useSiteChromeSurface = (): SiteChromeSurface => {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 

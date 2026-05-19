@@ -10,7 +10,7 @@ import { useSiteChromeSurface } from "@/lib/use-site-chrome-surface";
  * ScrollSmoother transforms #smooth-content, which breaks descendant `position: fixed`.
  * Mounting here keeps the social dock viewport-fixed while smooth scrolling.
  */
-export function HomeFixedSocialDock() {
+export const HomeFixedSocialDock = () => {
   const [mounted, setMounted] = useState(false);
   const surface = useSiteChromeSurface();
 

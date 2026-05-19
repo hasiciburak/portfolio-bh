@@ -20,7 +20,7 @@ type IndicatorRect = {
 
 gsap.registerPlugin(useGSAP);
 
-function usePrefersReducedMotion(): boolean {
+const usePrefersReducedMotion = (): boolean => {
   const [reduce, setReduce] = useState(false);
 
   useLayoutEffect(() => {
@@ -34,11 +34,11 @@ function usePrefersReducedMotion(): boolean {
   return reduce;
 }
 
-function measureRectAtIndex(
+const measureRectAtIndex = (
   container: HTMLDivElement,
   buttons: (HTMLButtonElement | null)[],
   index: number,
-): IndicatorRect | null {
+): IndicatorRect | null => {
   const activeButton = buttons[index];
   if (!activeButton) return null;
 
@@ -53,13 +53,13 @@ function measureRectAtIndex(
   };
 }
 
-function applyIndicatorPosition(
+const applyIndicatorPosition = (
   indicator: HTMLSpanElement,
   rect: IndicatorRect,
   animate: boolean,
   reduceMotion: boolean,
   hasPositioned: boolean,
-): boolean {
+): boolean => {
   gsap.killTweensOf(indicator);
 
   const props = {
@@ -86,7 +86,7 @@ function applyIndicatorPosition(
   return true;
 }
 
-function DesktopIcon({ className }: { className?: string }) {
+const DesktopIcon = ({ className }: { className?: string }) => {
   return (
     <svg className={className} width={18} height={18} viewBox="0 0 24 24" fill="none" aria-hidden>
       <rect
@@ -108,7 +108,7 @@ function DesktopIcon({ className }: { className?: string }) {
   );
 }
 
-function SunIcon({ className }: { className?: string }) {
+const SunIcon = ({ className }: { className?: string }) => {
   return (
     <svg className={className} width={18} height={18} viewBox="0 0 24 24" fill="none" aria-hidden>
       <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth={1.75} />
@@ -122,7 +122,7 @@ function SunIcon({ className }: { className?: string }) {
   );
 }
 
-function MoonIcon({ className }: { className?: string }) {
+const MoonIcon = ({ className }: { className?: string }) => {
   return (
     <svg className={className} width={18} height={18} viewBox="0 0 24 24" fill="none" aria-hidden>
       <path
@@ -143,11 +143,11 @@ const THEME_OPTIONS = [
 
 type ThemeId = (typeof THEME_OPTIONS)[number]["id"];
 
-function getThemeId(theme: string | undefined): ThemeId {
+const getThemeId = (theme: string | undefined): ThemeId => {
   return THEME_OPTIONS.some((option) => option.id === theme) ? (theme as ThemeId) : "system";
 }
 
-export function ThemeSwitch({ variant, isLightChrome }: ThemeSwitchProps) {
+export const ThemeSwitch = ({ variant, isLightChrome }: ThemeSwitchProps) => {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [hasMeasured, setHasMeasured] = useState(false);

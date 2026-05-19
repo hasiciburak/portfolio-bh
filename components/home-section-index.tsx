@@ -13,7 +13,7 @@ import { useCallback, useEffect, useLayoutEffect, useState } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-function usePrefersReducedMotion(): boolean {
+const usePrefersReducedMotion = (): boolean => {
   const [reduce, setReduce] = useState(false);
 
   useLayoutEffect(() => {
@@ -27,7 +27,7 @@ function usePrefersReducedMotion(): boolean {
   return reduce;
 }
 
-function scrollToSectionId(id: HomeSectionIndexId, prefersReducedMotion: boolean) {
+const scrollToSectionId = (id: HomeSectionIndexId, prefersReducedMotion: boolean) => {
   const el = document.getElementById(id);
   if (!el) return;
 
@@ -43,7 +43,7 @@ function scrollToSectionId(id: HomeSectionIndexId, prefersReducedMotion: boolean
   });
 }
 
-export function HomeSectionIndex() {
+export const HomeSectionIndex = () => {
   const pathname = usePathname();
   const prefersReducedMotion = usePrefersReducedMotion();
   const [mounted, setMounted] = useState(false);

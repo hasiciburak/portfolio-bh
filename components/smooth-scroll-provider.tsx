@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
 const SmoothScrollReadyContext = createContext(false);
 
-export function useSmoothScrollReady(): boolean {
+export const useSmoothScrollReady = (): boolean => {
   return useContext(SmoothScrollReadyContext);
 }
 
@@ -17,7 +17,7 @@ interface SmoothScrollProviderProps {
   children: React.ReactNode;
 }
 
-export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
+export const SmoothScrollProvider = ({ children }: SmoothScrollProviderProps) => {
   const [ready, setReady] = useState(false);
 
   useLayoutEffect(() => {

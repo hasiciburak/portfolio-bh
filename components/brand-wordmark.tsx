@@ -8,7 +8,7 @@ export interface BrandWordmarkProps {
   surface: SiteChromeSurface;
 }
 
-export function BrandWordmark({ surface }: BrandWordmarkProps) {
+export const BrandWordmark = ({ surface }: BrandWordmarkProps) => {
   const isLightSurface = surface === "lightSurface";
 
   const focusClasses = isLightSurface

@@ -6,7 +6,7 @@ import { BrandWordmark } from "@/components/brand-wordmark";
 import { SocialPill } from "@/components/social-pill";
 import { useSiteChromeSurface } from "@/lib/use-site-chrome-surface";
 
-export function SiteFooter() {
+export const SiteFooter = () => {
   const pathname = usePathname();
   const surface = useSiteChromeSurface();
 

@@ -4,7 +4,7 @@ import { SITE_SOCIAL_LINKS } from "@/lib/social-links";
 const skeletonPulse =
   "animate-pulse motion-reduce:animate-none motion-reduce:opacity-80";
 
-function ProjectSkeletonCard({ className = "" }: { className?: string }) {
+const ProjectSkeletonCard = ({ className = "" }: { className?: string }) => {
   return (
     <div
       className={`flex flex-col rounded-2xl border border-zinc-200/95 bg-white/80 p-4 shadow-sm backdrop-blur-md dark:border-white/[0.12] dark:bg-[rgb(22_22_26_/_0.45)] dark:shadow-[0_12px_40px_rgb(0_0_0_/_0.25)] dark:backdrop-saturate-[135%] ${className}`}
@@ -27,7 +27,7 @@ function ProjectSkeletonCard({ className = "" }: { className?: string }) {
   );
 }
 
-export function ProjectsComingSoon() {
+export const ProjectsComingSoon = () => {
   return (
     <div className="flex flex-col gap-12 lg:gap-14">
       <header className="max-w-2xl">

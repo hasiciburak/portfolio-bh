@@ -16,7 +16,7 @@ const NAV_ITEMS = [
   { href: "/projects", label: "Projects" },
 ] as const;
 
-function MenuIcon({ className }: { className?: string }) {
+const MenuIcon = ({ className }: { className?: string }) => {
   return (
     <svg className={className} width={22} height={22} viewBox="0 0 24 24" fill="none" aria-hidden>
       <path
@@ -29,7 +29,7 @@ function MenuIcon({ className }: { className?: string }) {
   );
 }
 
-function CloseIcon({ className }: { className?: string }) {
+const CloseIcon = ({ className }: { className?: string }) => {
   return (
     <svg className={className} width={22} height={22} viewBox="0 0 24 24" fill="none" aria-hidden>
       <path
@@ -42,7 +42,7 @@ function CloseIcon({ className }: { className?: string }) {
   );
 }
 
-export function SiteNavigation() {
+export const SiteNavigation = () => {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [portalReady, setPortalReady] = useState(false);

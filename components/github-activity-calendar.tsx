@@ -25,7 +25,7 @@ export interface GithubActivityCalendarProps {
 const MIN_BLOCK_SIZE = 8;
 const MAX_BLOCK_SIZE = 18;
 
-function GraphSkeleton() {
+const GraphSkeleton = () => {
   return (
     <div
       className="h-[200px] w-full animate-pulse rounded-xl bg-[#1b1b1b]"
@@ -34,10 +34,10 @@ function GraphSkeleton() {
   );
 }
 
-function useResponsiveBlockSize(
+const useResponsiveBlockSize = (
   containerRef: RefObject<HTMLDivElement | null>,
   contributions: Activity[],
-): number {
+): number => {
   const [blockSize, setBlockSize] = useState(12);
   const weekCount = Math.max(1, Math.ceil(contributions.length / 7));
 
@@ -64,7 +64,7 @@ function useResponsiveBlockSize(
   return blockSize;
 }
 
-function ActivityCalendarInner({ contributions }: GithubActivityCalendarProps) {
+const ActivityCalendarInner = ({ contributions }: GithubActivityCalendarProps) => {
   const sizeRef = useRef<HTMLDivElement>(null);
   const blockSize = useResponsiveBlockSize(sizeRef, contributions);
 
@@ -122,7 +122,7 @@ function ActivityCalendarInner({ contributions }: GithubActivityCalendarProps) {
 
 const MemoizedCalendar = memo(ActivityCalendarInner);
 
-export function GithubActivityCalendar({ contributions }: GithubActivityCalendarProps) {
+export const GithubActivityCalendar = ({ contributions }: GithubActivityCalendarProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [shouldMount, setShouldMount] = useState(false);
 
@@ -156,7 +156,7 @@ export function GithubActivityCalendar({ contributions }: GithubActivityCalendar
   );
 }
 
-function formatTooltipDate(isoDate: string): string {
+const formatTooltipDate = (isoDate: string): string => {
   return new Date(`${isoDate}T12:00:00`).toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",

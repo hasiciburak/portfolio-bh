@@ -1,6 +1,6 @@
 import type { SVGProps } from "react";
 
-export function NonpublicLogo(props: SVGProps<SVGSVGElement> & { size?: number }) {
+export const NonpublicLogo = (props: SVGProps<SVGSVGElement> & { size?: number }) => {
   // Calculate relative dimensions if height/width is overridden
   const height = props.height ?? 26;
   const width = props.width ?? 189;
