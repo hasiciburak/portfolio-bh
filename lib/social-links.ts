@@ -11,14 +11,10 @@ export interface SiteSocialLink {
   href: string;
 }
 
-/**
- * Single source of truth for profile URLs (footer pill, hero strip, Projects page).
- * Replace `"#"` with your live links; use mailto:you@example.com for Email.
- */
 export const SITE_SOCIAL_LINKS: readonly SiteSocialLink[] = [
-  { id: "linkedIn", label: "LinkedIn", href: "#" },
-  { id: "instagram", label: "Instagram", href: "#" },
+  { id: "linkedIn", label: "LinkedIn", href: "https://www.linkedin.com/in/burakhasici/" },
+  { id: "instagram", label: "Instagram", href: "https://www.instagram.com/burakhasici/" },
   { id: "github", label: "GitHub", href: "https://github.com/hasiciburak" },
-  { id: "email", label: "Email", href: "#" }, // e.g. mailto:hello@example.com
-  { id: "whatsapp", label: "WhatsApp", href: "#" },
+  { id: "email", label: "Email", href: "[EMAIL_ADDRESS]" },
+  { id: "whatsapp", label: "WhatsApp", href: "https://wa.me/905353685517" },
 ];

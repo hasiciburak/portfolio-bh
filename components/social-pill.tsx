@@ -21,7 +21,7 @@ export const SocialPill = ({ surface, className = "" }: SocialPillProps) => {
       <ul className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
         {SITE_SOCIAL_LINKS.map(({ id, label, href }) => (
           <li key={id}>
-            <a href={href} aria-label={label} className={`block transition-opacity ${linkHover}`}>
+            <a href={href} aria-label={label} className={`block transition-opacity ${linkHover}`} target="_blank">
               <SiteSocialIcon id={id} />
             </a>
           </li>

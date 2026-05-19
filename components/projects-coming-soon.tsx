@@ -86,6 +86,7 @@ export const ProjectsComingSoon = () => {
                   href={href}
                   aria-label={label}
                   className="group flex items-center gap-2.5 rounded-lg text-zinc-800 outline-none ring-offset-2 ring-offset-zinc-50 transition-colors hover:text-zinc-950 focus-visible:ring-2 focus-visible:ring-zinc-950/25 dark:text-white/88 dark:ring-offset-zinc-950 dark:hover:text-white dark:focus-visible:ring-white/35"
+                  target="_blank"
                 >
                   <span className="rounded-lg border border-zinc-200/95 bg-white p-2 transition-colors group-hover:border-zinc-300 group-hover:bg-zinc-50 dark:border-white/15 dark:bg-white/[0.06] dark:group-hover:border-white/25 dark:group-hover:bg-white/[0.1]">
                     <SiteSocialIcon id={id} className="h-6 w-6 shrink-0" />

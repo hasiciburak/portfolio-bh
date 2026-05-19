@@ -113,6 +113,7 @@ const HeroSection = ({ variant = "home" }: HeroSectionProps) => {
                             href={href}
                             aria-label={label}
                             className="block text-zinc-700 transition-opacity hover:opacity-100 dark:text-white/90"
+                            target="_blank"
                           >
                             <SiteSocialIcon id={id} />
                           </a>
