@@ -9,8 +9,8 @@
   "hero": {
     "title_part1": "Hi! You're in",
     "title_part2": "BH's Page",
-    "bio_mobile": "Burak Haşıcı - Frontend Developer, Industrial Engineer & Self Paced UI/UX Designer based in Istanbul Turkey",
-    "bio_desktop": "Burak Haşıcı — Software Developer, self-taught UI/UX designer based in Istanbul, Turkey.",
+    "bio_mobile": "Burak Haşıcı - Software Engineer with nearly 5 years of experience, working AI-natively. Industrial Engineer & self-taught UI/UX designer based in Istanbul, Turkey",
+    "bio_desktop": "Burak Haşıcı — Software engineer with nearly 5 years of experience, building products with AI tooling as a native part of the workflow. Self-taught UI/UX designer based in Istanbul, Turkey.",
     "download_resume": "Download my resume"
   },
   "why_hire_me": {
@@ -18,7 +18,7 @@
     "reasons": {
       "interfaces": {
         "title": "I build interfaces that users “get” on the first tap",
-        "body": "Shipping React/TypeScript experiences for nearly 4 years—fast, accessible, and production-ready."
+        "body": "Shipping React/TypeScript experiences for nearly 5 years—fast, accessible, and production-ready."
       },
       "performance": {
         "title": "Performance and UX aren’t trade-offs—I chase both",
@@ -37,6 +37,7 @@
   "skillset": {
     "title": "My Skillset",
     "categories": {
+      "ai": "AI Tools & Agentic Development",
       "languages": "Programming Languages",
       "frontend": "Frontend Frameworks & Libraries",
       "ui": "UI & Styling",
@@ -50,6 +51,19 @@
   "work_experience": {
     "title": "Work Experience",
     "entries": {
+      "hqo": {
+        "title": "HqO (via ElephantApps) - Software Engineer (AI Native)",
+        "date": "Dec 25’ - Present",
+        "bullets": [
+          "Developed full-stack applications with React, Next.js, Node.js, and NestJS on HqO’s and Leesman’s platforms.",
+          "Worked in the events domain, delivering features used by both tenants and landlords.",
+          "Took part in the product migration of the Leesman software into the HqO application.",
+          "Supported the existing Leesman platform by developing new features in response to customer requests.",
+          "Built AI-powered applications that automated internal workflows for the Leesman team, cutting tasks that previously took 4–7 hours down to 5 minutes.",
+          "Used AI tooling such as Cursor and Claude Code extensively throughout day-to-day development.",
+          "Collaborated across time zones with customers and fellow developers based in the UK, Slovakia, Poland, and the US."
+        ]
+      },
       "nonpublic": {
         "title": "Nonpublic - Frontend Developer",
         "date": "May - Nov 25’",
@@ -92,7 +106,18 @@
     "copyright": "© 2026 Burak Haşıcı. All rights reserved."
   },
   "projects": {
-    "title": "Projects coming soon",
-    "subtitle": "I'm currently polishing some of my work to present here. Stay tuned!"
+    "eyebrow": "Selected work",
+    "title": "Projects",
+    "subtitle": "A small but growing set of things I've built — more case studies are on the way.",
+    "tech_label": "Built with",
+    "view_source": "View source",
+    "view_live": "Visit site",
+    "details": "Read the case study",
+    "back_to_projects": "Projects",
+    "gallery_label": "Project screenshots",
+    "gallery_prev": "Previous screenshot",
+    "gallery_next": "Next screenshot",
+    "gallery_expand": "View full size",
+    "gallery_close": "Close"
   }
 }

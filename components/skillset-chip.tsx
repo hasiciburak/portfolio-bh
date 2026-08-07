@@ -1,25 +1,11 @@
 "use client";
 
 import type { SkillItem } from "@/lib/skillset-data";
-import { SKILL_ICON_COMPONENTS, type SkillIconId } from "@/lib/skillset-icons";
-
-/** 2–3 letter monogram when no brand icon exists in developer-icons */
-const monogramLabel = (name: string): string => {
-  const cleaned = name
-    .replace(/\([^)]*\)/g, "")
-    .replace(/[^\w\s]/g, " ")
-    .trim();
-  const words = cleaned.split(/\s+/).filter(Boolean);
-  if (words.length >= 2) {
-    const a = words[0]?.[0] ?? "";
-    const b = words[1]?.[0] ?? "";
-    return (a + b).toUpperCase().slice(0, 3);
-  }
-  if (words.length === 1 && words[0].length >= 2) {
-    return words[0].slice(0, 2).toUpperCase();
-  }
-  return cleaned.slice(0, 2).toUpperCase() || "?";
-}
+import {
+  SKILL_ICON_COMPONENTS,
+  skillMonogram,
+  type SkillIconId,
+} from "@/lib/skillset-icons";
 
 const SkillIconOrMonogram = ({
   name,
@@ -41,7 +27,7 @@ const SkillIconOrMonogram = ({
       className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-zinc-300/95 bg-white font-mono text-[10px] font-semibold uppercase leading-none tracking-tight text-zinc-800 shadow-sm dark:border-white/18 dark:bg-white/[0.07] dark:text-white dark:shadow-none"
       aria-hidden
     >
-      {monogramLabel(name)}
+      {skillMonogram(name)}
     </span>
   );
 }

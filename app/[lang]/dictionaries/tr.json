@@ -9,8 +9,8 @@
   "hero": {
     "title_part1": "Merhaba! Burası",
     "title_part2": "BH'nin Sayfası",
-    "bio_mobile": "Burak Haşıcı - İstanbul'da yaşayan Frontend Geliştirici, Endüstri Mühendisi ve Kendi Kendini Yetiştirmiş UI/UX Tasarımcısı",
-    "bio_desktop": "Burak Haşıcı — İstanbul'da yaşayan Yazılım Geliştirici ve Kendi Kendini Yetiştirmiş UI/UX Tasarımcısı.",
+    "bio_mobile": "Burak Haşıcı - Yaklaşık 5 yıllık deneyime sahip, yapay zekâ araçlarını doğal biçimde kullanan Yazılım Mühendisi. İstanbul'da yaşayan Endüstri Mühendisi ve kendi kendini yetiştirmiş UI/UX Tasarımcısı",
+    "bio_desktop": "Burak Haşıcı — Yaklaşık 5 yıllık deneyime sahip Yazılım Mühendisi; yapay zekâ araçlarını geliştirme sürecinin doğal bir parçası olarak kullanıyor. İstanbul'da yaşayan kendi kendini yetiştirmiş UI/UX Tasarımcısı.",
     "download_resume": "Özgeçmişimi İndir"
   },
   "why_hire_me": {
@@ -18,7 +18,7 @@
     "reasons": {
       "interfaces": {
         "title": "Kullanıcıların ilk dokunuşta “anladığı” arayüzler inşa ederim",
-        "body": "Yaklaşık 4 yıldır hızlı, erişilebilir ve üretime hazır React/TypeScript deneyimleri sunuyorum."
+        "body": "Yaklaşık 5 yıldır hızlı, erişilebilir ve üretime hazır React/TypeScript deneyimleri sunuyorum."
       },
       "performance": {
         "title": "Performans ve Kullanıcı Deneyimi ödün verilmesi gereken şeyler değildir—Her ikisini de hedeflerim",
@@ -37,6 +37,7 @@
   "skillset": {
     "title": "Yeteneklerim",
     "categories": {
+      "ai": "Yapay Zekâ Araçları ve Agentic Geliştirme",
       "languages": "Programlama Dilleri",
       "frontend": "Frontend Çatıları ve Kütüphaneleri",
       "ui": "Arayüz ve Stil",
@@ -50,6 +51,19 @@
   "work_experience": {
     "title": "İş Deneyimi",
     "entries": {
+      "hqo": {
+        "title": "HqO (ElephantApps aracılığıyla) - Yazılım Mühendisi (AI Native)",
+        "date": "Aralık 25’ - Halen",
+        "bullets": [
+          "HqO ve Leesman platformlarında React, Next.js, Node.js ve NestJS ile uçtan uca uygulamalar geliştirdim.",
+          "Etkinlikler (events) alanında çalışarak hem kiracıların hem de mülk sahiplerinin kullandığı özellikleri hayata geçirdim.",
+          "Leesman yazılımının HqO uygulamasına taşınmasını kapsayan ürün migrasyonunda görev aldım.",
+          "Mevcut Leesman platformunda müşteri taleplerine yönelik yeni özellikler geliştirdim.",
+          "Leesman ekibinin iç süreçlerini otomatikleştiren yapay zekâ destekli uygulamalar geliştirerek 4–7 saat süren işleri 5 dakikaya indirdim.",
+          "Günlük geliştirme sürecinde Cursor ve Claude Code gibi yapay zekâ araçlarını yoğun biçimde kullandım.",
+          "Birleşik Krallık, Slovakya, Polonya ve ABD’de bulunan müşteriler ve geliştiricilerle farklı saat dilimlerinde iş birliği içinde çalıştım."
+        ]
+      },
       "nonpublic": {
         "title": "Nonpublic - Frontend Geliştirici",
         "date": "Mayıs - Kasım 25’",
@@ -92,7 +106,18 @@
     "copyright": "© 2026 Burak Haşıcı. Tüm hakları saklıdır."
   },
   "projects": {
-    "title": "Projeler yakında burada",
-    "subtitle": "Burada sunmak üzere bazı çalışmalarımı parlatıyorum. Takipte kalın!"
+    "eyebrow": "Seçilmiş çalışmalar",
+    "title": "Projeler",
+    "subtitle": "Geliştirdiğim işlerden küçük ama büyüyen bir seçki — yeni vaka incelemeleri yolda.",
+    "tech_label": "Kullanılan teknolojiler",
+    "view_source": "Kaynak kodu gör",
+    "view_live": "Siteyi ziyaret et",
+    "details": "Vaka incelemesini oku",
+    "back_to_projects": "Projeler",
+    "gallery_label": "Proje ekran görüntüleri",
+    "gallery_prev": "Önceki ekran görüntüsü",
+    "gallery_next": "Sonraki ekran görüntüsü",
+    "gallery_expand": "Tam boyutta görüntüle",
+    "gallery_close": "Kapat"
   }
 }

@@ -10,10 +10,6 @@ import { useTranslation } from "@/components/language-provider";
 
 const PLACEHOLDER = "#";
 
-/** Figma [Mobile] Home (8:69) — exact copy */
-const BIO_MOBILE =
-  "Burak Haşıcı - Frontend Developer, Industrial Engineer & Self Paced UI/UX Designer based in Istanbul Turkey";
-
 const glassPill =
   "inline-flex items-center justify-center gap-2.5 rounded-full border border-zinc-900/18 bg-white/72 px-4 py-2.5 text-base text-zinc-950 shadow-[0_10px_40px_rgb(15_23_42_/_0.08),inset_0_1px_0_rgb(255_255_255_/_0.92),inset_0_-1px_0_rgb(15_23_42_/_0.06)] backdrop-blur-xl backdrop-saturate-150 transition-colors hover:bg-white/90 dark:border-white/35 dark:bg-white/10 dark:text-white dark:shadow-[0_10px_40px_rgb(0_0_0_/_0.18),inset_0_1px_0_rgb(255_255_255_/_0.35),inset_0_-1px_0_rgb(0_0_0_/_0.08)] dark:hover:bg-white/15";
 
@@ -95,6 +91,7 @@ const HeroSection = ({ variant = "home" }: HeroSectionProps) => {
                   {dict.hero.title_part2}
                 </h1>
 
+                {/* Figma [Mobile] Home (8:69) — copy lives in dictionaries/*.json under hero.bio_mobile */}
                 <p className="max-w-xl text-sm leading-snug text-zinc-600 dark:text-white/80 sm:text-base sm:leading-relaxed lg:hidden">
                   {dict.hero.bio_mobile}
                 </p>

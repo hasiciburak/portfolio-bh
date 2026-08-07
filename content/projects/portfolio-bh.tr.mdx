@@ -1,0 +1,140 @@
+export const metadata = {
+  name: "burakhasici.com",
+  summary:
+    "Şu anda gezindiğiniz site — Figma'da tasarlandı; ardından iki dilli, tema duyarlı bir Next.js uygulaması olarak GSAP tabanlı animasyonlar ve canlı GitHub katkı grafiğiyle geliştirildi.",
+  gallery: [
+    {
+      src: "/projects/portfolio-bh/website-mockup.jpeg",
+      alt: "Portfolyonun koyu temadaki ana sayfası, açık gri bir stüdyo kurgusunda duran dizüstü bilgisayarda",
+      caption: "Genel bakış",
+      width: 5000,
+      height: 4000,
+    },
+    {
+      src: "/projects/portfolio-bh/home-dark.jpg",
+      alt: "Koyu temada ana sayfa — başlık, biyografi ve portrenin yanındaki özgeçmiş indirme düğmesi",
+      caption: "Ana sayfa — koyu tema",
+      width: 3200,
+      height: 2000,
+    },
+    {
+      src: "/projects/portfolio-bh/home-light.jpg",
+      alt: "Aynı ana sayfanın açık temadaki hâli; açık ve koyu arayüzün eşlenmiş görünümü",
+      caption: "Ana sayfa — açık tema",
+      width: 3200,
+      height: 2000,
+    },
+    {
+      src: "/projects/portfolio-bh/home-tr.jpg",
+      alt: "/tr adresinden sunulan Türkçe ana sayfa; gezinme ve metinler tamamen yerelleştirilmiş",
+      caption: "Ana sayfa — Türkçe",
+      width: 3200,
+      height: 2000,
+    },
+    {
+      src: "/projects/portfolio-bh/projects-index.jpg",
+      alt: "Vaka incelemesi kartıyla projeler sayfası: özet, teknoloji etiketleri ve yazıya ile kaynağa giden bağlantılar",
+      caption: "Projeler sayfası",
+      width: 3200,
+      height: 2000,
+    },
+  ],
+};
+
+Portfolyo, hem müşterisi hem de geliştiricisi olduğum tek proje; dolayısıyla her kararın savunması
+bana ait olan tek yer. Siteyi Figma'da tasarladım, sonra Next.js App Router üzerinde geliştirdim ve
+yapay zekâ araçlarını sürecin doğal bir parçası olarak kullandım — yapay zekânın neler yazabildiğini
+göstermek için değil, kendi dikkatimi gerçekten muhakeme gerektiren yerlere ayırabilmek için.
+
+## Bağlam
+
+Yaptığım işlerin çoğu bir giriş ekranının arkasında yaşıyor. Bankacılık ekranları, kiracı
+platformları, back-office araçları — gerçek kullanıcıları olan gerçek ürünler; ama hiçbirine
+özgeçmişimden bağlantı veremiyorum. Geriye, madde işaretlerini okuyup bana güvenmek zorunda kalan
+bir işe alım yöneticisi kalıyor.
+
+Bu yüzden bu sitenin, veremediğim bağlantıların işini yapması gerekiyordu: açılabilen, kurcalanabilen
+ve kaynak kodu okunabilen bir üretim frontend'i olmalıydı. Bu da çıtayı belirledi. Performansı,
+erişilebilirliği ve temiz bileşen API'lerini önemsediğimi söylüyorsam, bunu söyleyen sitenin
+incelendiğinde ayakta kalması gerekir.
+
+Geri kalan her şeyi iki kısıt şekillendirdi. Site **İngilizce ve Türkçe** çalışmalıydı; çünkü beni
+işe alacak kişiler İstanbul ile Avrupa arasında bölünmüş durumda. Ve hem **açık hem koyu temada**
+bilinçli görünmeliydi; çünkü bir modu iyi, diğerini soluk bırakan bir tema düğmesi, hiç tema
+sunmamaktan daha kötüdür.
+
+## Neler geliştirdim
+
+- **i18n kütüphanesi olmadan iki dilli yönlendirme.** Tüm sayfalar `app/[lang]` altında yaşıyor;
+  sözlükler her dil için JSON olarak yükleniyor ve küçük bir `LanguageProvider` context'i üzerinden
+  aşağıya aktarılıyor. İngilizce varsayılan dil ve öneksiz kalıyor — `/en/projects` değil,
+  `/projects` — Türkçe ise `/tr` altından sunuluyor.
+- **İkonlara kadar inen tema duyarlılığı.** Tema geçişini `next-themes` yönetiyor; asıl ilginç
+  kısım ikon katmanı: marka logoları her arka plan için farklı bir çizim gerektiriyor, bu yüzden
+  ikon çiftleri CSS filtreleriyle yeniden renklendirilmek yerine bir `themedIcon` yardımcısı
+  üzerinden değiştiriliyor.
+- **Kullanıcıya saygılı GSAP animasyonları.** Sayfa kaydırmasını `ScrollSmoother` yönetiyor, bölüm
+  girişleri `ScrollTrigger` tabanlı, dil değiştiricisi göstergesini `useGSAP` ile animasyonluyor.
+  Hepsi önce `prefers-reduced-motion` değerini kontrol ediyor ve kullanıcı daha az hareket istediğinde
+  statik yerleşime düşüyor.
+- **Canlı GitHub katkı grafiği.** Katkılar sunucu tarafında saatlik yeniden doğrulama ile çekiliyor
+  ve sitenin paletine uyarlanmış biçimde `react-activity-calendar` ile gösteriliyor. Servis hata
+  verdiğinde bölüm bir hata durumu yerine hiçbir şey göstermiyor.
+- **Sitenin sahiplenilmiş hissettiren küçük detayları.** Lisanslı bir başlık yazı tipiyle çizilmiş
+  bir wordmark, yerel olarak yüklenen Nohemi tipografi ölçeği ve sekmeden ayrıldığınızda değişip
+  geri döndüğünüzde eski haline dönen bir sekme başlığı.
+- **Bu vaka incelemeleri.** Proje yazıları MDX dosyaları — her proje için her dilde bir dosya —
+  böylece yeni bir yazı eklemek, bir JSON bloğunu düzenlemek değil, metin yazmak anlamına geliyor.
+
+## Kararlar ve ödünleşimler
+
+**i18n kütüphanesi yok.** `next-intl` ve benzerleri yönlendirme, biçimlendirme ve mesaj çıkarma
+sorunlarını çözüyor. Ben bu üçünden yalnızca ilkine, hem de sadece iki dil için ihtiyaç duyuyordum;
+bu yüzden bir bağımlılık ve onun kurallarını eklemek yerine yaklaşık kırk satırlık proxy mantığı
+yazdım. Proxy, `/projects` yolunu arka planda `/en/projects` olarak yeniden yazıyor ve açıkça
+gelen `/en/…` isteklerini temiz adrese geri yönlendiriyor; böylece her sayfanın tek bir kanonik
+adresi oluyor. Bu site bir gün dile özgü çoğul kuralları veya tarih biçimlendirmesi isterse bu karar
+değişir — ve değişmeli.
+
+**Tailwind v4, bileşen kütüphanesi yok.** shadcn veya MUI eklemek ilk haftayı hızlandırır, sonraki
+her haftayı yavaşlatırdı; çünkü tasarım zaten Figma'da hazırdı ve her bileşen başkasının
+varsayılanlarıyla mücadeleye dönüşürdü. Az sayıda elle yazılmış bileşenle birlikte utility sınıflar
+tasarımı çok daha dürüst biçimde takip etti.
+
+**Varsayılan olarak sunucu bileşenleri, durum olan yerde istemci.** Sayfaların kendisi sunucu
+bileşeni; `"use client"` yalnızca gerçekten tarayıcıya ihtiyaç duyulan yerlerde görünüyor: tema,
+GSAP ve dil context'i. Bu da ziyaretçiye gönderilen JavaScript miktarını, sayfanın gerçekten
+hareket eden kısmıyla orantılı tutuyor.
+
+**CMS yerine MDX.** Başsız bir CMS; metni tarayıcıda düzenleyebilme karşılığında bir hesap, bir API
+çağrısı ve bir servisin ayakta kalmasına bağlı bir derleme bağımlılığı demekti. Kendi yazdığım birkaç
+vaka incelemesi için depodaki dosyalar kazanıyor — diff'lenebiliyor, gözden geçirilebiliyor ve kodla
+birlikte yayına çıkıyor.
+
+## Zorluklar
+
+**Varsayılan dil bir tuzak.** İngilizceyi `/` altında, Türkçeyi `/tr` altında sunmak, hem
+`/en/projects` hem `/projects` aynı sayfayı render edene kadar basit görünüyor; bu da iki adrese
+işaret eden yinelenen içerik demek. Çözüm, `/en` önekini içeri dönük bir uygulama detayı olarak ele
+almaktı: öneksiz yolu içeride yeniden yazarak App Router'ın hâlâ bir `[lang]` segmenti görmesini
+sağlamak ve `/en/…` ile gelen herkesi dışarıda temiz adrese yönlendirmek.
+
+**Temalı marka ikonları göz önünde saklanıyor.** İkon paketi her çifti ait olduğu temaya göre değil,
+çizimin rengine göre adlandırıyor — "light" varyantı, koyu arka planlar için tasarlanmış beyaza yakın
+olanı. İsimlerin ima ettiği gibi eşlemek ikonları her iki temada da görünmez yapıyor ve teknik olarak
+her biri render edildiği için hiçbir hata oluşmuyor. Bir saat boş kareye baktıktan sonra beş dakikada
+çözülen bir sorundu; artık bunu bir daha yaşamamak için doğrudan yardımcı fonksiyonun üstünde
+belgelenmiş durumda.
+
+**Yumuşak kaydırma her şeyle kavga eder.** `ScrollSmoother` kaydırma konteynerini devralıyor; bu da
+çapa bağlantılarının, `scroll-margin` değerlerinin ve `position: fixed` olan her arayüz parçasının
+onunla uzlaştırılması gerektiği anlamına geliyor. Ayrıca azaltılmış hareket tercih eden kullanıcılar
+için, yerleşimi yarı kurulmuş bir durumda bırakmadan tüm mekanizmayı atlayan bir yol gerekiyor.
+Sağlayıcı her iki durumda da bir hazır bayrağı çözüyor; böylece ona bağlı bileşenlerin tahmin yürütmek
+yerine bekleyeceği tek bir sinyal oluyor.
+
+**Yapay zekâ destekli, yapay zekâ yazımı değil.** Claude Code ile çalışmak, çalışan ama anlamadığınız
+bir kodla baş başa kalacak kadar hızlı ilerleyebiliyor. Benimsediğim kural şu: üretilen kod, depoda
+zaten var olan kurallara uyacak şekilde okunup yeniden şekillendirilmeden yayına girmiyor ve gözden
+geçirmede açıklayamadığım her şey yeniden yazılıyor. Hız gerçek — ama onu kullanılabilir kılan şey
+bu gözden geçirme disiplini.

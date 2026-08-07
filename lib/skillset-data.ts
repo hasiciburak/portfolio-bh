@@ -15,6 +15,16 @@ export interface SkillCategory {
 /** Grouped skills — labels match your CV wording; icons use developer-icons where available */
 export const SKILLSET_CATEGORIES: SkillCategory[] = [
   {
+    id: "ai",
+    title: "AI Tools & Agentic Development",
+    skills: [
+      { name: "Claude Code", icon: "claude" },
+      { name: "Cursor", icon: null },
+      { name: "Codex", icon: null },
+      { name: "Antigravity", icon: null },
+    ],
+  },
+  {
     id: "languages",
     title: "Programming Languages",
     skills: [
@@ -91,7 +101,6 @@ export const SKILLSET_CATEGORIES: SkillCategory[] = [
       { name: "GitHub", icon: "github" },
       { name: "Bitbucket", icon: "bitbucket" },
       { name: "VSCode", icon: "vscode" },
-      { name: "Cursor", icon: null },
       { name: "Xcode", icon: null },
       { name: "Vercel", icon: "vercel" },
     ],

@@ -96,6 +96,16 @@
   --font-nohemi: Nohemi, ui-sans-serif, system-ui, sans-serif;
 }
 
+/* Scroll-snap carousels drive paging with their own controls, so the native bar is noise. */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 *, ::before, ::after {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);

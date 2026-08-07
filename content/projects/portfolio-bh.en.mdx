@@ -1,0 +1,135 @@
+export const metadata = {
+  name: "burakhasici.com",
+  summary:
+    "The site you're on right now — designed in Figma, then built as a bilingual, theme-aware Next.js app with GSAP-driven motion and a live GitHub contribution graph.",
+  gallery: [
+    {
+      src: "/projects/portfolio-bh/website-mockup.jpeg",
+      alt: "The portfolio home page in dark theme, displayed on a laptop standing on a pale grey studio set",
+      caption: "Overview",
+      width: 5000,
+      height: 4000,
+    },
+    {
+      src: "/projects/portfolio-bh/home-dark.jpg",
+      alt: "Home page in dark theme — hero headline, bio, and the resume download button beside the portrait",
+      caption: "Home — dark theme",
+      width: 3200,
+      height: 2000,
+    },
+    {
+      src: "/projects/portfolio-bh/home-light.jpg",
+      alt: "The same home page in light theme, showing the paired light and dark chrome",
+      caption: "Home — light theme",
+      width: 3200,
+      height: 2000,
+    },
+    {
+      src: "/projects/portfolio-bh/home-tr.jpg",
+      alt: "Home page served in Turkish from the /tr route, with navigation and copy fully localized",
+      caption: "Home — Turkish locale",
+      width: 3200,
+      height: 2000,
+    },
+    {
+      src: "/projects/portfolio-bh/projects-index.jpg",
+      alt: "Projects index with a case-study card: summary, tech chips, and links to the write-up and source",
+      caption: "Projects index",
+      width: 3200,
+      height: 2000,
+    },
+  ],
+};
+
+A portfolio is the one project where I am both the client and the engineer, so it is the only
+place where every decision is mine to defend. I designed this site in Figma, then built it on the
+Next.js App Router with AI tooling as a normal part of the workflow — not as a demo of what AI can
+write, but as a way to spend my own attention on the parts that actually needed judgement.
+
+## The context
+
+Most of my work lives behind a login. Banking screens, tenant platforms, back-office tools —
+real products with real users, none of which I can link to from a CV. That leaves a hiring manager
+reading bullet points and taking my word for it.
+
+So this site had to do the job those links can't: be a piece of production frontend that someone
+can open, poke at, and read the source of. That set the bar. If I claim I care about performance,
+accessibility, and clean component APIs, the site making that claim has to hold up when you
+inspect it.
+
+Two constraints shaped everything else. It had to work in **English and Turkish**, because the
+people who hire me are split between Istanbul and Europe. And it had to look deliberate in both
+**light and dark**, because a theme toggle that produces one good mode and one washed-out mode is
+worse than not shipping one at all.
+
+## What I built
+
+- **Bilingual routing without an i18n framework.** Every page lives under `app/[lang]`, with the
+  dictionaries loaded per locale as JSON and handed down through a small `LanguageProvider`
+  context. English is the default locale and stays prefix-less — `/projects`, not `/en/projects` —
+  while Turkish is served from `/tr`.
+- **Theme-aware chrome down to the icons.** `next-themes` handles the toggle, but the interesting
+  part is the icon layer: brand logos need a different glyph per background, so paired icons are
+  swapped through a `themedIcon` helper rather than being recoloured with CSS filters.
+- **GSAP motion that respects the user.** `ScrollSmoother` drives page scrolling, section reveals
+  are `ScrollTrigger`-based, and the language switch animates its indicator with `useGSAP`. All of
+  it checks `prefers-reduced-motion` first and bails out to a static layout when the user has asked
+  for less movement.
+- **A live GitHub contribution graph.** Contributions are fetched server-side on an hourly
+  revalidate and rendered with `react-activity-calendar`, themed to match the site's palette. When
+  the upstream API fails, the section renders nothing rather than an error state.
+- **Small details that make a site feel owned.** A wordmark drawn in a licensed display face, the
+  Nohemi type scale loaded locally, and a tab title that changes when you switch away from the tab
+  and switches back when you return.
+- **These case studies.** Project write-ups are MDX files — one per project per language — so
+  writing a new one means adding prose, not editing a JSON blob.
+
+## Decisions & trade-offs
+
+**No i18n library.** `next-intl` and friends solve routing, formatting, and message extraction.
+I needed the first of those three, for exactly two locales, so I wrote about forty lines of proxy
+logic instead of adding a dependency and its conventions. The proxy rewrites `/projects` to
+`/en/projects` under the hood and redirects any explicit `/en/…` back to the clean path, so there
+is only ever one canonical URL per page. If this site ever needs pluralization rules or date
+formatting per locale, that decision flips — and it should.
+
+**Tailwind v4, no component library.** Bringing in shadcn or MUI would have made the first week
+faster and every week after that slower, because the design already existed in Figma and every
+component would have been a fight against someone else's defaults. Utility classes with a small
+set of hand-written components tracked the design more honestly.
+
+**Server components by default, client only where there's state.** The pages themselves are server
+components; `"use client"` appears only where something genuinely needs the browser — theme, GSAP,
+the language context. It keeps the JavaScript sent to a visitor roughly proportional to how much
+of the page actually moves.
+
+**MDX over a CMS.** A headless CMS would mean an account, an API call, and a build-time dependency
+on a service staying up, in exchange for editing prose in a browser. For a handful of case studies
+that I write myself, files in the repo win — they diff, they review, and they deploy with the code.
+
+## Challenges
+
+**The default locale is a trap.** Serving English at `/` and Turkish at `/tr` sounds trivial until
+both `/en/projects` and `/projects` render the same page, which is duplicate content pointing at
+two URLs. The fix was to treat the `/en` prefix as an internal implementation detail: rewrite the
+prefix-less path inward so App Router still sees a `[lang]` segment, and permanently redirect
+anyone arriving at `/en/…` outward to the clean URL.
+
+**Themed brand icons hide in plain sight.** The icon package names each pair by the colour of the
+glyph, not by the theme it belongs to — the "light" variant is the near-white one meant for dark
+backgrounds. Pairing them the way the names suggest makes icons invisible in both themes, and
+because each one is technically rendering, nothing errors. It was a five-minute fix after an hour
+of looking at empty squares, and it is now documented directly above the helper so the next person
+reading it doesn't repeat it.
+
+**Smooth scrolling fights everything.** `ScrollSmoother` takes over the scroll container, which
+means anchor links, scroll-margin, and any `position: fixed` chrome need to be reconciled with it,
+and reduced-motion users need a path that skips the whole mechanism without leaving the layout in
+a half-initialised state. The provider resolves a ready flag either way, so dependent components
+have one signal to wait on instead of guessing.
+
+**AI-assisted, not AI-authored.** Working with Claude Code moves quickly enough that it's easy to
+end up with code that runs and that you don't understand. The rule I settled on: generated code
+gets read and reshaped to match the conventions already in the repo before it lands, and anything
+I couldn't explain in review gets rewritten. The speed is real — the review discipline is what
+makes it usable.

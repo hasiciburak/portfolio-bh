@@ -13,6 +13,26 @@ export interface WorkExperienceEntry {
 
 export const WORK_EXPERIENCE_ENTRIES: WorkExperienceEntry[] = [
   {
+    id: "hqo",
+    logo: {
+      src: "/companies/hqo.svg",
+      alt: "HqO logo",
+      width: 101,
+      height: 48,
+    },
+    title: "HqO (via ElephantApps) - Software Engineer (AI Native)",
+    date: "Dec 25’ - Present",
+    bullets: [
+      "Developed full-stack applications with React, Next.js, Node.js, and NestJS on HqO’s and Leesman’s platforms.",
+      "Worked in the events domain, delivering features used by both tenants and landlords.",
+      "Took part in the product migration of the Leesman software into the HqO application.",
+      "Supported the existing Leesman platform by developing new features in response to customer requests.",
+      "Built AI-powered applications that automated internal workflows for the Leesman team, cutting tasks that previously took 4–7 hours down to 5 minutes.",
+      "Used AI tooling such as Cursor and Claude Code extensively throughout day-to-day development.",
+      "Collaborated across time zones with customers and fellow developers based in the UK, Slovakia, Poland, and the US.",
+    ],
+  },
+  {
     id: "nonpublic",
     logo: {
       src: "/companies/nonpublic.svg",
