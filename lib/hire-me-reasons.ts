@@ -13,6 +13,12 @@ export const HIRE_ME_REASONS: HireMeReason[] = [
       "Shipping React/TypeScript experiences for nearly 4 years—fast, accessible, and production-ready.",
   },
   {
+    id: "ai-native",
+    title: "AI is part of how I build—not a bolt-on",
+    body:
+      "Cursor and Claude Code in the daily loop, plus internal AI tooling I shipped that cut 4–7 hour tasks to 5 minutes.",
+  },
+  {
     id: "performance",
     title: "Performance and UX aren’t trade-offs—I chase both",
     body:

@@ -20,6 +20,10 @@
         "title": "I build interfaces that users “get” on the first tap",
         "body": "Shipping React/TypeScript experiences for nearly 5 years—fast, accessible, and production-ready."
       },
+      "ai_native": {
+        "title": "AI is part of how I build—not a bolt-on",
+        "body": "Cursor and Claude Code in the daily loop, plus internal AI tooling I shipped that cut 4–7 hour tasks to 5 minutes."
+      },
       "performance": {
         "title": "Performance and UX aren’t trade-offs—I chase both",
         "body": "From Lighthouse-focused builds to trimming legacy UI cost in regulated stacks; measurable gains beat vibes."

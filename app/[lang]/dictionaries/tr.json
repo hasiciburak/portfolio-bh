@@ -20,6 +20,10 @@
         "title": "Kullanıcıların ilk dokunuşta “anladığı” arayüzler inşa ederim",
         "body": "Yaklaşık 5 yıldır hızlı, erişilebilir ve üretime hazır React/TypeScript deneyimleri sunuyorum."
       },
+      "ai_native": {
+        "title": "Yapay zeka geliştirme sürecimin doğal bir parçası—sonradan eklenen bir araç değil",
+        "body": "Günlük akışımda Cursor ve Claude Code kullanırım; geliştirdiğim şirket içi yapay zeka araçları 4–7 saatlik işleri 5 dakikaya indirdi."
+      },
       "performance": {
         "title": "Performans ve Kullanıcı Deneyimi ödün verilmesi gereken şeyler değildir—Her ikisini de hedeflerim",
         "body": "Lighthouse odaklı yapılardan regüle edilen yığınlardaki eski arayüz maliyetlerini düşürmeye kadar; ölçülebilir kazanımların hislerden daha önemli olduğuna inanıyorum."
