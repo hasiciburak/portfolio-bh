@@ -114,6 +114,7 @@ export const SKILLSET_CATEGORIES: SkillCategory[] = [
       { name: "Miro", icon: "miro" },
       { name: "Confluence", icon: "atlassian" },
       { name: "Jira", icon: "jira" },
+      { name: "Linear", icon: "linear" },
       { name: "Slack", icon: "slack" },
       { name: "Microsoft Teams", icon: "microsoft" },
       { name: "Microsoft Office", icon: "microsoft" },
