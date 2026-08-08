@@ -19,6 +19,20 @@ const prefersReducedMotion = () =>
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 /**
+ * Shared chrome for every control floating over the lightbox backdrop. `fixed`
+ * anchors to the viewport rather than the dialog's content box, so the controls
+ * stay put whatever the aspect ratio of the current image. The blur keeps them
+ * legible on small screens, where they overlap the image's edges.
+ */
+const lightboxControl =
+  "fixed inline-flex items-center justify-center rounded-full border border-white/15 bg-white/10 text-white backdrop-blur-md outline-none transition hover:border-white/25 hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-white/50 disabled:pointer-events-none disabled:opacity-30";
+
+const lightboxArrow = `${lightboxControl} top-1/2 h-11 w-11 -translate-y-1/2 pb-0.5 text-2xl leading-none sm:h-12 sm:w-12`;
+
+/** Horizontal travel, in px, before a touch counts as a page rather than a tap. */
+const SWIPE_THRESHOLD = 48;
+
+/**
  * Screenshot carousel. Paging is native CSS scroll-snap, so drag, trackpad, touch
  * and keyboard all work with no JS; the arrows and progress bar are progressive
  * enhancement on top. Clicking a slide opens it in a native `<dialog>`, which
@@ -94,12 +108,59 @@ export const ProjectGallery = ({
     ScrollSmoother.get()?.paused(false);
   };
 
-  const stepLightbox = (direction: 1 | -1) => {
-    setActiveIndex((current) => {
-      if (current === null) return current;
-      return Math.min(images.length - 1, Math.max(0, current + direction));
-    });
+  const stepLightbox = useCallback(
+    (direction: 1 | -1) => {
+      setActiveIndex((current) => {
+        if (current === null) return current;
+        return Math.min(images.length - 1, Math.max(0, current + direction));
+      });
+    },
+    [images.length],
+  );
+
+  const isLightboxOpen = activeIndex !== null;
+
+  // The slide itself is one element, so there is no scroll container to snap —
+  // the swipe is measured by hand and only pages on a decisive horizontal drag.
+  const swipeOrigin = useRef<{ x: number; y: number } | null>(null);
+
+  const onSwipeStart = (event: React.TouchEvent) => {
+    const touch = event.touches[0];
+    swipeOrigin.current = { x: touch.clientX, y: touch.clientY };
   };
+
+  const onSwipeEnd = (event: React.TouchEvent) => {
+    const origin = swipeOrigin.current;
+    swipeOrigin.current = null;
+    if (!origin) return;
+
+    const touch = event.changedTouches[0];
+    const deltaX = touch.clientX - origin.x;
+    const deltaY = touch.clientY - origin.y;
+
+    // Ignore anything shorter than the threshold, or steeper than 45° — that is a
+    // tap or a vertical drag, not a page.
+    if (Math.abs(deltaX) < SWIPE_THRESHOLD || Math.abs(deltaX) <= Math.abs(deltaY)) {
+      return;
+    }
+
+    stepLightbox(deltaX < 0 ? 1 : -1);
+  };
+
+  useEffect(() => {
+    if (!isLightboxOpen) return undefined;
+
+    // Bound to the window rather than the dialog: reaching either end disables an
+    // arrow, and a disabled button drops focus to <body>, which would stop a
+    // dialog-scoped handler from ever seeing the key that steps back.
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "ArrowRight") stepLightbox(1);
+      if (event.key === "ArrowLeft") stepLightbox(-1);
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [isLightboxOpen, stepLightbox]);
 
   if (!images.length) {
     return null;
@@ -107,6 +168,8 @@ export const ProjectGallery = ({
 
   const isPageable = images.length > 1;
   const activeImage = activeIndex === null ? null : images[activeIndex];
+  const canStepBack = activeIndex !== null && activeIndex > 0;
+  const canStepForward = activeIndex !== null && activeIndex < images.length - 1;
 
   return (
     <section aria-label={copy.label} className="mt-10 sm:mt-12">
@@ -197,14 +260,14 @@ export const ProjectGallery = ({
           // rather than on the figure inside is a backdrop click.
           if (event.target === dialogRef.current) dialogRef.current?.close();
         }}
-        onKeyDown={(event) => {
-          if (event.key === "ArrowRight") stepLightbox(1);
-          if (event.key === "ArrowLeft") stepLightbox(-1);
-        }}
         className="m-auto max-h-none max-w-none border-none bg-transparent p-4 backdrop:bg-black/85 backdrop:backdrop-blur-sm"
       >
         {activeImage ? (
-          <figure className="flex flex-col items-center gap-3">
+          <figure
+            onTouchStart={onSwipeStart}
+            onTouchEnd={onSwipeEnd}
+            className="flex touch-pan-y flex-col items-center gap-3"
+          >
             <Image
               src={activeImage.src}
               alt={activeImage.alt}
@@ -224,11 +287,34 @@ export const ProjectGallery = ({
           </figure>
         ) : null}
 
+        {isPageable ? (
+          <>
+            <button
+              type="button"
+              onClick={() => stepLightbox(-1)}
+              disabled={!canStepBack}
+              aria-label={copy.prev}
+              className={`${lightboxArrow} left-2 sm:left-4 lg:left-6`}
+            >
+              <span aria-hidden>&#8249;</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => stepLightbox(1)}
+              disabled={!canStepForward}
+              aria-label={copy.next}
+              className={`${lightboxArrow} right-2 sm:right-4 lg:right-6`}
+            >
+              <span aria-hidden>&#8250;</span>
+            </button>
+          </>
+        ) : null}
+
         <button
           type="button"
           onClick={() => dialogRef.current?.close()}
           aria-label={copy.close}
-          className="fixed right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-lg text-white outline-none transition hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-white/50"
+          className={`${lightboxControl} right-2 top-2 h-10 w-10 text-lg sm:right-4 sm:top-4`}
         >
           <span aria-hidden>&#10005;</span>
         </button>
