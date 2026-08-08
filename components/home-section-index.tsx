@@ -9,7 +9,7 @@ import { ScrollSmoother } from "gsap/ScrollSmoother";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { usePathname } from "next/navigation";
 import { createPortal } from "react-dom";
-import { useCallback, useEffect, useLayoutEffect, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -33,7 +33,11 @@ const scrollToSectionId = (id: HomeSectionIndexId, prefersReducedMotion: boolean
 
   const smoother = ScrollSmoother.get();
   if (smoother && !prefersReducedMotion) {
-    smoother.scrollTo(`#${id}`, true, "top top");
+    // scrollTo() lands the section flush against the viewport top, which puts its
+    // heading under the fixed header. scrollIntoView() below avoids that via the
+    // sections' `scroll-mt-24`; read the same value back so both paths agree.
+    const offset = Number.parseFloat(getComputedStyle(el).scrollMarginTop) || 0;
+    smoother.scrollTo(el, true, `top ${offset}px`);
     return;
   }
 
@@ -50,6 +54,7 @@ export const HomeSectionIndex = () => {
   const [activeId, setActiveId] = useState<HomeSectionIndexId>(
     HOME_SECTION_INDEX_ENTRIES[0].id,
   );
+  const lastSignature = useRef<string | null>(null);
 
   useEffect(() => {
     const id = requestAnimationFrame(() => setMounted(true));
@@ -61,6 +66,13 @@ export const HomeSectionIndex = () => {
 
     const vh = window.innerHeight;
     const probe = Math.min(vh * 0.38, vh - 32);
+
+    // Runs every frame, so bail on the cheap when the page has not moved: one rect
+    // read decides whether the five-section sweep below is worth doing at all.
+    const anchor = document.getElementById(HOME_SECTION_INDEX_ENTRIES[0].id);
+    const signature = anchor ? `${anchor.getBoundingClientRect().top}:${vh}` : null;
+    if (signature !== null && signature === lastSignature.current) return;
+    lastSignature.current = signature;
 
     let found: HomeSectionIndexId = HOME_SECTION_INDEX_ENTRIES[0].id;
     let anyContains = false;
@@ -85,33 +97,41 @@ export const HomeSectionIndex = () => {
       }
     }
 
+    // The page runs out of scroll before the final section can reach the probe line,
+    // so on its own it would never light up — not even when its own dot is clicked.
+    // Having it fully in view is as far as the page goes; count that as arriving.
+    const last = HOME_SECTION_INDEX_ENTRIES[HOME_SECTION_INDEX_ENTRIES.length - 1];
+    const lastSection = document.getElementById(last.id);
+    if (lastSection && lastSection.getBoundingClientRect().bottom <= vh) {
+      found = last.id;
+    }
+
     setActiveId((prev) => (prev === found ? prev : found));
   }, []);
 
   useLayoutEffect(() => {
     if (pathname !== "/") return undefined;
 
-    let raf = 0;
-    const schedule = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => updateActive());
+    // A resize or a ScrollTrigger refresh can reflow the sections without moving the
+    // first one, which the signature check would read as "nothing happened".
+    const forceUpdate = () => {
+      lastSignature.current = null;
+      updateActive();
     };
 
-    schedule();
+    forceUpdate();
 
-    window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("resize", schedule, { passive: true });
-    ScrollTrigger.addEventListener("scrollStart", schedule);
-    ScrollTrigger.addEventListener("scrollEnd", schedule);
-    ScrollTrigger.addEventListener("refresh", schedule);
+    // GSAP's ticker rather than `scroll`: ScrollSmoother keeps easing its transform
+    // after native scroll events stop, so a scroll-driven marker settles on whichever
+    // section happened to be under the probe when the events dried up — one behind.
+    gsap.ticker.add(updateActive);
+    window.addEventListener("resize", forceUpdate, { passive: true });
+    ScrollTrigger.addEventListener("refresh", forceUpdate);
 
     return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("scroll", schedule);
-      window.removeEventListener("resize", schedule);
-      ScrollTrigger.removeEventListener("scrollStart", schedule);
-      ScrollTrigger.removeEventListener("scrollEnd", schedule);
-      ScrollTrigger.removeEventListener("refresh", schedule);
+      gsap.ticker.remove(updateActive);
+      window.removeEventListener("resize", forceUpdate);
+      ScrollTrigger.removeEventListener("refresh", forceUpdate);
     };
   }, [pathname, updateActive]);
 
