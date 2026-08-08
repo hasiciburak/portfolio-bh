@@ -184,7 +184,7 @@ export const SiteNavigation = () => {
     ) : null;
 
   return (
-    <header className="fixed inset-x-0 top-0 z-[65]">
+    <header data-intro-chrome="" className="fixed inset-x-0 top-0 z-[65]">
       {/* Inner wrapper carries centering + horizontal padding so the outer fixed shell can span the full viewport. */}
       <div className="mx-auto w-full max-w-7xl px-4 pb-3 pt-6 lg:pb-4">
         <div className="flex min-h-11 items-center justify-between lg:hidden">

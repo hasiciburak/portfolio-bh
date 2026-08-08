@@ -133,6 +133,38 @@ html {
   }
 }
 
+/*
+ * Entrance intro (#HSC curtain) — hidden start states for everything the overlay
+ * reveals. Declared in CSS rather than set by GSAP so they land on first paint;
+ * an effect would run a frame too late and the hero would flash into view behind
+ * the curtain. `data-intro` flips to "done" when the timeline ends, which drops
+ * every rule below at once. See lib/entrance-intro.ts.
+ */
+/*
+ * Headline lines wipe open left-to-right. The negative insets on the three static
+ * sides push the clip edge just outside the text box so ascenders, descenders and
+ * the final glyph's side bearing are never shaved; only the animated right edge
+ * actually cuts anything.
+ */
+html[data-intro="play"] [data-intro-line] {
+  clip-path: inset(-0.2em 100% -0.2em -0.2em);
+}
+
+html[data-intro="play"] [data-intro-portrait] {
+  clip-path: inset(0 0 100% 0);
+}
+
+html[data-intro="play"] [data-intro-rise] {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+html[data-intro="play"] [data-intro-chrome],
+html[data-intro="reduced"] [data-intro-chrome],
+html[data-intro="reduced"] [data-intro-rise] {
+  opacity: 0;
+}
+
 /* GitHub graph: ~365 SVG cells — global fill/stroke transitions cause hover/scroll jank. */
 .github-graph-calendar,
 .github-graph-calendar * {

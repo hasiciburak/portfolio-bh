@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import { Geist_Mono, Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { ThemeProvider } from "@/components/theme-provider";
+import { INTRO_BOOT_SCRIPT } from "@/lib/entrance-intro";
 import { SITE_TAB_TITLE } from "@/lib/site-tab-title";
 import "./globals.css";
 
@@ -41,6 +42,15 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${inter.variable} ${geistMono.variable} ${brandWordmark.variable} h-full antialiased`}
     >
+      <head>
+        {/*
+          Render-blocking on purpose, and deliberately not next/script: it has to
+          resolve the intro mode before the body paints, which even
+          `beforeInteractive` does not guarantee. Same shape as the next-themes
+          anti-flash script.
+        */}
+        <script dangerouslySetInnerHTML={{ __html: INTRO_BOOT_SCRIPT }} />
+      </head>
       <body className="flex min-h-full flex-col bg-background font-sans text-foreground antialiased">
         <ThemeProvider>
           {children}

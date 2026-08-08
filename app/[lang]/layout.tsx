@@ -1,3 +1,4 @@
+import { EntranceIntro } from "@/components/entrance-intro";
 import { TabAwayTitle } from "@/components/tab-away-title";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteNavigation } from "@/components/site-navigation";
@@ -28,6 +29,9 @@ const RootLayout = async ({
   return (
     <LanguageProvider lang={lang as Locale} dict={dict}>
       <TabAwayTitle />
+      {/* Sits outside SmoothScrollProvider — ScrollSmoother's transform on
+          #smooth-content would otherwise break the overlay's `position: fixed`. */}
+      <EntranceIntro />
       <SiteNavigation />
       <SmoothScrollProvider>
         {children}

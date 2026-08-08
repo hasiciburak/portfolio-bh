@@ -63,6 +63,7 @@ const HeroSection = ({ variant = "home" }: HeroSectionProps) => {
               ].join(" ")}
             >
               <div
+                data-intro-portrait=""
                 className={[
                   "relative mx-auto aspect-square w-full max-w-[min(100%,304px)] overflow-hidden rounded-br-[148px] rounded-tl-[28px] rounded-tr-[28px] rounded-bl-[28px]",
                   "sm:max-w-[371px] sm:rounded-br-[185.5px] sm:rounded-tl-[32px] sm:rounded-tr-[32px] sm:rounded-bl-[32px]",
@@ -86,25 +87,41 @@ const HeroSection = ({ variant = "home" }: HeroSectionProps) => {
                   id="hero-heading"
                   className="max-w-xl font-nohemi font-extralight leading-[normal] tracking-tight text-zinc-950 text-[44px] sm:text-[48px] lg:text-7xl xl:text-8xl dark:text-[#fffffe]"
                 >
-                  {dict.hero.title_part1}
-                  <br />
-                  {dict.hero.title_part2}
+                  {/*
+                    One block span per line — replaces the previous `<br>` — so the
+                    entrance intro can curtain-wipe each line independently. Block
+                    spans produce the same line boxes as the <br> did, so the h1's
+                    measured height is unchanged (ScrollSmoother reads it for pin
+                    distances).
+                  */}
+                  <span data-intro-line="" className="block">
+                    {dict.hero.title_part1}
+                  </span>
+                  <span data-intro-line="" className="block">
+                    {dict.hero.title_part2}
+                  </span>
                 </h1>
 
                 {/* Figma [Mobile] Home (8:69) — copy lives in dictionaries/*.json under hero.bio_mobile */}
-                <p className="max-w-xl text-sm leading-snug text-zinc-600 dark:text-white/80 sm:text-base sm:leading-relaxed lg:hidden">
+                <p
+                  data-intro-rise=""
+                  className="max-w-xl text-sm leading-snug text-zinc-600 dark:text-white/80 sm:text-base sm:leading-relaxed lg:hidden"
+                >
                   {dict.hero.bio_mobile}
                 </p>
-                <p className="hidden max-w-xl text-lg leading-relaxed text-zinc-600 dark:text-white/80 md:text-xl lg:block">
+                <p
+                  data-intro-rise=""
+                  className="hidden max-w-xl text-lg leading-relaxed text-zinc-600 dark:text-white/80 md:text-xl lg:block"
+                >
                   {dict.hero.bio_desktop}
                 </p>
 
-                <Link href={PLACEHOLDER} className={`${glassPill} w-fit max-lg:hidden lg:inline-flex`}>
+                <Link href={PLACEHOLDER} data-intro-rise="" className={`${glassPill} w-fit max-lg:hidden lg:inline-flex`}>
                   <span className="font-normal leading-tight">{dict.hero.download_resume}</span>
                   <DownloadIcon className="size-4 shrink-0 opacity-90" />
                 </Link>
 
-                <div className="flex flex-col gap-4 sm:gap-5 lg:hidden">
+                <div data-intro-rise="" className="flex flex-col gap-4 sm:gap-5 lg:hidden">
                   <nav aria-label="Social profiles">
                     <ul className="flex flex-wrap items-center gap-4">
                       {MOBILE_SOCIAL.map(({ id, label, href }) => (
