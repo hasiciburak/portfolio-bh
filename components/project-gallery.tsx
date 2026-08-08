@@ -21,13 +21,18 @@ const prefersReducedMotion = () =>
 /**
  * Shared chrome for every control floating over the lightbox backdrop. `fixed`
  * anchors to the viewport rather than the dialog's content box, so the controls
- * stay put whatever the aspect ratio of the current image. The blur keeps them
- * legible on small screens, where they overlap the image's edges.
+ * stay put whatever the aspect ratio of the current image.
  */
 const lightboxControl =
   "fixed inline-flex items-center justify-center rounded-full border border-white/15 bg-white/10 text-white backdrop-blur-md outline-none transition hover:border-white/25 hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-white/50 disabled:pointer-events-none disabled:opacity-30";
 
-const lightboxArrow = `${lightboxControl} top-1/2 h-11 w-11 -translate-y-1/2 pb-0.5 text-2xl leading-none sm:h-12 sm:w-12`;
+/**
+ * Below `sm` the arrows pair up in the bottom-right corner, clear of the image and
+ * within thumb reach; from `sm` they split to the left and right edges at the
+ * vertical centre. Both layouts come from one element, so there is no duplicated
+ * markup and no breakpoint at which a control is missing.
+ */
+const lightboxArrow = `${lightboxControl} bottom-[max(1rem,env(safe-area-inset-bottom))] h-11 w-11 pb-0.5 text-2xl leading-none sm:bottom-auto sm:top-1/2 sm:h-12 sm:w-12 sm:-translate-y-1/2`;
 
 /** Horizontal travel, in px, before a touch counts as a page rather than a tap. */
 const SWIPE_THRESHOLD = 48;
@@ -294,7 +299,8 @@ export const ProjectGallery = ({
               onClick={() => stepLightbox(-1)}
               disabled={!canStepBack}
               aria-label={copy.prev}
-              className={`${lightboxArrow} left-2 sm:left-4 lg:left-6`}
+              /* 4.25rem clears the next button (1rem edge + 2.75rem button + 0.5rem gap). */
+              className={`${lightboxArrow} right-[4.25rem] sm:left-4 sm:right-auto lg:left-6`}
             >
               <span aria-hidden>&#8249;</span>
             </button>
@@ -303,7 +309,7 @@ export const ProjectGallery = ({
               onClick={() => stepLightbox(1)}
               disabled={!canStepForward}
               aria-label={copy.next}
-              className={`${lightboxArrow} right-2 sm:right-4 lg:right-6`}
+              className={`${lightboxArrow} right-4 lg:right-6`}
             >
               <span aria-hidden>&#8250;</span>
             </button>
