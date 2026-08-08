@@ -83,6 +83,7 @@ export const SKILLSET_CATEGORIES: SkillCategory[] = [
       { name: "Vitest", icon: "vitest" },
       { name: "Jest", icon: "jest" },
       { name: "React Testing Library", icon: null },
+      { name: "Cypress", icon: "cypress" },
     ],
   },
   {
