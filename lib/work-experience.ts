@@ -74,8 +74,8 @@ export const WORK_EXPERIENCE_ENTRIES: WorkExperienceEntry[] = [
       width: 48,
       height: 48,
     },
-    title: "ElephantApps (cotracted to Leesman) - Frontend Developer",
-    date: "Jul 24’ - May  25’",
+    title: "ElephantApps (contracted to Leesman) - Frontend Developer",
+    date: "Dec 22’ - Jun 24’",
     bullets: [
       "Developed custom web applications using React and Next.js.",
       "Optimized React applications, achieving up to 80% performance improvements. Managed and resolved client requests via Jira.",
