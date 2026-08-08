@@ -84,4 +84,20 @@ export const WORK_EXPERIENCE_ENTRIES: WorkExperienceEntry[] = [
       "Documented workflows and applications using Jira and Confluence.",
     ],
   },
+  {
+    id: "digiturk",
+    logo: {
+      src: "/companies/digiturk.svg",
+      alt: "Digiturk beIN Media Group logo",
+      width: 136,
+      height: 48,
+    },
+    title: "Digiturk (beIN Media Group) - Frontend Developer",
+    date: "Feb 22’ - Dec 22’",
+    bullets: [
+      "Addressed and resolved Jira requests from call center teams.",
+      "Developed web applications for in-house R&D projects using React.",
+      "Utilized a modern tech stack including Redux for state management, Redux Saga for middleware, Axios for API fetching, and Bootstrap, Styled Components, and Emotion for UI development.",
+    ],
+  },
 ];

@@ -94,6 +94,15 @@
           "İngiltere merkezli uluslararası müşterilerle iş birliği yaparak özelliklerin zamanında teslim edilmesini sağladım.",
           "İş akışlarını ve uygulamaları Jira ile Confluence kullanarak belgeledim."
         ]
+      },
+      "digiturk": {
+        "title": "Digiturk (beIN Media Group) - Frontend Geliştirici",
+        "date": "Şubat 22’ - Aralık 22’",
+        "bullets": [
+          "Çağrı merkezi ekiplerinden gelen Jira taleplerini ele aldım ve çözüme kavuşturdum.",
+          "Şirket içi Ar-Ge projeleri için React kullanarak web uygulamaları geliştirdim.",
+          "Durum yönetimi için Redux, ara katman için Redux Saga, API istekleri için Axios ve arayüz geliştirmede Bootstrap, Styled Components ve Emotion içeren modern bir teknoloji yığını kullandım."
+        ]
       }
     }
   },
