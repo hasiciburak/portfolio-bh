@@ -9,7 +9,10 @@ const GithubGraphSection = async ({ lang }: { lang: string }) => {
   return (
     <section
       id="github-graph"
-      className="isolate w-full scroll-mt-24 bg-zinc-50 font-sans text-zinc-950 [content-visibility:auto] dark:bg-zinc-950 dark:text-white"
+      /* No `content-visibility: auto` here: while this last section is off-screen the
+         browser reports it as empty, the document measures short, and ScrollSmoother
+         clamps any jump to the end of the page well before it gets there. */
+      className="isolate w-full scroll-mt-24 bg-zinc-50 font-sans text-zinc-950 dark:bg-zinc-950 dark:text-white"
       aria-labelledby="github-graph-heading"
     >
       <div className="mx-auto w-full max-w-7xl px-4 py-16 sm:py-20 lg:py-28">
