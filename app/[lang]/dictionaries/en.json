@@ -4,7 +4,10 @@
     "projects": "Projects",
     "appearance": "Appearance",
     "menu": "Menu",
-    "dismiss": "Dismiss navigation menu"
+    "dismiss": "Dismiss navigation menu",
+    "language": "Language",
+    "close": "Close menu",
+    "contact": "Let's talk"
   },
   "hero": {
     "title_part1": "Hi! You're in",

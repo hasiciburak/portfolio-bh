@@ -120,3 +120,132 @@
     transform: none;
   }
 }
+
+/* ─── Full-screen mobile menu ─── */
+
+/*
+ * An opaque curtain rather than a scrim: it drops from the top edge, so anything
+ * showing through mid-travel would read as a translucent panel sliding over the
+ * page instead of a surface replacing it. Sits *below* the header (z-65) so the
+ * wordmark and the hamburger-turned-X stay put and keep working.
+ */
+.menuOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  background: var(--background);
+  overscroll-behavior: contain;
+  will-change: transform;
+}
+
+/*
+ * Mask for one nav row — the same trick the entrance-intro uses on the wordmark
+ * (see entrance-intro.module.css): the row rises out of nothing rather than
+ * fading, and the hairline underneath travels with it instead of appearing flat.
+ */
+.linkClip {
+  display: block;
+  overflow: hidden;
+}
+
+.linkRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 0.34em 0.28em;
+  border-bottom: 1px solid rgb(24 24 27 / 0.14);
+  color: var(--foreground);
+  will-change: transform;
+}
+
+:global(.dark) .linkRow {
+  border-bottom-color: rgb(255 255 255 / 0.16);
+}
+
+.linkLabel {
+  font-size: clamp(2.5rem, 1rem + 9.5vw, 4.25rem);
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+
+  transition: opacity 240ms cubic-bezier(0.2, 0.85, 0.2, 1);
+}
+
+/*
+ * Inactive rows sit back so the current page reads without a badge or underline.
+ * Dimming the label and arrow rather than the row keeps every hairline at the
+ * same weight — fading the whole row made the rules look unevenly ruled.
+ */
+.linkInactive .linkLabel,
+.linkInactive .linkArrow {
+  opacity: 0.42;
+}
+
+.linkRow:active .linkLabel,
+.linkRow:active .linkArrow {
+  opacity: 0.7;
+}
+
+.linkArrow {
+  flex-shrink: 0;
+  width: clamp(1.4rem, 0.6rem + 4vw, 2rem);
+  height: clamp(1.4rem, 0.6rem + 4vw, 2rem);
+  align-self: center;
+
+  transition: transform 260ms cubic-bezier(0.2, 0.85, 0.2, 1),
+    opacity 240ms cubic-bezier(0.2, 0.85, 0.2, 1);
+}
+
+.linkRow:active .linkArrow {
+  transform: translateX(0.15em);
+}
+
+/*
+ * The contact CTA borrows the nav rows' idiom — hairline, label, trailing arrow —
+ * at a smaller scale rather than arriving as its own bordered pill. The footer
+ * already carries socials and two switches; one more boxed surface made the
+ * bottom of the menu read as a pile of unrelated widgets.
+ */
+.contactRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 0.9rem;
+  border-top: 1px solid rgb(24 24 27 / 0.14);
+  color: var(--foreground);
+}
+
+:global(.dark) .contactRow {
+  border-top-color: rgb(255 255 255 / 0.16);
+}
+
+.contactArrow {
+  flex-shrink: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+
+  transition: transform 260ms cubic-bezier(0.2, 0.85, 0.2, 1);
+}
+
+.contactRow:active .contactArrow {
+  transform: translateX(0.15em);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .linkLabel,
+  .linkArrow,
+  .contactArrow {
+    transition: none;
+  }
+
+  .contactRow:active .contactArrow {
+    transform: none;
+  }
+
+  .linkRow:active .linkArrow {
+    transform: none;
+  }
+}

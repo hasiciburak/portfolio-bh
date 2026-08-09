@@ -4,7 +4,10 @@
     "projects": "Projeler",
     "appearance": "Görünüm",
     "menu": "Menü",
-    "dismiss": "Gezinme menüsünü kapat"
+    "dismiss": "Gezinme menüsünü kapat",
+    "language": "Dil",
+    "close": "Menüyü kapat",
+    "contact": "Konuşalım"
   },
   "hero": {
     "title_part1": "Merhaba! Burası",
