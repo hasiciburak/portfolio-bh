@@ -7,7 +7,9 @@
     "dismiss": "Gezinme menüsünü kapat",
     "language": "Dil",
     "close": "Menüyü kapat",
-    "contact": "Konuşalım"
+    "contact": "Konuşalım",
+    "contact_subject": "Konuşalım",
+    "contact_greeting": "Merhaba Burak,"
   },
   "hero": {
     "title_part1": "Merhaba! Burası",

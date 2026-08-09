@@ -11,6 +11,7 @@ import { ThemeSwitch } from "@/components/theme-switch";
 import { LanguageSwitch } from "@/components/language-switch";
 import { SiteSocialIcon } from "@/components/social-icons";
 import { useTranslation } from "@/components/language-provider";
+import { buildContactMailto, contactAddress } from "@/lib/contact-mailto";
 import { SITE_SOCIAL_LINKS } from "@/lib/social-links";
 import { useAppPathname } from "@/lib/use-app-pathname";
 
@@ -273,15 +274,20 @@ export const SiteNavigation = () => {
         {MENU_EMAIL ? (
           <a
             data-menu-tail
-            href={MENU_EMAIL.href}
+            href={buildContactMailto(
+              MENU_EMAIL.href,
+              dict.navigation.contact_subject,
+              dict.navigation.contact_greeting,
+            )}
             className={`${styles.contactRow} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/25 dark:focus-visible:ring-white/30`}
           >
             {/* One tap target: the label commits to the action, the address under
-                it is the detail a recruiter wants to read or copy before tapping. */}
+                it is the detail a recruiter wants to read or copy before tapping.
+                The address shown is the bare one — the template lives in the href. */}
             <span className="min-w-0">
               <span className="block text-lg leading-tight">{dict.navigation.contact}</span>
               <span className="mt-1 block truncate text-xs leading-tight text-zinc-600 dark:text-white/60">
-                {MENU_EMAIL.href.replace(/^mailto:/, "")}
+                {contactAddress(MENU_EMAIL.href)}
               </span>
             </span>
             <ArrowIcon className={styles.contactArrow} />

@@ -7,7 +7,9 @@
     "dismiss": "Dismiss navigation menu",
     "language": "Language",
     "close": "Close menu",
-    "contact": "Let's talk"
+    "contact": "Let's talk",
+    "contact_subject": "Let's talk",
+    "contact_greeting": "Hi Burak,"
   },
   "hero": {
     "title_part1": "Hi! You're in",
