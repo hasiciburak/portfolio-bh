@@ -6,47 +6,56 @@ export interface SkillItem {
   icon: SkillIconId | null;
 }
 
-export interface SkillCategory {
-  id: string;
-  title: string;
-  skills: SkillItem[];
+/** Marquee entries always carry a real mark — a text monogram drifting past logos looks broken. */
+export interface SkillRowItem extends SkillItem {
+  icon: SkillIconId;
 }
 
-/** Grouped skills — labels match your CV wording; icons use developer-icons where available */
-export const SKILLSET_CATEGORIES: SkillCategory[] = [
+export interface SkillRow {
+  id: string;
+  title: string;
+  skills: SkillRowItem[];
+}
+
+/**
+ * One row per marquee lane. Rows are ordered by how much they say about the work —
+ * the reader sees the top two before scrolling — and each holds enough entries to fill
+ * a wide lane without the loop repeating inside a single screen.
+ */
+export const SKILLSET_ROWS: SkillRow[] = [
   {
     id: "ai",
-    title: "AI Tools & Agentic Development",
+    title: "AI & Agentic",
     skills: [
       { name: "Claude Code", icon: "claude" },
-      { name: "Cursor", icon: null },
-      { name: "Codex", icon: null },
-      { name: "Antigravity", icon: null },
+      { name: "Cursor", icon: "cursor" },
+      { name: "Codex", icon: "codex" },
+      { name: "Antigravity", icon: "antigravity" },
     ],
   },
   {
     id: "languages",
-    title: "Programming Languages",
+    title: "Languages",
     skills: [
       { name: "TypeScript", icon: "typescript" },
       { name: "JavaScript", icon: "javascript" },
       { name: "Swift", icon: "swift" },
       { name: "Dart", icon: "dart" },
-      { name: "C", icon: "c" },
-      { name: "Java", icon: "java" },
       { name: "Python", icon: "python" },
+      { name: "Java", icon: "java" },
+      { name: "C", icon: "c" },
     ],
   },
   {
     id: "frontend",
-    title: "Frontend Frameworks & Libraries",
+    title: "Web & Mobile",
     skills: [
       { name: "React", icon: "react" },
       { name: "Next.js", icon: "nextjs" },
       { name: "React Native", icon: "react" },
-      { name: "Expo", icon: null },
-      { name: "Svelte", icon: "svelte" },
+      { name: "Expo", icon: "expo" },
       { name: "SwiftUI", icon: "apple" },
+      { name: "Svelte", icon: "svelte" },
     ],
   },
   {
@@ -54,26 +63,28 @@ export const SKILLSET_CATEGORIES: SkillCategory[] = [
     title: "UI & Styling",
     skills: [
       { name: "TailwindCSS", icon: "tailwind" },
-      { name: "Bootstrap", icon: "bootstrap" },
-      { name: "Material UI", icon: "materialUi" },
       { name: "Tailwind UI", icon: "tailwind" },
-      { name: "Ant Design", icon: null },
-      { name: "Styled Components", icon: null },
+      { name: "Material UI", icon: "materialUi" },
+      { name: "Ant Design", icon: "antDesign" },
+      { name: "Bootstrap", icon: "bootstrap" },
+      { name: "Styled Components", icon: "styledComponents" },
       { name: "Storybook", icon: "storybook" },
       { name: "Framer Motion", icon: "framer" },
-      { name: "Formik", icon: null },
+      { name: "Formik", icon: "formik" },
     ],
   },
   {
     id: "state-data",
-    title: "State Management & Data Handling",
+    title: "State & Data",
     skills: [
       { name: "Redux", icon: "redux" },
       { name: "Redux Toolkit", icon: "redux" },
       { name: "Redux Thunk", icon: "redux" },
-      { name: "Zustand", icon: null },
-      { name: "React Query (TanStack)", icon: "reactQuery" },
+      { name: "Zustand", icon: "zustand" },
+      { name: "React Query", icon: "reactQuery" },
       { name: "GraphQL", icon: "graphql" },
+      { name: "PostgreSQL", icon: "postgresql" },
+      { name: "MongoDB", icon: "mongodb" },
     ],
   },
   {
@@ -82,45 +93,37 @@ export const SKILLSET_CATEGORIES: SkillCategory[] = [
     skills: [
       { name: "Vitest", icon: "vitest" },
       { name: "Jest", icon: "jest" },
-      { name: "React Testing Library", icon: null },
+      { name: "React Testing Library", icon: "testingLibrary" },
       { name: "Cypress", icon: "cypress" },
     ],
   },
   {
-    id: "databases",
-    title: "Databases",
-    skills: [
-      { name: "SQL (PostgreSQL)", icon: "postgresql" },
-      { name: "MongoDB", icon: "mongodb" },
-    ],
-  },
-  {
-    id: "devtools",
-    title: "Tools & DevOps",
+    id: "tooling",
+    title: "Tooling & Design",
     skills: [
       { name: "Git", icon: "git" },
       { name: "GitHub", icon: "github" },
       { name: "Bitbucket", icon: "bitbucket" },
-      { name: "VSCode", icon: "vscode" },
-      { name: "Xcode", icon: null },
+      { name: "VS Code", icon: "vscode" },
+      { name: "Xcode", icon: "xcode" },
       { name: "Vercel", icon: "vercel" },
-    ],
-  },
-  {
-    id: "design",
-    title: "Design & Collaboration",
-    skills: [
       { name: "Figma", icon: "figma" },
       { name: "Sketch", icon: "sketch" },
-      { name: "Miro", icon: "miro" },
-      { name: "Confluence", icon: "atlassian" },
-      { name: "Jira", icon: "jira" },
-      { name: "Linear", icon: "linear" },
-      { name: "Slack", icon: "slack" },
-      { name: "Microsoft Teams", icon: "microsoft" },
-      { name: "Microsoft Office", icon: "microsoft" },
-      { name: "Agile Software Development", icon: null },
-      { name: "Scrum", icon: null },
     ],
   },
+];
+
+/**
+ * Ways of working rather than things built with — kept as a single line under the rows
+ * so the keywords stay on the page without costing a lane apiece.
+ */
+export const SKILLSET_COLLABORATION = [
+  "Jira",
+  "Linear",
+  "Confluence",
+  "Miro",
+  "Slack",
+  "Microsoft Teams",
+  "Agile",
+  "Scrum",
 ];

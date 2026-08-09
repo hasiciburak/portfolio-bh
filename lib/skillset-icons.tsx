@@ -16,6 +16,7 @@ import {
   Git,
   GitHubDark,
   GitHubLight,
+  Google,
   GraphQL,
   Java,
   JavaScript,
@@ -26,6 +27,7 @@ import {
   MongoDB,
   Miro,
   NextJs,
+  OpenAI,
   PostgreSQL,
   Python,
   React as ReactLogo,
@@ -43,6 +45,17 @@ import {
   VercelLight,
   Vitest,
 } from "developer-icons";
+
+import {
+  AntDesignGlyph,
+  CursorGlyph,
+  ExpoGlyph,
+  FormikGlyph,
+  StyledComponentsGlyph,
+  TestingLibraryGlyph,
+  XcodeGlyph,
+  ZustandGlyph,
+} from "@/lib/brand-glyphs";
 
 export type SkillIconComponent = ComponentType<
   Partial<SVGProps<SVGSVGElement>> & { size?: number }
@@ -83,21 +96,31 @@ const LinearIcon: SkillIconComponent = ({ size = 24, ...props }) => (
 );
 
 const AppleIcon = themedIcon(AppleDark, AppleLight);
+const OpenAIIcon: SkillIconComponent = ({ className = "", ...props }) => (
+  // developer-icons ships OpenAI as a black glyph only — invert it on dark surfaces.
+  <OpenAI {...props} className={`${className} dark:invert`} />
+);
 const ClaudeIcon = themedIcon(AnthropicBasicDark, AnthropicBasicLight);
 const FramerIcon = themedIcon(FramerDark, FramerLight);
 const GitHubIcon = themedIcon(GitHubDark, GitHubLight);
 const VercelIcon = themedIcon(VercelDark, VercelLight);
 
 export const SKILL_ICON_COMPONENTS = {
+  antDesign: AntDesignGlyph,
+  antigravity: Google,
   apple: AppleIcon,
   atlassian: Atlassian,
   bitbucket: Bitbucket,
   bootstrap: Bootstrap5,
   c: C,
   claude: ClaudeIcon,
+  codex: OpenAIIcon,
+  cursor: CursorGlyph,
   cypress: Cypress,
   dart: Dart,
+  expo: ExpoGlyph,
   figma: Figma,
+  formik: FormikGlyph,
   framer: FramerIcon,
   git: Git,
   github: GitHubIcon,
@@ -120,18 +143,29 @@ export const SKILL_ICON_COMPONENTS = {
   sketch: Sketch,
   slack: Slack,
   storybook: Storybook,
+  styledComponents: StyledComponentsGlyph,
   svelte: SvelteJS,
   swift: Swift,
   tailwind: TailwindCSS,
+  testingLibrary: TestingLibraryGlyph,
   typescript: TypeScript,
   vscode: VisualStudioCode,
   vercel: VercelIcon,
   vitest: Vitest,
+  xcode: XcodeGlyph,
+  zustand: ZustandGlyph,
 } as const satisfies Record<string, SkillIconComponent>;
 
 export type SkillIconId = keyof typeof SKILL_ICON_COMPONENTS;
 
-/** 2–3 letter monogram when no brand icon exists in developer-icons */
+/**
+ * Hover tint for the glyphs drawn in `currentColor`. Brands whose mark is essentially
+ * black (Cursor, Expo, Formik) are left out on purpose — they'd vanish in dark mode, so
+ * they keep the chip's ink colour and only brighten on hover. Colour-carrying logos from
+ * `developer-icons` need no entry: they already hold their own palette and are merely
+ * desaturated at rest.
+ */
+/** 2–3 letter monogram for project tech tags that have no brand icon */
 export const skillMonogram = (name: string): string => {
   const cleaned = name
     .replace(/\([^)]*\)/g, "")
@@ -147,5 +181,13 @@ export const skillMonogram = (name: string): string => {
     return words[0].slice(0, 2).toUpperCase();
   }
   return cleaned.slice(0, 2).toUpperCase() || "?";
+};
+
+export const SKILL_BRAND_COLORS: Partial<Record<SkillIconId, string>> = {
+  antDesign: "#1677FF",
+  styledComponents: "#DB7093",
+  testingLibrary: "#E33332",
+  xcode: "#1B8CFF",
+  zustand: "#B4735A",
 };
 

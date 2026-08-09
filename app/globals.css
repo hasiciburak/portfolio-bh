@@ -165,6 +165,92 @@ html[data-intro="reduced"] [data-intro-rise] {
   opacity: 0;
 }
 
+/*
+ * Skillset marquee. Rows fade into the lane edges rather than being clipped, so the
+ * loop never shows a hard seam.
+ */
+.skillset-lane {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 40px,
+    #000 calc(100% - 64px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 40px,
+    #000 calc(100% - 64px),
+    transparent 100%
+  );
+}
+
+/*
+ * Logos rest in one ink tone and only bloom into brand colour under the cursor —
+ * forty palettes in motion at once reads as noise. Marks drawn in `currentColor`
+ * (lib/brand-glyphs.tsx) get their tint from `--brand`; the rest simply desaturate.
+ */
+.skill-chip-logo {
+  filter: grayscale(1);
+  opacity: 0.55;
+  transition:
+    filter 320ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 320ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 320ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+:root.dark .skill-chip-logo {
+  opacity: 0.6;
+}
+
+.skill-chip:hover .skill-chip-logo {
+  filter: none;
+  opacity: 1;
+  color: var(--brand, currentColor);
+}
+
+/* Same reasoning as the GitHub graph below: dozens of SVG nodes per lane, and the
+ * global fill/stroke transition would repaint all of them on every theme touch. */
+.skillset-lane svg,
+.skillset-lane svg * {
+  transition: none !important;
+}
+
+/* A 40px fade would swallow most of a phone-width lane. */
+@media (max-width: 639px) {
+  .skillset-lane {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 16px,
+      #000 calc(100% - 28px),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 16px,
+      #000 calc(100% - 28px),
+      transparent 100%
+    );
+  }
+}
+
+/* A lane whose row already fits isn't scrolling, so fading its ends would just
+ * dim the first and last chip for no reason. */
+.skillset-lane[data-static] {
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skillset-lane {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
+
 /* GitHub graph: ~365 SVG cells — global fill/stroke transitions cause hover/scroll jank. */
 .github-graph-calendar,
 .github-graph-calendar * {

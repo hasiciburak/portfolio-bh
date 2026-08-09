@@ -3,7 +3,7 @@
 import type { SkillItem } from "@/lib/skillset-data";
 import { SKILL_ICON_COMPONENTS, skillMonogram } from "@/lib/skillset-icons";
 
-/** Compact counterpart to `SkillsetChip` — used on project cards and detail pages. */
+/** Compact named tech tag — used on project cards and detail pages. */
 export const TechChip = ({ tech }: { tech: SkillItem }) => {
   const Icon = tech.icon ? SKILL_ICON_COMPONENTS[tech.icon] : null;
 

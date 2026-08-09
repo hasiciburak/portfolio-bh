@@ -45,16 +45,16 @@
   },
   "skillset": {
     "title": "Yeteneklerim",
+    "subtitle": "Ürün geliştirirken kullandığım teknolojiler. Satırı yavaşlatmak için üzerine gelin veya sürükleyin.",
+    "collaboration_label": "Çalışma biçimi:",
     "categories": {
-      "ai": "Yapay Zekâ Araçları ve Agentic Geliştirme",
-      "languages": "Programlama Dilleri",
-      "frontend": "Frontend Çatıları ve Kütüphaneleri",
-      "ui": "Arayüz ve Stil",
-      "state-data": "Durum Yönetimi ve Veri İşleme",
+      "ai": "Yapay Zekâ",
+      "languages": "Diller",
+      "frontend": "Web & Mobil",
+      "ui": "Arayüz",
+      "state-data": "State & Veri",
       "testing": "Test",
-      "databases": "Veritabanları",
-      "devtools": "Araçlar ve DevOps",
-      "design": "Tasarım ve İş Birliği"
+      "tooling": "Araçlar"
     }
   },
   "work_experience": {

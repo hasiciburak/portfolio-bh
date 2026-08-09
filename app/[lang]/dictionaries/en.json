@@ -45,16 +45,16 @@
   },
   "skillset": {
     "title": "My Skillset",
+    "subtitle": "The stack I build with. Hover or drag a row to slow it down.",
+    "collaboration_label": "Ways of working:",
     "categories": {
-      "ai": "AI Tools & Agentic Development",
-      "languages": "Programming Languages",
-      "frontend": "Frontend Frameworks & Libraries",
+      "ai": "AI & Agentic",
+      "languages": "Languages",
+      "frontend": "Web & Mobile",
       "ui": "UI & Styling",
-      "state-data": "State Management & Data Handling",
+      "state-data": "State & Data",
       "testing": "Testing",
-      "databases": "Databases",
-      "devtools": "Tools & DevOps",
-      "design": "Design & Collaboration"
+      "tooling": "Tooling"
     }
   },
   "work_experience": {
