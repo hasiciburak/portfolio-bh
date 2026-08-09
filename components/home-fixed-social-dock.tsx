@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 
 import { SocialPill } from "@/components/social-pill";
-import { useSiteChromeSurface } from "@/lib/use-site-chrome-surface";
 
 /** Matches the `bottom-10` resting offset, in px. */
 const REST_OFFSET = 40;
@@ -24,7 +23,6 @@ const FOOTER_GAP = 20;
 export const HomeFixedSocialDock = () => {
   const [mounted, setMounted] = useState(false);
   const dockRef = useRef<HTMLDivElement>(null);
-  const surface = useSiteChromeSurface();
 
   useEffect(() => {
     const id = requestAnimationFrame(() => setMounted(true));
@@ -71,7 +69,7 @@ export const HomeFixedSocialDock = () => {
       className="pointer-events-none fixed bottom-10 left-1/2 z-20 hidden -translate-x-1/2 justify-center px-2 lg:flex"
     >
       <div className="pointer-events-auto">
-        <SocialPill surface={surface} />
+        <SocialPill />
       </div>
     </div>,
     document.body,

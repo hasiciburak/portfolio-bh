@@ -7,16 +7,15 @@
   text-decoration: none;
 }
 
-.wordmarkLink:hover .wordmarkText.onLightStroke {
-  color: #27272a;
-}
-
 .wordmarkText {
   display: inline-block;
 
   /*
-   * Wordmark (#HSC): HK Grotesk Wide Black — dark pages: black fill + gray stroke;
-   * light pages: solid zinc-950 fill.
+   * Wordmark (#HSC): HK Grotesk Wide Black — light pages: solid zinc-950 fill;
+   * dark pages: black fill + gray stroke.
+   *
+   * The dark treatment hangs off `:global(.dark)` (set on <html> by next-themes
+   * before first paint) so the glyph is already correct on the first frame.
    */
   font-family: var(--font-brand-wordmark), ui-sans-serif, system-ui, sans-serif;
   font-weight: 900;
@@ -32,16 +31,18 @@
   transition:
     color 0.18s ease,
     -webkit-text-stroke-color 0.18s ease;
+
+  color: rgb(9 9 11);
 }
 
-.wordmarkText.onDarkStroke {
-  /* Black fill + gray glyph outline on dark chrome. */
+/* Hover darkening is a light-surface affordance only — the dark glyph is already black. */
+:global(html:not(.dark)) .wordmarkLink:hover .wordmarkText {
+  color: #27272a;
+}
+
+:global(.dark) .wordmarkText {
   color: #000;
   -webkit-text-fill-color: #000;
   -webkit-text-stroke-width: 3px;
   -webkit-text-stroke-color: #5c5c5f;
-}
-
-.wordmarkText.onLightStroke {
-  color: rgb(9 9 11);
 }

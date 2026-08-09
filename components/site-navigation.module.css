@@ -1,28 +1,45 @@
 /*
  * Portfolio-v2 nav (Figma node 8:100): translucent pill shell + frosted active segment.
+ *
+ * Light is the base state and `:global(.dark)` (the class next-themes stamps on
+ * <html> before first paint) overrides it. Keyed off CSS rather than a resolved
+ * theme passed down from React on purpose: a JS-resolved variant cannot be right
+ * until hydration, which made the whole shell fade dark → light on every load.
  */
 
-.navShellDark,
-.navShellLight {
+.navShell {
   position: relative;
   isolation: isolate;
   overflow: hidden;
   transform: translateZ(0);
 
   border-radius: 9999px;
+  color: inherit;
 }
 
-.navShellDark > *,
-.navShellLight > * {
+.navShell > * {
   position: relative;
   z-index: 1;
 }
 
+/* ─── Light capsule (paired chrome for non-hero surfaces) ─── */
+
+.navShell {
+  border: 1px solid rgb(24 24 27 / 0.1);
+
+  background: rgb(255 255 255 / 0.72);
+
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+
+  box-shadow:
+    0 14px 36px rgb(15 23 42 / 0.08),
+    0 1px 0 rgb(255 255 255 / 0.85) inset;
+}
+
 /* ─── Dark capsule (Portfolio-v2 / node 8:100: charcoal glass + thin rim) ─── */
 
-.navShellDark {
-  color: inherit;
-
+:global(.dark) .navShell {
   border: 1px solid rgb(255 255 255 / 0.3);
 
   background:
@@ -43,23 +60,6 @@
     0 -1px 0 rgb(0 0 0 / 0.28) inset;
 }
 
-/* ─── Light capsule (paired chrome for non-hero surfaces) ─── */
-
-.navShellLight {
-  color: inherit;
-
-  border: 1px solid rgb(24 24 27 / 0.1);
-
-  background: rgb(255 255 255 / 0.72);
-
-  backdrop-filter: blur(18px) saturate(140%);
-  -webkit-backdrop-filter: blur(18px) saturate(140%);
-
-  box-shadow:
-    0 14px 36px rgb(15 23 42 / 0.08),
-    0 1px 0 rgb(255 255 255 / 0.85) inset;
-}
-
 /* ─── Segments (Figma: active pill rgba(255,255,255,0.2); inactive flush) ─── */
 
 .segment {
@@ -75,11 +75,23 @@
   transform: scale(0.98);
 }
 
-.segmentDark:not(.segmentActive):hover {
+.segment:not(.segmentActive):hover {
+  background: rgb(24 24 27 / 0.05);
+}
+
+.segment.segmentActive {
+  border: 1px solid rgb(24 24 27 / 0.08);
+
+  background: rgb(255 255 255 / 0.92);
+
+  box-shadow: none;
+}
+
+:global(.dark) .segment:not(.segmentActive):hover {
   background: rgb(255 255 255 / 0.08);
 }
 
-.segmentDark.segmentActive {
+:global(.dark) .segment.segmentActive {
   border: 1px solid rgb(255 255 255 / 0.3);
 
   background:
@@ -96,18 +108,6 @@
 
   backdrop-filter: blur(12px) saturate(120%);
   -webkit-backdrop-filter: blur(12px) saturate(120%);
-}
-
-.segmentLight:not(.segmentActive):hover {
-  background: rgb(24 24 27 / 0.05);
-}
-
-.segmentLight.segmentActive {
-  border: 1px solid rgb(24 24 27 / 0.08);
-
-  background: rgb(255 255 255 / 0.92);
-
-  box-shadow: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

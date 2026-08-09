@@ -7,9 +7,31 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 type ThemeSwitchProps = {
   variant: "header" | "drawer";
-  /** When true (light chrome), invert control surfaces vs dark header. */
-  isLightChrome: boolean;
 };
+
+/*
+ * Surfaces are light by default and overridden under `dark:`, rather than picked
+ * from a JS-resolved theme. next-themes stamps `.dark` on <html> before the body
+ * paints, so the control is already the right colour on the very first frame —
+ * a resolved-theme prop could not be, and the swap read as a dark → light flash.
+ */
+const CHROME_HEADER =
+  "border-zinc-900/12 bg-white/85 text-zinc-900 shadow-[0_14px_36px_rgb(15_23_42_/_0.06)] dark:border-white/[0.22] dark:bg-[rgb(22_22_26_/_0.52)] dark:text-white dark:shadow-[0_12px_40px_rgb(0_0_0_/_0.35)]";
+
+const CHROME_DRAWER =
+  "border-zinc-200/90 bg-zinc-100 text-zinc-900 dark:border-white/[0.15] dark:bg-zinc-900 dark:text-white";
+
+const INACTIVE_LABEL =
+  "text-zinc-600 hover:text-zinc-950 dark:text-white/72 dark:hover:text-white";
+
+const INDICATOR_SURFACE =
+  "bg-zinc-900 shadow-sm dark:bg-white/18 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.35)]";
+
+const FOCUS_RING_ACTIVE =
+  "focus-visible:ring-zinc-900/35 dark:focus-visible:ring-white/40";
+
+const FOCUS_RING_INACTIVE =
+  "focus-visible:ring-zinc-950/25 dark:focus-visible:ring-white/30";
 
 type IndicatorRect = {
   left: number;
@@ -147,7 +169,7 @@ const getThemeId = (theme: string | undefined): ThemeId => {
   return THEME_OPTIONS.some((option) => option.id === theme) ? (theme as ThemeId) : "system";
 }
 
-export const ThemeSwitch = ({ variant, isLightChrome }: ThemeSwitchProps) => {
+export const ThemeSwitch = ({ variant }: ThemeSwitchProps) => {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [hasMeasured, setHasMeasured] = useState(false);
@@ -235,50 +257,21 @@ export const ThemeSwitch = ({ variant, isLightChrome }: ThemeSwitchProps) => {
     },
     {
       scope: containerRef,
-      dependencies: [mounted, activeIndex, variant, reduceMotion, isLightChrome],
+      dependencies: [mounted, activeIndex, variant, reduceMotion],
     },
   );
-
-  const chromeHeader = isLightChrome
-    ? "border-zinc-900/12 bg-white/85 text-zinc-900 shadow-[0_14px_36px_rgb(15_23_42_/_0.06)]"
-    : "border-white/[0.22] bg-[rgb(22_22_26_/_0.52)] text-white shadow-[0_12px_40px_rgb(0_0_0_/_0.35)]";
-
-  const chromeDrawerMuted = "border-zinc-200/90 bg-zinc-100 text-zinc-900";
-  const chromeDrawerDark = "border-white/[0.15] bg-zinc-900 text-white";
-
-  const inactiveHeader = isLightChrome
-    ? "text-zinc-600 hover:text-zinc-950"
-    : "text-white/72 hover:text-white";
-
-  const inactiveDrawer = isLightChrome
-    ? "text-zinc-600 hover:text-zinc-950"
-    : "text-white/72 hover:text-white";
 
   const isDrawer = variant === "drawer";
 
   const chrome = isDrawer
-    ? `relative w-full rounded-xl border p-1.5 ${isLightChrome ? chromeDrawerMuted : chromeDrawerDark}`
-    : `relative inline-flex rounded-full border p-1.5 backdrop-blur-xl backdrop-saturate-150 ${chromeHeader}`;
+    ? `relative w-full rounded-xl border p-1.5 ${CHROME_DRAWER}`
+    : `relative inline-flex rounded-full border p-1.5 backdrop-blur-xl backdrop-saturate-150 ${CHROME_HEADER}`;
 
   const layout = isDrawer
     ? "grid w-full grid-cols-3 gap-1"
     : "inline-flex items-center gap-1";
 
-  const inactive = isDrawer ? inactiveDrawer : inactiveHeader;
-
-  const indicatorSurface = isLightChrome
-    ? "bg-zinc-900 shadow-sm"
-    : "bg-white/18 shadow-[inset_0_1px_0_rgba(255,255,255,0.35)]";
-
   const indicatorRadius = isDrawer ? "rounded-lg" : "rounded-full";
-
-  const activeLabel = "text-white";
-  const focusRing = isLightChrome
-    ? "focus-visible:ring-zinc-900/35"
-    : "focus-visible:ring-white/40";
-  const focusRingInactive = isLightChrome
-    ? "focus-visible:ring-zinc-950/25"
-    : "focus-visible:ring-white/30";
 
   const handleSelect = (id: ThemeId) => {
     setSelectedTheme(id);
@@ -299,7 +292,7 @@ export const ThemeSwitch = ({ variant, isLightChrome }: ThemeSwitchProps) => {
           className={[
             "pointer-events-none absolute left-0 top-0 z-0 box-border will-change-transform",
             indicatorRadius,
-            indicatorSurface,
+            INDICATOR_SURFACE,
             hasMeasured ? "opacity-100" : "opacity-0",
           ].join(" ")}
         />
@@ -323,7 +316,9 @@ export const ThemeSwitch = ({ variant, isLightChrome }: ThemeSwitchProps) => {
               isDrawer
                 ? "flex h-9 items-center justify-center gap-1.5 rounded-lg px-2"
                 : "flex size-9 items-center justify-center rounded-full",
-              pressed ? `${activeLabel} ${focusRing}` : `${inactive} ${focusRingInactive}`,
+              pressed
+                ? `text-white ${FOCUS_RING_ACTIVE}`
+                : `${INACTIVE_LABEL} ${FOCUS_RING_INACTIVE}`,
             ].join(" ")}
           >
             <Icon className="size-[18px] shrink-0" />
