@@ -11,6 +11,8 @@ import { usePathname } from "next/navigation";
 import { createPortal } from "react-dom";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 
+import { useDesktopViewport } from "@/lib/use-desktop-viewport";
+
 gsap.registerPlugin(ScrollTrigger);
 
 const usePrefersReducedMotion = (): boolean => {
@@ -50,6 +52,7 @@ const scrollToSectionId = (id: HomeSectionIndexId, prefersReducedMotion: boolean
 export const HomeSectionIndex = () => {
   const pathname = usePathname();
   const prefersReducedMotion = usePrefersReducedMotion();
+  const isDesktop = useDesktopViewport();
   const [mounted, setMounted] = useState(false);
   const [activeId, setActiveId] = useState<HomeSectionIndexId>(
     HOME_SECTION_INDEX_ENTRIES[0].id,
@@ -110,7 +113,9 @@ export const HomeSectionIndex = () => {
   }, []);
 
   useLayoutEffect(() => {
-    if (pathname !== "/") return undefined;
+    // The rail is `hidden lg:flex`. Below `lg` this swept every section's rect on
+    // GSAP's ticker to light up a dot that was never painted.
+    if (pathname !== "/" || !isDesktop) return undefined;
 
     // A resize or a ScrollTrigger refresh can reflow the sections without moving the
     // first one, which the signature check would read as "nothing happened".
@@ -133,9 +138,9 @@ export const HomeSectionIndex = () => {
       window.removeEventListener("resize", forceUpdate);
       ScrollTrigger.removeEventListener("refresh", forceUpdate);
     };
-  }, [pathname, updateActive]);
+  }, [pathname, updateActive, isDesktop]);
 
-  if (!mounted || pathname !== "/") return null;
+  if (!mounted || pathname !== "/" || !isDesktop) return null;
 
   const rail = (
     <div className="pointer-events-none fixed right-6 top-1/2 z-20 hidden -translate-y-1/2 lg:flex xl:right-8">

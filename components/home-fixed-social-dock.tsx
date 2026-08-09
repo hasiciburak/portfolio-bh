@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 
 import { SocialPill } from "@/components/social-pill";
+import { useDesktopViewport } from "@/lib/use-desktop-viewport";
 
 /** Matches the `bottom-10` resting offset, in px. */
 const REST_OFFSET = 40;
@@ -22,6 +23,7 @@ const FOOTER_GAP = 20;
  */
 export const HomeFixedSocialDock = () => {
   const [mounted, setMounted] = useState(false);
+  const isDesktop = useDesktopViewport();
   const dockRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -30,7 +32,9 @@ export const HomeFixedSocialDock = () => {
   }, []);
 
   useEffect(() => {
-    if (!mounted) return undefined;
+    // The dock is `hidden lg:flex`, so below `lg` this ticker measured the footer
+    // every frame to move something nobody could see.
+    if (!mounted || !isDesktop) return undefined;
 
     const dock = dockRef.current;
     const footer = document.querySelector<HTMLElement>("footer[aria-label='Site']");
@@ -59,9 +63,9 @@ export const HomeFixedSocialDock = () => {
     follow();
 
     return () => gsap.ticker.remove(follow);
-  }, [mounted]);
+  }, [mounted, isDesktop]);
 
-  if (!mounted) return null;
+  if (!mounted || !isDesktop) return null;
 
   return createPortal(
     <div

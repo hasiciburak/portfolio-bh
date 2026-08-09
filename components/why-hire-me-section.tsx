@@ -6,7 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import { useLayoutEffect, useRef, useState } from "react";
 
-import { useSmoothScrollReady } from "@/components/smooth-scroll-provider";
+import { isNativeTouchScroll, useSmoothScrollReady } from "@/components/smooth-scroll-provider";
 import { HIRE_ME_REASONS } from "@/lib/hire-me-reasons";
 import { useTranslation } from "@/components/language-provider";
 
@@ -75,8 +75,14 @@ const WhyHireMeSection = () => {
               end: () => `+=${window.innerHeight * (panels.length - 1) * factor}`,
               pin: true,
               pinSpacing: true,
-              // pinType: "transform" plays nice with ScrollSmoother's transformed #smooth-content.
-              pinType: "transform",
+              // "transform" is only needed because ScrollSmoother transforms
+              // #smooth-content, and `position: fixed` resolves against a transformed
+              // ancestor instead of the viewport. On touch that transform is gone
+              // (smoothTouch: 0), so "fixed" is both correct and far cheaper: the
+              // compositor holds the pin, rather than the main thread writing a new
+              // matrix on every frame of an async, off-thread scroll — which is what
+              // made this section judder worst of all on a phone.
+              pinType: isNativeTouchScroll() ? "fixed" : "transform",
               anticipatePin: 1,
               scrub: true,
               invalidateOnRefresh: true,
