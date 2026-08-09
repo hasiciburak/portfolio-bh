@@ -1,14 +1,13 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-
 import { BrandWordmark } from "@/components/brand-wordmark";
 import { SocialPill } from "@/components/social-pill";
+import { useAppPathname } from "@/lib/use-app-pathname";
 import { useSiteChromeSurface } from "@/lib/use-site-chrome-surface";
 import { useTranslation } from "@/components/language-provider";
 
 export const SiteFooter = () => {
-  const pathname = usePathname();
+  const pathname = useAppPathname();
   const surface = useSiteChromeSurface();
   const { dict } = useTranslation();
 

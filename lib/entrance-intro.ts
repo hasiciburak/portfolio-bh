@@ -18,6 +18,21 @@ export type IntroMode = "play" | "reduced" | "skip" | "done";
 export const INTRO_SESSION_KEY = "bh-intro-seen";
 
 /**
+ * The boot script mirrors the resolved mode here as well as onto `<html>`.
+ *
+ * The attribute is the one the CSS keys off, but it is not safe to *read* back:
+ * anything that makes React discard the server tree — a hydration mismatch, a
+ * browser extension mutating the DOM before hydration — re-acquires `<html>` and
+ * strips every attribute React did not render itself. A plain window global
+ * survives that, so the overlay can tell "never armed" from "armed, then wiped".
+ */
+declare global {
+  interface Window {
+    __bhIntroMode?: IntroMode;
+  }
+}
+
+/**
  * `true`  → plays once per tab session (first arrival only).
  * `false` → plays on every load and refresh.
  *
@@ -45,8 +60,10 @@ export const INTRO_FAILSAFE_MS = 5000;
  */
 const INTRO_HOME_PATHS = ["/", "/tr", "/tr/"];
 
-export const INTRO_BOOT_SCRIPT = `(function(){var r=document.documentElement;try{
-if(${JSON.stringify(INTRO_HOME_PATHS)}.indexOf(location.pathname)===-1){r.dataset.intro="skip";return}
-if(${INTRO_ONCE_PER_SESSION}&&sessionStorage.getItem(${JSON.stringify(INTRO_SESSION_KEY)})==="1"){r.dataset.intro="skip";return}
-r.dataset.intro=matchMedia("(prefers-reduced-motion: reduce)").matches?"reduced":"play"
-}catch(e){r.dataset.intro="skip"}})()`;
+export const INTRO_BOOT_SCRIPT = `(function(){var r=document.documentElement;
+function s(m){r.dataset.intro=m;window.__bhIntroMode=m}
+try{
+if(${JSON.stringify(INTRO_HOME_PATHS)}.indexOf(location.pathname)===-1){s("skip");return}
+if(${INTRO_ONCE_PER_SESSION}&&sessionStorage.getItem(${JSON.stringify(INTRO_SESSION_KEY)})==="1"){s("skip");return}
+s(matchMedia("(prefers-reduced-motion: reduce)").matches?"reduced":"play")
+}catch(e){s("skip")}})()`;

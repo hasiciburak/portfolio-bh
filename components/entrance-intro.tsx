@@ -33,11 +33,19 @@ export const EntranceIntro = () => {
 
   useLayoutEffect(() => {
     const root = document.documentElement;
-    const mode = root.dataset.intro;
+
+    // window first: React re-acquires <html> whenever it discards the server tree
+    // and strips every attribute it did not render itself, so a missing
+    // `data-intro` means "wiped" at least as often as it means "never armed".
+    const mode = window.__bhIntroMode ?? root.dataset.intro;
     if (mode !== "play" && mode !== "reduced") return undefined;
 
     const curtain = curtainRef.current;
     if (!curtain) return undefined;
+
+    // Put it back if it was stripped: the overlay's own visibility and every
+    // hidden hero start state are CSS rules keyed off this attribute.
+    root.dataset.intro = mode;
 
     // Written at the *start* of the sequence, so a refresh mid-intro skips it
     // rather than restarting it.
@@ -79,8 +87,10 @@ export const EntranceIntro = () => {
       cancelAnimationFrame(smootherFrame);
       window.clearTimeout(failsafe);
 
-      // Drops every hidden start state declared in globals.css.
+      // Drops every hidden start state declared in globals.css. The window mirror
+      // moves with it, so a re-run of this effect reads "done" and does not replay.
       root.dataset.intro = "done";
+      window.__bhIntroMode = "done";
 
       // Kill before clearing: ScrollTrigger.refresh() below re-renders live
       // animations, and a surviving timeline puts every inline value it owns

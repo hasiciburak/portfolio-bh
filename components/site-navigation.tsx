@@ -3,12 +3,12 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
 import { BrandWordmark } from "@/components/brand-wordmark";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { LanguageSwitch } from "@/components/language-switch";
 import { useTranslation } from "@/components/language-provider";
+import { useAppPathname } from "@/lib/use-app-pathname";
 import { useSiteChromeSurface } from "@/lib/use-site-chrome-surface";
 
 import styles from "./site-navigation.module.css";
@@ -40,7 +40,7 @@ const CloseIcon = ({ className }: { className?: string }) => {
 }
 
 export const SiteNavigation = () => {
-  const pathname = usePathname();
+  const pathname = useAppPathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [portalReady, setPortalReady] = useState(false);
   const surface = useSiteChromeSurface();
