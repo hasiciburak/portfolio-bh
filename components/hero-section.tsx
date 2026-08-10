@@ -1,14 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 
 import { HomeFixedSocialDock } from "@/components/home-fixed-social-dock";
 import { SiteSocialIcon } from "@/components/social-icons";
+import { RESUME_FILENAME, RESUME_PATH } from "@/lib/resume";
 import { SITE_SOCIAL_LINKS } from "@/lib/social-links";
 import { useTranslation } from "@/components/language-provider";
-
-const PLACEHOLDER = "#";
 
 const glassPill =
   "inline-flex items-center justify-center gap-2.5 rounded-full border border-zinc-900/18 bg-white/72 px-4 py-2.5 text-base text-zinc-950 shadow-[0_10px_40px_rgb(15_23_42_/_0.08),inset_0_1px_0_rgb(255_255_255_/_0.92),inset_0_-1px_0_rgb(15_23_42_/_0.06)] backdrop-blur-xl backdrop-saturate-150 transition-colors hover:bg-white/90 dark:border-white/35 dark:bg-white/10 dark:text-white dark:shadow-[0_10px_40px_rgb(0_0_0_/_0.18),inset_0_1px_0_rgb(255_255_255_/_0.35),inset_0_-1px_0_rgb(0_0_0_/_0.08)] dark:hover:bg-white/15";
@@ -116,10 +114,20 @@ const HeroSection = ({ variant = "home" }: HeroSectionProps) => {
                   {dict.hero.bio_desktop}
                 </p>
 
-                <Link href={PLACEHOLDER} data-intro-rise="" className={`${glassPill} w-fit max-lg:hidden lg:inline-flex`}>
+                {/*
+                  Plain <a>, not next/link: the CV is a static file in `public/`,
+                  not an app route, so there is nothing to prefetch or navigate to.
+                */}
+                <a
+                  href={RESUME_PATH}
+                  download={RESUME_FILENAME}
+                  type="application/pdf"
+                  data-intro-rise=""
+                  className={`${glassPill} w-fit max-lg:hidden lg:inline-flex`}
+                >
                   <span className="font-normal leading-tight">{dict.hero.download_resume}</span>
                   <DownloadIcon className="size-4 shrink-0 opacity-90" />
-                </Link>
+                </a>
 
                 <div data-intro-rise="" className="flex flex-col gap-4 sm:gap-5 lg:hidden">
                   <nav aria-label="Social profiles">
@@ -139,12 +147,17 @@ const HeroSection = ({ variant = "home" }: HeroSectionProps) => {
                     </ul>
                   </nav>
 
-                  <Link href={PLACEHOLDER} className={`${mobileResumePill} inline-flex w-fit max-w-full`}>
+                  <a
+                    href={RESUME_PATH}
+                    download={RESUME_FILENAME}
+                    type="application/pdf"
+                    className={`${mobileResumePill} inline-flex w-fit max-w-full`}
+                  >
                     <span className="text-center font-nohemi font-normal leading-[1.2]">
                       {dict.hero.download_resume}
                     </span>
                     <DownloadIcon className="size-4 shrink-0 opacity-90" />
-                  </Link>
+                  </a>
                 </div>
               </div>
             </div>
