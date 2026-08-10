@@ -44,3 +44,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .pnpm-store
+
+# claude code — local dev-server config, not part of the project
+.claude/launch.json
