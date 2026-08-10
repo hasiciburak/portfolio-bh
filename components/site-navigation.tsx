@@ -28,7 +28,7 @@ gsap.registerPlugin(ScrollSmoother);
  * this subtree, so the gate reopened each time).
  */
 const MENU_BUTTON =
-  "rounded-lg p-2 text-zinc-950 hover:bg-zinc-900/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/35 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-50 dark:text-white dark:hover:bg-white/10 dark:focus-visible:ring-white/50 dark:focus-visible:ring-offset-black/70";
+  "rounded-full p-2 text-zinc-950 hover:bg-zinc-900/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/35 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-50 dark:text-white dark:hover:bg-white/10 dark:focus-visible:ring-white/50 dark:focus-visible:ring-offset-black/70";
 
 const MENU_TAIL_LINK =
   "rounded-lg text-zinc-600 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/25 dark:text-white/72 dark:hover:text-white dark:focus-visible:ring-white/30";
@@ -326,9 +326,21 @@ export const SiteNavigation = () => {
 
   return (
     <header data-intro-chrome="" className="fixed inset-x-0 top-0 z-[65]">
+      {/*
+        Not a bar with chrome of its own — just the page's own colour, blurred,
+        dissolving to nothing at the bottom edge. At the top of the page it is
+        invisible (it *is* the background); it only shows itself once something
+        scrolls up behind the wordmark.
+      */}
+      <div
+        aria-hidden
+        data-flat={menuOpen ? "" : undefined}
+        className={`${styles.headerScrim} lg:hidden`}
+      />
+
       {/* Inner wrapper carries centering + horizontal padding so the outer fixed shell can span the full viewport. */}
-      <div className="mx-auto w-full max-w-7xl px-4 pb-3 pt-6 lg:pb-4">
-        <div className="flex min-h-11 items-center justify-between lg:hidden">
+      <div className="relative mx-auto w-full max-w-7xl px-4 pb-3 pt-6 lg:pb-4">
+        <div className="flex min-h-11 items-center justify-between gap-3 lg:hidden">
           <BrandWordmark />
           <button
             ref={triggerRef}
