@@ -1,0 +1,140 @@
+/*
+ * Resume CTA — the three states of one button.
+ *
+ * Everything here keys off `[data-status]` on the anchor, so the caller keeps
+ * supplying the pill chrome (hero has a light one and a dark one) and this file
+ * only owns what moves.
+ */
+
+.button {
+  position: relative;
+}
+
+/* ─── Label ─── */
+
+.labelStack {
+  display: grid;
+  align-items: center;
+}
+
+.label {
+  grid-area: 1 / 1;
+
+  opacity: 0;
+  translate: 0 5px;
+
+  transition:
+    opacity 190ms ease,
+    translate 260ms cubic-bezier(0.2, 0.85, 0.2, 1);
+}
+
+.button[data-status="idle"] .label[data-label="idle"],
+.button[data-status="downloading"] .label[data-label="downloading"],
+.button[data-status="done"] .label[data-label="done"] {
+  opacity: 1;
+  translate: 0 0;
+}
+
+/* ─── Icon ─── */
+
+.icon {
+  flex-shrink: 0;
+  opacity: 0.9;
+}
+
+.icon path {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/*
+ * The arrow falls into the tray on a loop while the download is in flight. It
+ * starts above the tray and leaves below it, fading at both ends, so the loop
+ * reads as a repeating drop rather than a bouncing object.
+ */
+@keyframes resumeArrowDrop {
+  0% {
+    translate: 0 -4px;
+    opacity: 0;
+  }
+
+  22% {
+    translate: 0 0;
+    opacity: 1;
+  }
+
+  62% {
+    translate: 0 4px;
+    opacity: 1;
+  }
+
+  100% {
+    translate: 0 7px;
+    opacity: 0;
+  }
+}
+
+/* The tray takes the hit a beat after the arrow lands — that timing offset is the
+   whole reason it reads as weight rather than as two things moving. */
+@keyframes resumeTrayGive {
+  0%,
+  52% {
+    translate: 0 0;
+  }
+
+  66% {
+    translate: 0 1.2px;
+  }
+
+  100% {
+    translate: 0 0;
+  }
+}
+
+.button[data-status="downloading"] .arrow {
+  animation: resumeArrowDrop 900ms cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+.button[data-status="downloading"] .tray {
+  animation: resumeTrayGive 900ms cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+/* ─── Done ─── */
+
+.check {
+  /* Path length ≈ 17; the extra is slack so the tail never clips short. */
+  stroke-dasharray: 18;
+  stroke-dashoffset: 18;
+  opacity: 0;
+}
+
+.button[data-status="done"] .arrow,
+.button[data-status="done"] .tray {
+  opacity: 0;
+  transition: opacity 140ms ease;
+}
+
+.button[data-status="done"] .check {
+  opacity: 1;
+  stroke-dashoffset: 0;
+
+  /* Drawn, not faded: a tick that writes itself is the part that reads as done. */
+  transition: stroke-dashoffset 340ms cubic-bezier(0.2, 0.85, 0.2, 1) 70ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .label {
+    transition: none;
+  }
+
+  .button[data-status="downloading"] .arrow,
+  .button[data-status="downloading"] .tray {
+    animation: none;
+  }
+
+  /* The states still change — they just arrive rather than travel. */
+  .button[data-status="done"] .check {
+    transition: none;
+    stroke-dashoffset: 0;
+  }
+}

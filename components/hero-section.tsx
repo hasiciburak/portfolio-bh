@@ -3,8 +3,8 @@
 import Image from "next/image";
 
 import { HomeFixedSocialDock } from "@/components/home-fixed-social-dock";
+import { ResumeDownloadButton } from "@/components/resume-download-button";
 import { SiteSocialIcon } from "@/components/social-icons";
-import { RESUME_FILENAME, RESUME_PATH } from "@/lib/resume";
 import { SITE_SOCIAL_LINKS } from "@/lib/social-links";
 import { useTranslation } from "@/components/language-provider";
 
@@ -15,28 +15,6 @@ const mobileResumePill =
   "inline-flex items-center justify-center gap-2.5 rounded-full bg-zinc-950/[0.065] px-[15px] py-[10px] text-base text-zinc-950 backdrop-blur-[2px] transition-colors hover:bg-zinc-950/[0.1] dark:bg-[rgba(170,170,170,0.1)] dark:text-white dark:hover:bg-[rgba(170,170,170,0.16)]";
 
 const MOBILE_SOCIAL = SITE_SOCIAL_LINKS.slice(0, 4);
-
-const DownloadIcon = ({ className }: { className?: string }) => {
-  return (
-    <svg
-      className={className}
-      width={16}
-      height={16}
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden
-    >
-      <path
-        d="M12 3v12m0 0l4-4m-4 4l-4-4M4 15v3a2 2 0 002 2h12a2 2 0 002-2v-3"
-        stroke="currentColor"
-        strokeWidth={1.75}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
 
 export interface HeroSectionProps {
   variant?: "home";
@@ -114,20 +92,11 @@ const HeroSection = ({ variant = "home" }: HeroSectionProps) => {
                   {dict.hero.bio_desktop}
                 </p>
 
-                {/*
-                  Plain <a>, not next/link: the CV is a static file in `public/`,
-                  not an app route, so there is nothing to prefetch or navigate to.
-                */}
-                <a
-                  href={RESUME_PATH}
-                  download={RESUME_FILENAME}
-                  type="application/pdf"
+                <ResumeDownloadButton
                   data-intro-rise=""
                   className={`${glassPill} w-fit max-lg:hidden lg:inline-flex`}
-                >
-                  <span className="font-normal leading-tight">{dict.hero.download_resume}</span>
-                  <DownloadIcon className="size-4 shrink-0 opacity-90" />
-                </a>
+                  labelClassName="font-normal leading-tight"
+                />
 
                 <div data-intro-rise="" className="flex flex-col gap-4 sm:gap-5 lg:hidden">
                   <nav aria-label="Social profiles">
@@ -147,17 +116,10 @@ const HeroSection = ({ variant = "home" }: HeroSectionProps) => {
                     </ul>
                   </nav>
 
-                  <a
-                    href={RESUME_PATH}
-                    download={RESUME_FILENAME}
-                    type="application/pdf"
+                  <ResumeDownloadButton
                     className={`${mobileResumePill} inline-flex w-fit max-w-full`}
-                  >
-                    <span className="text-center font-nohemi font-normal leading-[1.2]">
-                      {dict.hero.download_resume}
-                    </span>
-                    <DownloadIcon className="size-4 shrink-0 opacity-90" />
-                  </a>
+                    labelClassName="text-center font-nohemi font-normal leading-[1.2]"
+                  />
                 </div>
               </div>
             </div>
