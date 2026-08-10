@@ -24,13 +24,19 @@
 
 /* ─── Light capsule (paired chrome for non-hero surfaces) ─── */
 
+/*
+ * Denser than the Figma fill (0.72 / 18px). The pill is fixed over a page that
+ * scrolls 40–64px headlines behind it, and at the design value the type read
+ * straight through the glass. The values below are the switches' — every floating
+ * surface in the header now shares one fill, blur and saturation.
+ */
 .navShell {
   border: 1px solid rgb(24 24 27 / 0.1);
 
-  background: rgb(255 255 255 / 0.72);
+  background: rgb(255 255 255 / 0.85);
 
-  backdrop-filter: blur(18px) saturate(140%);
-  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
 
   box-shadow:
     0 14px 36px rgb(15 23 42 / 0.08),
@@ -49,10 +55,10 @@
       rgb(255 255 255 / 0.03) 45%,
       rgb(0 0 0 / 0.12) 100%
     ),
-    rgb(22 22 26 / 0.52);
+    rgb(22 22 26 / 0.84);
 
-  backdrop-filter: blur(22px) saturate(135%);
-  -webkit-backdrop-filter: blur(22px) saturate(135%);
+  backdrop-filter: blur(28px) saturate(135%);
+  -webkit-backdrop-filter: blur(28px) saturate(135%);
 
   box-shadow:
     0 12px 40px rgb(0 0 0 / 0.38),
