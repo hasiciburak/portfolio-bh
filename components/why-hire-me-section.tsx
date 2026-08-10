@@ -120,25 +120,31 @@ const WhyHireMeSection = () => {
   };
 
   const gridTemplate =
-    "flex flex-col items-center gap-10 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center lg:gap-12 xl:gap-16";
+    "flex flex-col items-center gap-6 sm:gap-10 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center lg:gap-12 xl:gap-16";
 
   const heading = (
     <h2
       id="why-hire-heading"
-      className="mb-10 text-center font-nohemi text-[40px] font-bold leading-[1.2] tracking-tight text-zinc-950 dark:text-white sm:mb-12 sm:text-5xl lg:mb-14 lg:text-[64px]"
+      className="mb-6 text-center font-nohemi text-[40px] font-bold leading-[1.2] tracking-tight text-zinc-950 dark:text-white sm:mb-10 sm:text-5xl lg:mb-14 lg:text-[64px]"
     >
       {dict.why_hire_me.title}
     </h2>
   );
 
+  /*
+   * The artwork is square, so capping its *width* in svh caps its height by the
+   * same number — which is what keeps the pinned block inside one viewport on a
+   * short phone. Below `lg` this column is stacked under the copy and is the one
+   * piece that can afford to give height back.
+   */
   const imageCol = (
-    <div className="relative flex w-full max-w-[320px] shrink-0 justify-center pointer-events-none sm:max-w-[380px] lg:max-w-[445px] lg:justify-self-end">
+    <div className="relative flex w-full max-w-[min(240px,30svh)] shrink-0 justify-center pointer-events-none sm:max-w-[min(320px,32svh)] lg:max-w-[445px] lg:justify-self-end">
       <Image
         src="/images/achievements.png"
         alt="Stylized 3D trophy, wrench, and gear on a pedestal"
         width={1024}
         height={1024}
-        sizes="(max-width: 1024px) 320px, 445px"
+        sizes="(max-width: 639px) 240px, (max-width: 1023px) 320px, 445px"
         className="h-auto w-full object-contain"
         priority={false}
         onLoad={handleImageLoaded}
@@ -173,17 +179,35 @@ const WhyHireMeSection = () => {
         </div>
       ) : (
         // Pin the whole block (heading + reasons + image). Heading + trophy stay; reason text scrubs through.
+        /*
+         * The pin parks this block at `top: top`, so unlike every other section it
+         * cannot simply scroll out from under the fixed header — whatever lands in
+         * the top 80px stays there for the whole scrub. Hence a top pad that clears
+         * the header with room to spare, and `justify-center-safe` so that a
+         * viewport too short for the content spills off the bottom instead of
+         * centring the heading back up underneath the wordmark. `lg` keeps the
+         * original 80px: the desktop layout fills an 800px viewport exactly, so
+         * extra padding there would start clipping instead of buying air.
+         */
         <article
           ref={pinRootRef}
-          className="relative z-[1] mx-auto flex min-h-[100svh] w-full max-w-7xl flex-col justify-center bg-zinc-50 px-4 py-12 sm:py-16 dark:bg-zinc-950 lg:py-20"
+          className="relative z-[1] mx-auto flex min-h-[100svh] w-full max-w-7xl flex-col justify-center-safe bg-zinc-50 px-4 pb-12 pt-24 sm:pb-16 dark:bg-zinc-950 lg:pb-20 lg:pt-20"
         >
           {heading}
           <div className={gridTemplate}>
-            <div className="relative w-full max-w-[660px] min-h-[280px] sm:min-h-[260px] lg:min-h-[260px] lg:max-w-none lg:justify-self-start">
+            {/*
+              The panels are stacked in one grid cell rather than absolutely
+              positioned, so the column is exactly as tall as the tallest reason at
+              the current width and language. The fixed `min-h` this replaced was
+              sized for the longest Turkish string and wasted ~110px of the mobile
+              viewport on the English copy — which is what pushed the heading up
+              into the header in the first place.
+            */}
+            <div className="grid w-full max-w-[660px] lg:min-h-[260px] lg:max-w-none lg:justify-self-start">
               {reasons.map((reason) => (
                 <div
                   key={reason.id}
-                  className="hire-me-panel absolute inset-x-0 top-0 flex flex-col gap-2.5 text-left"
+                  className="hire-me-panel col-start-1 row-start-1 flex flex-col gap-2.5 text-left"
                 >
                   <h3 className="font-nohemi text-[28px] font-normal leading-[1.2] text-zinc-950 dark:text-white sm:text-4xl lg:text-[48px]">
                     {reason.title}
