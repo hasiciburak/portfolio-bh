@@ -44,15 +44,27 @@ const MENU_EMAIL = SITE_SOCIAL_LINKS.find(({ id }) => id === "email");
 const SEGMENT_FOCUS =
   "focus-visible:z-[2] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500/35 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-50 dark:focus-visible:ring-white/35 dark:focus-visible:ring-offset-zinc-950";
 
-const MenuIcon = ({ className }: { className?: string }) => {
+/*
+ * One icon that morphs, not two that swap. The bars are separate paths so the
+ * open/close transition can be staged in CSS: the outer two travel to the middle
+ * before they cross, and uncross before they spread back out. Doing both at once
+ * reads as a smear at this size — 22px leaves no room for a diagonal to be legible
+ * while it is also moving.
+ */
+const MenuToggleIcon = ({ open }: { open: boolean }) => {
   return (
-    <svg className={className} width={22} height={22} viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M4 7h16M4 12h16M4 17h16"
-        stroke="currentColor"
-        strokeWidth={1.75}
-        strokeLinecap="round"
-      />
+    <svg
+      className={styles.menuToggle}
+      data-open={open ? "" : undefined}
+      width={22}
+      height={22}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden
+    >
+      <path className={styles.menuBarTop} d="M4 7h16" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" />
+      <path className={styles.menuBarMid} d="M4 12h16" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" />
+      <path className={styles.menuBarBottom} d="M4 17h16" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" />
     </svg>
   );
 }
@@ -66,19 +78,6 @@ const ArrowIcon = ({ className }: { className?: string }) => {
         strokeWidth={1.5}
         strokeLinecap="round"
         strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-const CloseIcon = ({ className }: { className?: string }) => {
-  return (
-    <svg className={className} width={22} height={22} viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M6 6l12 12M18 6L6 18"
-        stroke="currentColor"
-        strokeWidth={1.75}
-        strokeLinecap="round"
       />
     </svg>
   );
@@ -334,7 +333,7 @@ export const SiteNavigation = () => {
           <button
             ref={triggerRef}
             type="button"
-            className={MENU_BUTTON}
+            className={`${MENU_BUTTON} ${styles.menuButton}`}
             aria-expanded={menuOpen}
             aria-controls="mobile-main-nav"
             onClick={() => (menuOpen ? closeMenu() : openMenu())}
@@ -342,7 +341,9 @@ export const SiteNavigation = () => {
             <span className="sr-only">
               {menuOpen ? dict.navigation.close : dict.navigation.menu}
             </span>
-            {menuOpen ? <CloseIcon /> : <MenuIcon />}
+            {/* Driven by `menuOpen` (intent), not `menuMounted` (presence), so the
+                morph starts on the same frame as the curtain rather than trailing it. */}
+            <MenuToggleIcon open={menuOpen} />
           </button>
         </div>
 

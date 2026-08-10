@@ -121,6 +121,88 @@
   }
 }
 
+/* ─── Hamburger ⇄ X morph ─── */
+
+/*
+ * The three bars animate with the standalone `translate` / `rotate` / `scale`
+ * properties rather than one `transform` shorthand, because each needs its own
+ * timing: a shorthand can only interpolate the whole list on a single curve, and
+ * translating and rotating together turns the morph into a smudge.
+ *
+ * Transitions are declared on the state being entered — the base rule times the
+ * close (X → bars), the `[data-open]` rule times the open (bars → X).
+ */
+.menuToggle {
+  overflow: visible;
+
+  transition: scale 200ms cubic-bezier(0.2, 0.85, 0.2, 1);
+}
+
+.menuToggle path {
+  /* Origin is each bar's own midpoint, so a rotation pivots in place and the
+     translate below is what carries it to the centre line. */
+  transform-box: fill-box;
+  transform-origin: center;
+
+  translate: 0 0;
+  rotate: 0deg;
+  scale: 1 1;
+  opacity: 1;
+
+  /* Closing: uncross first, then the arms spread back apart. */
+  transition:
+    rotate 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    translate 220ms cubic-bezier(0.2, 0.9, 0.2, 1) 140ms,
+    scale 180ms cubic-bezier(0, 0, 0.2, 1) 190ms,
+    opacity 140ms linear 190ms;
+}
+
+/* Opening: arms converge on the centre line, and only then cross. */
+.menuToggle[data-open] path {
+  transition:
+    translate 190ms cubic-bezier(0.4, 0, 0.2, 1),
+    rotate 240ms cubic-bezier(0.2, 0.9, 0.2, 1) 150ms,
+    scale 150ms cubic-bezier(0.4, 0, 1, 1),
+    opacity 120ms linear;
+}
+
+/* 5px is the gap between each outer bar (y=7 / y=17) and the centre (y=12). */
+.menuToggle[data-open] .menuBarTop {
+  translate: 0 5px;
+  rotate: 45deg;
+}
+
+.menuToggle[data-open] .menuBarBottom {
+  translate: 0 -5px;
+  rotate: -45deg;
+}
+
+/* The middle bar collapses into the centre instead of fading in place — a bar
+   that merely dims stays visible underneath the crossing arms. */
+.menuToggle[data-open] .menuBarMid {
+  scale: 0 1;
+  opacity: 0;
+}
+
+/* Press feedback matching the desktop segments' `scale(0.98)` idiom, a touch
+   deeper because the target is a bare icon with no pill behind it. */
+.menuButton:active .menuToggle {
+  scale: 0.9;
+
+  transition-duration: 90ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menuToggle,
+  .menuToggle path {
+    transition: none;
+  }
+
+  .menuButton:active .menuToggle {
+    scale: 1;
+  }
+}
+
 /* ─── Full-screen mobile menu ─── */
 
 /*
