@@ -45,6 +45,37 @@
       }
     }
   },
+  "services": {
+    "eyebrow": "What I do",
+    "title": "Six ways I can help your team ship",
+    "subtitle": "From the first Figma frame to the production deploy — take the part you need, or the whole run.",
+    "offerings": {
+      "frontend": {
+        "title": "Frontend Development",
+        "body": "Production React interfaces that stay fast and accessible as the product grows."
+      },
+      "fullstack": {
+        "title": "Full-Stack Development",
+        "body": "APIs, data models and the screens on top of them, shipped as one coherent piece."
+      },
+      "mobile": {
+        "title": "Mobile Apps",
+        "body": "Cross-platform apps that feel native, from the onboarding flow to the store release."
+      },
+      "design": {
+        "title": "UI/UX Design",
+        "body": "Figma work that survives contact with code — design systems, not one-off screens."
+      },
+      "ai": {
+        "title": "AI-Native Engineering",
+        "body": "Internal tooling and agentic workflows that cut hours of manual work down to minutes."
+      },
+      "performance": {
+        "title": "Performance & Accessibility",
+        "body": "Audits and refactors that move Core Web Vitals and open the product up to everyone."
+      }
+    }
+  },
   "skillset": {
     "title": "My Skillset",
     "subtitle": "The stack I build with. Hover or drag a row to slow it down.",

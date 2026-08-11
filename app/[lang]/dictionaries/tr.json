@@ -45,6 +45,37 @@
       }
     }
   },
+  "services": {
+    "eyebrow": "Ne yapıyorum",
+    "title": "Ekibinizin ürün çıkarmasına yardım edebileceğim altı alan",
+    "subtitle": "İlk Figma çerçevesinden canlı yayına kadar — ihtiyacınız olan parçayı ya da sürecin tamamını devralırım.",
+    "offerings": {
+      "frontend": {
+        "title": "Frontend Geliştirme",
+        "body": "Ürün büyüdükçe hızlı ve erişilebilir kalan, üretime hazır React arayüzleri."
+      },
+      "fullstack": {
+        "title": "Full-Stack Geliştirme",
+        "body": "API'ler, veri modelleri ve üzerlerindeki ekranlar; hepsi tutarlı tek bir bütün olarak."
+      },
+      "mobile": {
+        "title": "Mobil Uygulamalar",
+        "body": "Onboarding akışından mağaza yayınına kadar, native hissettiren çok platformlu uygulamalar."
+      },
+      "design": {
+        "title": "UI/UX Tasarım",
+        "body": "Kodla buluştuğunda ayakta kalan Figma işleri — tek seferlik ekranlar değil, tasarım sistemleri."
+      },
+      "ai": {
+        "title": "Yapay Zekâ Odaklı Geliştirme",
+        "body": "Saatler süren manuel işleri dakikalara indiren şirket içi araçlar ve agentic iş akışları."
+      },
+      "performance": {
+        "title": "Performans & Erişilebilirlik",
+        "body": "Core Web Vitals'ı gerçekten iyileştiren ve ürünü herkese açan denetimler ve düzenlemeler."
+      }
+    }
+  },
   "skillset": {
     "title": "Yeteneklerim",
     "subtitle": "Ürün geliştirirken kullandığım teknolojiler. Satırı yavaşlatmak için üzerine gelin veya sürükleyin.",

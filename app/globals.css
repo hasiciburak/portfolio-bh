@@ -172,6 +172,67 @@ html[data-intro="reduced"] [data-intro-rise] {
 }
 
 /*
+ * Services deck. Below `lg` the cards are an ordinary stacked list; from `lg` up they fan
+ * out across a canvas of fixed height, each card centred on a percentage of the deck's
+ * width so the spread reflows with the container. The per-card coordinates arrive as
+ * custom properties from `DECK_SLOTS` in components/services-section.tsx.
+ *
+ * This lives here rather than in Tailwind arbitrary values because a card's `left` and
+ * `rotate` are data, not design: they differ per card, and inline `style` is the only
+ * place a per-instance value can go.
+ */
+.services-deck {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+@media (min-width: 1024px) {
+  .services-deck {
+    display: block;
+    position: relative;
+    /*
+     * Absolute children measure nothing, so the deck is told its own height. Sized to
+     * clear the tallest card in the lower row in Turkish — the longest copy the section
+     * carries — with the surplus spent on the section's bottom padding when it isn't
+     * needed. Cards are narrower here than at `xl`, so their copy wraps further and this
+     * is the taller of the two decks.
+     */
+    height: 740px;
+  }
+
+  .services-slot {
+    position: absolute;
+    top: var(--deck-y);
+    left: var(--deck-x);
+    width: 268px;
+    /* Centring on `left` is what lets the percentage act as the card's midpoint. */
+    transform: translateX(-50%) rotate(var(--deck-rot));
+  }
+}
+
+@media (min-width: 1280px) {
+  .services-deck {
+    height: 760px;
+  }
+
+  .services-slot {
+    width: 320px;
+  }
+}
+
+/*
+ * The tilt is pure decoration, so it goes when a reader has asked for less of it. Scoped
+ * to `lg` with the rest of the fan: below that the slot is static, and an unqualified
+ * rule would drag every card half its own width off the left edge.
+ */
+@media (min-width: 1024px) and (prefers-reduced-motion: reduce) {
+  .services-slot {
+    transform: translateX(-50%);
+  }
+}
+
+/*
  * Skillset marquee. Rows fade into the lane edges rather than being clipped, so the
  * loop never shows a hard seam.
  */

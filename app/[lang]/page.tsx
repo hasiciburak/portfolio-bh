@@ -1,6 +1,7 @@
 import { HomeSectionIndex } from "@/components/home-section-index";
 import HeroSection from "@/components/hero-section";
 import MySkillsetSection from "@/components/my-skillset-section";
+import ServicesSection from "@/components/services-section";
 import WorkExperienceSection from "@/components/work-experience-section";
 import WhyHireMeSection from "@/components/why-hire-me-section";
 
@@ -10,6 +11,7 @@ const Home = () => {
       <HomeSectionIndex />
       <HeroSection variant="home" />
       <WhyHireMeSection />
+      <ServicesSection />
       <MySkillsetSection />
       <WorkExperienceSection />
     </div>
