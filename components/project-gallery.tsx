@@ -230,7 +230,12 @@ export const ProjectGallery = ({
                 width={image.width}
                 height={image.height}
                 sizes="(min-width: 1024px) 62vw, (min-width: 640px) 70vw, 85vw"
-                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                /* transform-gpu promotes the slide to its own compositor layer, so the
+                   zoom is a GPU texture scale rather than a per-frame repaint of a
+                   full-bleed bitmap. ease-out front-loads the travel: the default
+                   ease-in-out spends both ends of a 2% scale moving sub-pixel amounts,
+                   which is what reads as sticky. */
+                className="h-full w-full transform-gpu object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
               />
             </button>
             {image.caption ? (
