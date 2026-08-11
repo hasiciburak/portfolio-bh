@@ -106,10 +106,16 @@
   }
 }
 
-*, ::before, ::after {
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 300ms;
+/* Theme-switch defaults: every element eases its colours rather than snapping when
+ * `.dark` flips on <html>. This must live in `@layer base` — unlayered rules outrank
+ * *every* layer, so at the top level this would beat `transition-transform` and friends
+ * and silently pin every element's transition to the colour list below. */
+@layer base {
+  *, ::before, ::after {
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+  }
 }
 
 body {
