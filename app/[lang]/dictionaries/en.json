@@ -117,10 +117,6 @@
       }
     }
   },
-  "github_graph": {
-    "title": "Contributions",
-    "subtitle": "My GitHub contribution graph."
-  },
   "footer": {
     "credits": "Designed in Figma, built with Next.js & Tailwind CSS.",
     "copyright": "© 2026 Burak Haşıcı. All rights reserved."

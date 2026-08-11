@@ -117,10 +117,6 @@
       }
     }
   },
-  "github_graph": {
-    "title": "Katkılar",
-    "subtitle": "GitHub katkı grafiğim."
-  },
   "footer": {
     "credits": "Figma ile tasarlandı, Next.js ve Tailwind CSS ile geliştirildi.",
     "copyright": "© 2026 Burak Haşıcı. Tüm hakları saklıdır."
