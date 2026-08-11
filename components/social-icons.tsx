@@ -31,8 +31,9 @@ export const SiteSocialIcon = ({ id, className = "h-6 w-6 shrink-0" }: SiteSocia
       );
     case "email":
       return (
-        <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} aria-hidden>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M4 7l8 5 8-5M4 7v10h16V7" />
+        <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+          <path d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.977a1.5 1.5 0 001.572 0L22.5 6.908z" />
+          <path d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z" />
         </svg>
       );
     case "whatsapp":
