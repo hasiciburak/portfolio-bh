@@ -25,6 +25,27 @@
     "downloading": "İndiriliyor…",
     "downloaded": "İndirildi"
   },
+  "proof": {
+    "title": "Sonuçlar",
+    "metrics": {
+      "automation": {
+        "value": "5 dk",
+        "label": "4–7 saat süren bir iç sürecin, geliştirdiğim yapay zekâ aracından sonraki hâli"
+      },
+      "lighthouse": {
+        "value": "100",
+        "label": "Next.js ile geliştirdiğim kurumsal sitede Lighthouse performans skoru"
+      },
+      "react-perf": {
+        "value": "%80",
+        "label": "İngiltere merkezli müşteriler için yaptığım optimizasyon sonrası React uygulamaları"
+      },
+      "legacy-ui": {
+        "value": "2×",
+        "label": "Yerini aldığı Java/XML bankacılık ekranlarına kıyasla arayüz hızı"
+      }
+    }
+  },
   "why_hire_me": {
     "title": "Neden Beni İşe Almalısınız?",
     "reasons": {
