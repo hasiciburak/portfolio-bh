@@ -121,7 +121,9 @@ const ServicesSection = () => {
       aria-labelledby="services-heading"
     >
       <div className="mx-auto w-full max-w-7xl px-4 py-16 sm:py-20 lg:py-28">
-        <header className="services-reveal mb-10 max-w-3xl sm:mb-12 lg:mb-16">
+        {/* Centred to match the other home sections — Why Hire Me, Skillset and Work
+            Experience all centre their headings, and this was the only one that did not. */}
+        <header className="services-reveal mx-auto mb-10 max-w-3xl text-center sm:mb-12 lg:mb-16">
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-zinc-500 dark:text-white/45 sm:text-sm">
             {dict.services.eyebrow}
           </p>
@@ -131,7 +133,7 @@ const ServicesSection = () => {
           >
             {dict.services.title}
           </h2>
-          <p className="mt-4 max-w-[60ch] text-base leading-relaxed text-zinc-600 dark:text-white/70 sm:text-lg">
+          <p className="mx-auto mt-4 max-w-[60ch] text-base leading-relaxed text-zinc-600 dark:text-white/70 sm:text-lg">
             {dict.services.subtitle}
           </p>
         </header>
@@ -160,7 +162,8 @@ const ServicesSection = () => {
                   inline transform written by GSAP would otherwise outrank.
                 */}
                 <div className="services-card-reveal">
-                  <article className="flex gap-4 rounded-2xl border border-zinc-950/10 bg-linear-to-b from-white to-zinc-100 p-5 shadow-[6px_6px_0_rgb(9_9_11_/_0.045)] transition-[transform,box-shadow,border-color] duration-300 hover:-translate-y-1.5 hover:border-zinc-950/20 hover:shadow-[10px_10px_0_rgb(9_9_11_/_0.07)] dark:border-white/12 dark:from-zinc-900 dark:to-zinc-950 dark:shadow-[6px_6px_0_rgb(255_255_255_/_0.05)] dark:hover:border-white/25 dark:hover:shadow-[10px_10px_0_rgb(255_255_255_/_0.08)] lg:min-h-[248px] lg:flex-col lg:gap-0 lg:p-6 xl:min-h-[268px]">
+                  {/* Lift, shadow and their timing live on `.services-card` in globals.css. */}
+                  <article className="services-card flex gap-4 rounded-2xl border border-zinc-950/10 bg-linear-to-b from-white to-zinc-100 p-5 hover:border-zinc-950/20 dark:border-white/12 dark:from-zinc-900 dark:to-zinc-950 dark:hover:border-white/25 lg:min-h-[248px] lg:flex-col lg:gap-0 lg:p-6 xl:min-h-[268px]">
                     <p
                       aria-hidden
                       className="shrink-0 font-nohemi text-[32px] font-black leading-none tracking-tight text-zinc-950/15 dark:text-white/15 lg:text-[60px] xl:text-[64px]"

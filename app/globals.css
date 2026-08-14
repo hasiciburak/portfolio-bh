@@ -233,6 +233,97 @@ html[data-intro="reduced"] [data-intro-rise] {
 }
 
 /*
+ * Services card hover. The lift used to transition `box-shadow` alongside
+ * `transform`; box-shadow cannot be composited, so every frame repainted the card,
+ * its gradient fill and the shadow region — on a main thread ScrollSmoother is
+ * already driving, which is what made a 6px lift read as steppy.
+ *
+ * Drawing the hard shadow as its own layer leaves the hover animating `transform`
+ * and `opacity` only, both of which the compositor handles without a repaint. The
+ * shadow's two resting/hover colours differ in alpha alone, so fading one layer
+ * reproduces them exactly: 0.045/0.07 light, 0.05/0.08 dark.
+ *
+ * Unlayered on purpose, like the deck rules above — the `@layer base` colour
+ * transition would otherwise outrank the shorthand here and pin these to its own
+ * property list.
+ */
+.services-card-reveal {
+  position: relative;
+  --card-shadow: rgb(9 9 11 / 0.07);
+  --card-shadow-rest: 0.64;
+}
+
+.dark .services-card-reveal {
+  --card-shadow: rgb(255 255 255 / 0.08);
+  --card-shadow-rest: 0.625;
+}
+
+/*
+ * The shadow hangs off the reveal wrapper, not the card, and carries no z-index.
+ * Both it and the card are positioned with `z-index: auto`, so they paint in tree
+ * order — pseudo-element first, card over it — which holds no matter what the
+ * ancestors are doing.
+ *
+ * The obvious version, `.services-card::before { z-index: -1 }`, does not: a
+ * negative index paints against the nearest ancestor stacking context, and below
+ * `lg` the slot carries no transform, so the only candidate is the wrapper — which
+ * is a stacking context only once GSAP has stamped a transform on it. Until then
+ * the shadow lands behind `#services` (isolated, and painting its own background)
+ * and vanishes.
+ *
+ * Radius is duplicated rather than inherited because the wrapper has none of its
+ * own — keep it in step with `rounded-2xl` on the card in services-section.tsx.
+ */
+.services-card-reveal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 1rem;
+  background: var(--card-shadow);
+  opacity: var(--card-shadow-rest);
+  transform: translate3d(6px, 6px, 0);
+  transition:
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.services-card {
+  /* Positioned so it paints over the shadow above. */
+  position: relative;
+  transition:
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/*
+ * `hover: hover` keeps the lift off touch screens, where :hover latches on tap and
+ * leaves a card stuck in its raised state until something else is tapped. The
+ * wrapper is the hover target because the shadow lives on it, and it boxes the
+ * card exactly.
+ */
+@media (hover: hover) {
+  .services-card-reveal:hover .services-card {
+    transform: translate3d(0, -6px, 0);
+  }
+
+  .services-card-reveal:hover::before {
+    opacity: 1;
+    transform: translate3d(10px, 10px, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .services-card,
+  .services-card-reveal::before {
+    transition: none;
+  }
+
+  .services-card-reveal:hover .services-card {
+    transform: none;
+  }
+}
+
+/*
  * Skillset marquee. Rows fade into the lane edges rather than being clipped, so the
  * loop never shows a hard seam.
  */
