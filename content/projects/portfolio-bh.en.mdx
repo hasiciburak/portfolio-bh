@@ -1,7 +1,7 @@
 export const metadata = {
   name: "burakhasici.com",
   summary:
-    "The site you're on right now — designed in Figma, then built as a bilingual, theme-aware Next.js app with GSAP-driven motion and a live GitHub contribution graph.",
+    "The site you're on right now — designed in Figma, then built as a bilingual, theme-aware Next.js app with GSAP-driven motion.",
   gallery: [
     {
       src: "/projects/portfolio-bh/website-mockup.jpeg",
@@ -75,9 +75,6 @@ worse than not shipping one at all.
   are `ScrollTrigger`-based, and the language switch animates its indicator with `useGSAP`. All of
   it checks `prefers-reduced-motion` first and bails out to a static layout when the user has asked
   for less movement.
-- **A live GitHub contribution graph.** Contributions are fetched server-side on an hourly
-  revalidate and rendered with `react-activity-calendar`, themed to match the site's palette. When
-  the upstream API fails, the section renders nothing rather than an error state.
 - **Small details that make a site feel owned.** A wordmark drawn in a licensed display face, the
   Nohemi type scale loaded locally, and a tab title that changes when you switch away from the tab
   and switches back when you return.

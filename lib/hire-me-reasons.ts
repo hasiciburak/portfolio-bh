@@ -10,7 +10,7 @@ export const HIRE_ME_REASONS: HireMeReason[] = [
     id: "interfaces",
     title: "I build interfaces that users “get” on the first tap",
     body:
-      "Shipping React/TypeScript experiences for nearly 4 years—fast, accessible, and production-ready.",
+      "Shipping React/TypeScript experiences for nearly 5 years—fast, accessible, and production-ready.",
   },
   {
     id: "ai-native",

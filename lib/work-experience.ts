@@ -41,7 +41,7 @@ export const WORK_EXPERIENCE_ENTRIES: WorkExperienceEntry[] = [
       height: 26,
     },
     title: "Nonpublic - Frontend Developer",
-    date: "May - Nov  25’ ",
+    date: "May - Nov 25’",
     bullets: [
       "Contributed to the development of customer-facing and back-office applications in collaboration with a globally distributed team (HQ in Sydney, Australia).",
       "Built and maintained web and mobile applications, including onboarding flows, using React, React Native, TypeScript, React Query, and SASS, with Figma for UI design.",
@@ -58,7 +58,7 @@ export const WORK_EXPERIENCE_ENTRIES: WorkExperienceEntry[] = [
       height: 52,
     },
     title: "Fibabanka (via Veriport) - Frontend Developer",
-    date: "Jul 24’ - May  25’",
+    date: "Jul 24’ - May 25’",
     bullets: [
       "Transformed core banking applications originally developed in Java/XML, used across all branches for accounting, customer services, and EFT, by implementing React, Redux, and a customized version of Material UI.",
       "Analyzed legacy screens built with XML and Java on the backend and documented findings in Confluence.",
