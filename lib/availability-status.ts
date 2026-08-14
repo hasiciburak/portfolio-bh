@@ -1,8 +1,12 @@
 export interface AvailabilityStatus {
-  /** The state itself — the only part that carries the indicator dot. */
+  /** The state itself — the part the indicator dot belongs to. */
   status: string;
-  /** Qualifiers, joined with a separator. Hidden below `sm` to keep the pill on one line. */
-  meta: string[];
+  /**
+   * One qualifier, and only one. Where matters most to a recruiter and costs the
+   * badge no height; work model was the other candidate and made the pill read as
+   * a sentence rather than a label.
+   */
+  location: string;
 }
 
 /**
@@ -18,5 +22,5 @@ export interface AvailabilityStatus {
  */
 export const AVAILABILITY_STATUS: AvailabilityStatus = {
   status: "Open to the right opportunity",
-  meta: ["Istanbul", "Remote or hybrid"],
+  location: "Istanbul",
 };

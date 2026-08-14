@@ -28,26 +28,26 @@
   "availability": {
     "label": "Müsaitlik",
     "status": "Doğru fırsata açık",
-    "meta": ["İstanbul", "Uzaktan veya hibrit"]
+    "location": "İstanbul"
   },
   "proof": {
     "title": "Sonuçlar",
     "metrics": {
       "automation": {
         "value": "5 dk",
-        "label": "4–7 saat süren bir iç sürecin, geliştirdiğim yapay zekâ aracından sonraki hâli"
+        "label": "4–7 saatten indi; geliştirdiğim yapay zekâ aracı sayesinde"
       },
       "lighthouse": {
         "value": "100",
-        "label": "Next.js ile geliştirdiğim kurumsal sitede Lighthouse performans skoru"
+        "label": "Next.js ile geliştirdiğim kurumsal sitede Lighthouse skoru"
       },
       "react-perf": {
         "value": "%80",
-        "label": "İngiltere merkezli müşteriler için yaptığım optimizasyon sonrası React uygulamaları"
+        "label": "İngiltere merkezli müşteriler için optimizasyon sonrası"
       },
       "legacy-ui": {
         "value": "2×",
-        "label": "Yerini aldığı Java/XML bankacılık ekranlarına kıyasla arayüz hızı"
+        "label": "Java/XML bankacılık ekranlarına kıyasla arayüz hızı"
       }
     }
   },

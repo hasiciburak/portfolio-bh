@@ -28,26 +28,26 @@
   "availability": {
     "label": "Availability",
     "status": "Open to the right opportunity",
-    "meta": ["Istanbul", "Remote or hybrid"]
+    "location": "Istanbul"
   },
   "proof": {
     "title": "Results",
     "metrics": {
       "automation": {
         "value": "5 min",
-        "label": "What a 4–7 hour internal workflow takes after the AI tooling I built"
+        "label": "down from 4–7 hours, after the AI tooling I built"
       },
       "lighthouse": {
         "value": "100",
-        "label": "Lighthouse performance score on a company site built with Next.js"
+        "label": "Lighthouse performance score on a Next.js company site"
       },
       "react-perf": {
         "value": "80%",
-        "label": "Faster React applications after optimisation work for UK clients"
+        "label": "faster React apps after optimisation for UK clients"
       },
       "legacy-ui": {
         "value": "2×",
-        "label": "UI speed against the Java/XML banking screens it replaced"
+        "label": "UI speed against the Java/XML banking screens replaced"
       }
     }
   },

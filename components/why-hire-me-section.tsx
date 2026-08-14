@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useLayoutEffect, useRef, useState } from "react";
 
 import { isNativeTouchScroll, useSmoothScrollReady } from "@/components/smooth-scroll-provider";
+import { ProofMetrics } from "@/components/proof-metrics";
 import { HIRE_ME_REASONS } from "@/lib/hire-me-reasons";
 import { useTranslation } from "@/components/language-provider";
 
@@ -158,6 +159,12 @@ const WhyHireMeSection = () => {
       className="isolate w-full scroll-mt-24 bg-zinc-50 font-sans text-zinc-950 dark:bg-zinc-950 dark:text-white"
       aria-labelledby="why-hire-heading"
     >
+      {/*
+        Outside both branches below, and outside the pin in particular: the evidence
+        scrolls past normally, then the argument pins behind it.
+      */}
+      <ProofMetrics />
+
       {reduceMotion ? (
         <div className="mx-auto w-full max-w-7xl px-4 py-16 sm:py-20 lg:py-28">
           {heading}
