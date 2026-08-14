@@ -1,38 +1,123 @@
 "use client";
 
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useLayoutEffect, useRef, useState } from "react";
+
+import { useSmoothScrollReady } from "@/components/smooth-scroll-provider";
 import { PROOF_METRICS } from "@/lib/proof-metrics";
 import { useTranslation } from "@/components/language-provider";
 
+gsap.registerPlugin(ScrollTrigger, useGSAP);
+
+const usePrefersReducedMotion = (): boolean => {
+  const [reduce, setReduce] = useState(false);
+
+  useLayoutEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setReduce(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  return reduce;
+}
+
 /**
- * The four numbers, as the opening line of "Why Hire Me" rather than a band of
- * their own.
+ * Splits a figure into the part that counts and the parts that don't.
  *
- * It has been both before. As a standalone `<section>` with `border-y` it read as
- * a third stacked stripe under the hero; moved inside the hero it crowded a column
- * that already carried a badge, a headline, a bio and a CTA. Parented to the
- * section it introduces — no border, no background of its own — it reads as that
- * section's lead-in: the evidence, immediately before the argument it supports.
+ * The affix cannot be assumed to trail the number: English writes `80%`, Turkish
+ * writes `%80`. Capturing both sides keeps the count working in either, and the
+ * lazy leading group stops `%` being swallowed into the number.
  *
- * Deliberately outside the pinned `<article>`. That block is `min-h-[100svh]` and
- * the desktop layout fills an 800px viewport exactly, so anything added inside it
- * comes straight out of the pinned scrub's headroom.
+ * Only whole numbers animate. `5 dk`, `100`, `%80` and `2×` all qualify today;
+ * anything with a decimal falls through and renders as written rather than
+ * counting through a separator that differs per locale.
  */
+const FIGURE = /^(\D*?)(\d+)(\D*)$/;
+
+const splitFigure = (value: string) => {
+  const match = FIGURE.exec(value);
+  if (!match) return null;
+  return { prefix: match[1], count: match[2], suffix: match[3] };
+};
+
 export const ProofMetrics = () => {
+  const rootRef = useRef<HTMLDivElement>(null);
+  const reduceMotion = usePrefersReducedMotion();
+  const smootherReady = useSmoothScrollReady();
   const { dict } = useTranslation();
 
   const metrics = PROOF_METRICS.map((metric) => {
     const key = metric.id as keyof typeof dict.proof.metrics;
     const localized = dict.proof.metrics[key];
+    const value = localized?.value || metric.value;
     return {
       id: metric.id,
-      value: localized?.value || metric.value,
+      value,
+      figure: splitFigure(value),
       label: localized?.label || metric.label,
     };
   });
 
+  useGSAP(
+    () => {
+      const root = rootRef.current;
+      if (!root) return;
+
+      const counters = gsap.utils.toArray<HTMLElement>("[data-count]", root);
+      if (counters.length === 0) return;
+
+      /*
+       * Server-rendered markup already carries the final figure, so a visitor who
+       * never gets this effect — no JS, reduced motion — reads the real number.
+       * Zeroing happens here, inside useGSAP's layout-effect pass, which lands
+       * before paint: the reset is never visible as a flash.
+       */
+      if (reduceMotion || !smootherReady) return;
+
+      counters.forEach((el) => {
+        const target = Number(el.dataset.count);
+        if (!Number.isFinite(target)) return;
+
+        const tally = { value: 0 };
+        el.textContent = "0";
+
+        gsap.to(tally, {
+          value: target,
+          duration: 1.1,
+          ease: "power2.out",
+          snap: { value: 1 },
+          onUpdate: () => {
+            el.textContent = String(Math.round(tally.value));
+          },
+          scrollTrigger: { trigger: root, start: "top 85%", once: true },
+        });
+      });
+    },
+    {
+      scope: rootRef,
+      dependencies: [reduceMotion, smootherReady],
+      revertOnUpdate: true,
+    },
+  );
+
   return (
-    <div className="mx-auto w-full max-w-7xl px-4 pt-14 sm:pt-16 lg:pt-20">
-      <h2 className="sr-only">{dict.proof.title}</h2>
+    <div
+      ref={rootRef}
+      className="mx-auto w-full max-w-7xl px-4 pt-14 sm:pt-16 lg:pt-20"
+    >
+      {/*
+        An eyebrow rather than a heading, matching the Services section's. A full
+        heading here would sit a few hundred pixels above the 64px "Why Hire Me"
+        and the two would compete; at eyebrow weight it labels the numbers without
+        claiming to open a section of its own.
+      */}
+      <h2 className="mb-6 text-xs font-semibold uppercase tracking-[0.14em] text-zinc-500 dark:text-white/45 sm:mb-7 sm:text-sm">
+        {dict.proof.title}
+      </h2>
 
       <dl className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-4 sm:gap-x-8">
         {metrics.map((metric) => (
@@ -49,8 +134,26 @@ export const ProofMetrics = () => {
             <dt className="max-w-[34ch] text-[13px] leading-snug text-zinc-500 dark:text-white/50 sm:text-sm">
               {metric.label}
             </dt>
-            <dd className="font-nohemi text-[32px] font-bold leading-none tracking-tight text-zinc-950 dark:text-white sm:text-[38px] lg:text-[44px]">
-              {metric.value}
+            <dd className="font-nohemi text-[32px] font-bold leading-none tracking-tight tabular-nums text-zinc-950 dark:text-white sm:text-[38px] lg:text-[44px]">
+              {metric.figure ? (
+                <>
+                  {/*
+                    The visible figure mutates every frame while counting, which
+                    is not something to read out. Assistive tech gets the settled
+                    value once, from a node nothing touches.
+                  */}
+                  <span className="sr-only">{metric.value}</span>
+                  <span aria-hidden>
+                    {metric.figure.prefix}
+                    <span data-count={metric.figure.count}>
+                      {metric.figure.count}
+                    </span>
+                    {metric.figure.suffix}
+                  </span>
+                </>
+              ) : (
+                metric.value
+              )}
             </dd>
           </div>
         ))}
