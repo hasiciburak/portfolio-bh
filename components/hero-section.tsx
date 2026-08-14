@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 
+import { AvailabilityBadge } from "@/components/availability-badge";
 import { HomeFixedSocialDock } from "@/components/home-fixed-social-dock";
 import { ResumeDownloadButton } from "@/components/resume-download-button";
 import { SiteSocialIcon } from "@/components/social-icons";
@@ -59,6 +60,12 @@ const HeroSection = ({ variant = "home" }: HeroSectionProps) => {
 
             <div className="flex min-h-0 min-w-0 flex-none flex-col px-4 lg:col-start-1 lg:row-start-1 lg:h-full lg:flex-1">
               <div className="flex w-full flex-col justify-start gap-5 sm:gap-6 lg:flex-1 lg:justify-center lg:gap-7">
+                {/*
+                  First `[data-intro-rise]` in the DOM, so the intro's staggered
+                  rise starts here and cascades down through the bio and the CTA.
+                */}
+                <AvailabilityBadge data-intro-rise="" className="w-fit" />
+
                 <h1
                   id="hero-heading"
                   className="max-w-xl font-nohemi font-extralight leading-[normal] tracking-tight text-zinc-950 text-[44px] sm:text-[48px] lg:text-7xl xl:text-8xl dark:text-[#fffffe]"

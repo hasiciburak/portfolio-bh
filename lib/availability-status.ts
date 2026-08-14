@@ -1,39 +1,22 @@
-export interface AvailabilityRow {
-  id: string;
-  label: string;
-  value: string;
+export interface AvailabilityStatus {
+  /** The state itself — the only part that carries the indicator dot. */
+  status: string;
+  /** Qualifiers, joined with a separator. Hidden below `sm` to keep the pill on one line. */
+  meta: string[];
 }
 
 /**
- * The three facts a recruiter screens on before they read anything else, laid out
- * the way a service status page lays out its components.
+ * The availability signal, sized to sit above the hero headline.
  *
- * Only `availability` carries an indicator dot: it is the one row describing a
- * state that can change. Location and work model are facts, and a health dot next
- * to "Istanbul" would be borrowing the metaphor past the point where it means
- * anything.
+ * Deliberately not "open to work": that phrase is visible to a current employer
+ * and overstates someone who is employed and not searching. "Open to the right
+ * opportunity" is both true and the more useful signal to a recruiter.
  *
- * Deliberately not listed: notice period and work-permit status. Both are useful
- * to a recruiter, but they are also details worth telling someone directly rather
- * than publishing — and an out-of-date notice period is worse than none.
+ * Notice period and work-permit status are left out. Both matter on a first
+ * screen, but they are worth saying directly rather than publishing — and a stale
+ * notice period is worse than none.
  */
-export const AVAILABILITY_ROWS: AvailabilityRow[] = [
-  {
-    id: "availability",
-    label: "Availability",
-    value: "Open to the right opportunity",
-  },
-  {
-    id: "location",
-    label: "Location",
-    value: "Istanbul, Turkey · GMT+3",
-  },
-  {
-    id: "work-model",
-    label: "Work model",
-    value: "Remote or hybrid",
-  },
-];
-
-/** The row whose value gets the live indicator. */
-export const AVAILABILITY_STATUS_ROW_ID = "availability";
+export const AVAILABILITY_STATUS: AvailabilityStatus = {
+  status: "Open to the right opportunity",
+  meta: ["Istanbul", "Remote or hybrid"],
+};
