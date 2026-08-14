@@ -1,3 +1,4 @@
+import AvailabilityStatusSection from "@/components/availability-status-section";
 import { HomeSectionIndex } from "@/components/home-section-index";
 import HeroSection from "@/components/hero-section";
 import MySkillsetSection from "@/components/my-skillset-section";
@@ -11,7 +12,8 @@ const Home = () => {
     <div className="flex w-full flex-1 flex-col bg-background">
       <HomeSectionIndex />
       <HeroSection variant="home" />
-      {/* Straight after the hero: the numbers do the arguing before "Why Hire Me" makes it. */}
+      {/* Availability first — it gates everything — then the numbers make the case. */}
+      <AvailabilityStatusSection />
       <ProofMetricsSection />
       <WhyHireMeSection />
       <ServicesSection />

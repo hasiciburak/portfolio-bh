@@ -25,6 +25,24 @@
     "downloading": "İndiriliyor…",
     "downloaded": "İndirildi"
   },
+  "availability": {
+    "title": "Müsaitlik",
+    "note": "Aktif olarak aramıyorum ama iyi tekliflere her zaman dönüş yapıyorum.",
+    "rows": {
+      "availability": {
+        "label": "Müsaitlik",
+        "value": "Doğru fırsata açık"
+      },
+      "location": {
+        "label": "Konum",
+        "value": "İstanbul, Türkiye · GMT+3"
+      },
+      "work-model": {
+        "label": "Çalışma modeli",
+        "value": "Uzaktan veya hibrit"
+      }
+    }
+  },
   "proof": {
     "title": "Sonuçlar",
     "metrics": {

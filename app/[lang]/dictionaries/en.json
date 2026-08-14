@@ -25,6 +25,24 @@
     "downloading": "Downloading…",
     "downloaded": "Downloaded"
   },
+  "availability": {
+    "title": "Availability",
+    "note": "Not actively looking — but a good offer always gets a reply.",
+    "rows": {
+      "availability": {
+        "label": "Availability",
+        "value": "Open to the right opportunity"
+      },
+      "location": {
+        "label": "Location",
+        "value": "Istanbul, Turkey · GMT+3"
+      },
+      "work-model": {
+        "label": "Work model",
+        "value": "Remote or hybrid"
+      }
+    }
+  },
   "proof": {
     "title": "Results",
     "metrics": {
