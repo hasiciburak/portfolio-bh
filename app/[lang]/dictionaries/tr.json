@@ -1,4 +1,9 @@
 {
+  "meta": {
+    "title": "Burak Haşıcı — Yazılım Mühendisi",
+    "description": "Yaklaşık 5 yıllık deneyimle React, Next.js ve React Native ürünleri geliştiren yazılım mühendisi; yapay zekâ araçları sürecin doğal bir parçası. İstanbul merkezli.",
+    "job_title": "Yazılım Mühendisi"
+  },
   "navigation": {
     "home": "Ana Sayfa",
     "projects": "Projeler",

@@ -9,6 +9,13 @@ import {
   hasProjectSlug,
 } from "@/lib/project-content";
 import { findProject } from "@/lib/projects";
+import {
+  OG_IMAGE,
+  OG_LOCALE,
+  SITE_NAME,
+  languageAlternates,
+  localeUrl,
+} from "@/lib/site-metadata";
 
 interface ProjectPageProps {
   params: Promise<{ lang: string; slug: string }>;
@@ -29,10 +36,32 @@ export const generateMetadata = async ({
   }
 
   const { metadata } = await getProjectContent(slug, lang);
+  const url = localeUrl(lang, `/projects/${slug}`);
 
   return {
-    title: `${metadata.name} — Burak Haşıcı`,
+    // The `— Burak Haşıcı` suffix now comes from the title template in
+    // `app/[lang]/layout.tsx`, so appending it here would double it up.
+    title: metadata.name,
     description: metadata.summary,
+    alternates: {
+      canonical: url,
+      languages: languageAlternates(`/projects/${slug}`),
+    },
+    openGraph: {
+      type: "article",
+      url,
+      siteName: SITE_NAME,
+      title: `${metadata.name} — ${SITE_NAME}`,
+      description: metadata.summary,
+      locale: OG_LOCALE[lang],
+      images: [OG_IMAGE],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${metadata.name} — ${SITE_NAME}`,
+      description: metadata.summary,
+      images: [OG_IMAGE],
+    },
   };
 };
 

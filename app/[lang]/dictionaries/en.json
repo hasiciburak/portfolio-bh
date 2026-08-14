@@ -1,4 +1,9 @@
 {
+  "meta": {
+    "title": "Burak Haşıcı — Software Engineer",
+    "description": "Software engineer with nearly 5 years of experience building React, Next.js and React Native products, with AI tooling native to the workflow. Based in Istanbul.",
+    "job_title": "Software Engineer"
+  },
   "navigation": {
     "home": "Home",
     "projects": "Projects",

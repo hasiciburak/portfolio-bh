@@ -42,7 +42,10 @@ export function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    // Skip all static assets, api, and internal paths
-    "/((?!api|_next/static|_next/image|images|companies|fonts|favicon.ico|manifest.webmanifest|apple-icon.png|icon.svg).*)",
+    // Skip all static assets, api, internal paths, and the metadata routes.
+    // The metadata ones matter: `/opengraph-image` carries no file extension, so
+    // without an exemption here it would be rewritten to `/en/opengraph-image` —
+    // a path that does not exist — and every social card would 404.
+    "/((?!api|_next/static|_next/image|images|companies|fonts|favicon.ico|manifest.webmanifest|apple-icon.png|icon.svg|opengraph-image|twitter-image|sitemap.xml|robots.txt).*)",
   ],
 };

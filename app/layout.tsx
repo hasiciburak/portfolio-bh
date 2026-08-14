@@ -4,6 +4,7 @@ import { Geist_Mono, Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { ThemeProvider } from "@/components/theme-provider";
 import { INTRO_BOOT_SCRIPT } from "@/lib/entrance-intro";
+import { SITE_NAME, SITE_ORIGIN } from "@/lib/site-metadata";
 import { SITE_TAB_TITLE } from "@/lib/site-tab-title";
 import "./globals.css";
 
@@ -26,10 +27,33 @@ const brandWordmark = localFont({
   display: "swap",
 });
 
+/*
+ * Base layer only. Everything locale-dependent — title, description, canonical,
+ * hreflang, Open Graph — is set by `app/[lang]/layout.tsx`, which is the first
+ * segment that knows which language it is rendering. What lives here is what is
+ * true for every route: the origin relative metadata URLs resolve against, and
+ * the crawler directives.
+ */
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_ORIGIN),
   title: SITE_TAB_TITLE,
   description:
     "Software developer and UI/UX designer based in Istanbul, Turkey.",
+  authors: [{ name: SITE_NAME, url: SITE_ORIGIN }],
+  creator: SITE_NAME,
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      // Let Google use the full OG image in results instead of a thumbnail, and
+      // stop it truncating the description to its default snippet length.
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
 };
 
 export default function RootLayout({
