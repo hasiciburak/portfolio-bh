@@ -5,36 +5,16 @@ import {
   type HomeSectionIndexId,
 } from "@/lib/home-section-index";
 import gsap from "gsap";
-import { ScrollSmoother } from "gsap/ScrollSmoother";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { usePathname } from "next/navigation";
 import { createPortal } from "react-dom";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 
+import { scrollToSectionId } from "@/lib/scroll-to-section";
 import { useDesktopViewport } from "@/lib/use-desktop-viewport";
 import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const scrollToSectionId = (id: HomeSectionIndexId, prefersReducedMotion: boolean) => {
-  const el = document.getElementById(id);
-  if (!el) return;
-
-  const smoother = ScrollSmoother.get();
-  if (smoother && !prefersReducedMotion) {
-    // scrollTo() lands the section flush against the viewport top, which puts its
-    // heading under the fixed header. scrollIntoView() below avoids that via the
-    // sections' `scroll-mt-24`; read the same value back so both paths agree.
-    const offset = Number.parseFloat(getComputedStyle(el).scrollMarginTop) || 0;
-    smoother.scrollTo(el, true, `top ${offset}px`);
-    return;
-  }
-
-  el.scrollIntoView({
-    block: "start",
-    behavior: prefersReducedMotion ? "auto" : "smooth",
-  });
-}
 
 export const HomeSectionIndex = () => {
   const pathname = usePathname();

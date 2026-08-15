@@ -6,11 +6,23 @@ import { AvailabilityBadge } from "@/components/availability-badge";
 import { HomeFixedSocialDock } from "@/components/home-fixed-social-dock";
 import { ResumeDownloadButton } from "@/components/resume-download-button";
 import { SiteSocialIcon } from "@/components/social-icons";
+import { scrollToSectionId } from "@/lib/scroll-to-section";
 import { SITE_SOCIAL_LINKS } from "@/lib/social-links";
+import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 import { useTranslation } from "@/components/language-provider";
 
 const glassPill =
   "inline-flex items-center justify-center gap-2.5 rounded-full border border-zinc-900/18 bg-white/72 px-4 py-2.5 text-base text-zinc-950 shadow-[0_10px_40px_rgb(15_23_42_/_0.08),inset_0_1px_0_rgb(255_255_255_/_0.92),inset_0_-1px_0_rgb(15_23_42_/_0.06)] backdrop-blur-xl backdrop-saturate-150 transition-colors hover:bg-white/90 dark:border-white/35 dark:bg-white/10 dark:text-white dark:shadow-[0_10px_40px_rgb(0_0_0_/_0.18),inset_0_1px_0_rgb(255_255_255_/_0.35),inset_0_-1px_0_rgb(0_0_0_/_0.08)] dark:hover:bg-white/15";
+
+/*
+ * The secondary CTA. Same shell as `glassPill` — radius, padding, blur, saturate —
+ * so the two read as one family, minus the white fill and the drop shadow, which
+ * is what makes it the quieter of the pair. An outline alone was too little: next
+ * to a blurred, shadowed pill a bare hairline reads as unfinished rather than
+ * secondary.
+ */
+const ghostPill =
+  "inline-flex items-center justify-center gap-2 rounded-full border border-zinc-900/20 bg-white/25 px-4 py-2.5 text-base leading-tight text-zinc-800 backdrop-blur-xl backdrop-saturate-150 transition-colors hover:border-zinc-900/35 hover:bg-white/45 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/25 dark:border-white/25 dark:bg-white/[0.06] dark:text-white/85 dark:hover:border-white/40 dark:hover:bg-white/12 dark:hover:text-white dark:focus-visible:ring-white/35";
 
 const mobileResumePill =
   "inline-flex items-center justify-center gap-2.5 rounded-full bg-zinc-950/[0.065] px-[15px] py-[10px] text-base text-zinc-950 backdrop-blur-[2px] transition-colors hover:bg-zinc-950/[0.1] dark:bg-[rgba(170,170,170,0.1)] dark:text-white dark:hover:bg-[rgba(170,170,170,0.16)]";
@@ -23,6 +35,7 @@ export interface HeroSectionProps {
 
 const HeroSection = ({ variant = "home" }: HeroSectionProps) => {
   const isHome = variant === "home";
+  const reduceMotion = usePrefersReducedMotion();
   const { dict } = useTranslation();
 
   return (
@@ -127,12 +140,27 @@ const HeroSection = ({ variant = "home" }: HeroSectionProps) => {
                     className={`${glassPill} w-fit lg:inline-flex`}
                     labelClassName="font-normal leading-tight"
                   />
+                  {/*
+                    The `href` stays real so the link survives without JS and can
+                    be opened in a new tab; the handler only takes over when it can
+                    do better, which on this page means handing the target to
+                    ScrollSmoother rather than letting the browser jump.
+                  */}
                   <a
                     href="#contact"
-                    className="inline-flex items-center gap-2 rounded-full border border-zinc-900/15 px-4 py-2.5 text-base text-zinc-700 outline-none transition-colors hover:border-zinc-900/30 hover:text-zinc-950 focus-visible:ring-2 focus-visible:ring-zinc-950/25 dark:border-white/20 dark:text-white/75 dark:hover:border-white/40 dark:hover:text-white dark:focus-visible:ring-white/35"
+                    onClick={(event) => {
+                      event.preventDefault();
+                      scrollToSectionId("contact", reduceMotion);
+                    }}
+                    className={`group/talk ${ghostPill}`}
                   >
                     {dict.navigation.contact}
-                    <span aria-hidden>&darr;</span>
+                    <span
+                      aria-hidden
+                      className="text-zinc-500 transition-transform duration-300 group-hover/talk:translate-y-0.5 dark:text-white/55"
+                    >
+                      &darr;
+                    </span>
                   </a>
                 </div>
 
