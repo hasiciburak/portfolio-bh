@@ -1,10 +1,10 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 
 import { AvailabilityBadge } from "@/components/availability-badge";
 import { HomeFixedSocialDock } from "@/components/home-fixed-social-dock";
-import { ResumeDownloadButton } from "@/components/resume-download-button";
 import { SiteSocialIcon } from "@/components/social-icons";
 import { scrollToSectionId } from "@/lib/scroll-to-section";
 import { SITE_SOCIAL_LINKS } from "@/lib/social-links";
@@ -31,10 +31,9 @@ const MOBILE_SOCIAL = SITE_SOCIAL_LINKS.slice(0, 4);
 
 /*
  * A speech bubble rather than the arrow this started as. The arrow described the
- * mechanism — the link scrolls down — but the CV button beside it is also a
- * downward arrow, and two down-arrows side by side read as the same gesture
- * twice. The bubble describes the destination instead, which is what the label
- * already says.
+ * mechanism — the link scrolls down — where the bubble describes the destination,
+ * which is what the label already says. It also keeps this button's mark distinct
+ * from the sheet of paper on the CV link beside it.
  */
 const TalkIcon = ({ className }: { className?: string }) => (
   <svg
@@ -55,6 +54,31 @@ const TalkIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
+const CvIcon = ({ className }: { className?: string }) => (
+  <svg
+    className={className}
+    width={16}
+    height={16}
+    viewBox="0 0 24 24"
+    fill="none"
+    aria-hidden
+  >
+    <path
+      d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"
+      stroke="currentColor"
+      strokeWidth={1.75}
+      strokeLinejoin="round"
+    />
+    <path
+      d="M14 3v5h5M9 13.5h6M9 17h4"
+      stroke="currentColor"
+      strokeWidth={1.75}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
 export interface HeroSectionProps {
   variant?: "home";
 }
@@ -62,7 +86,9 @@ export interface HeroSectionProps {
 const HeroSection = ({ variant = "home" }: HeroSectionProps) => {
   const isHome = variant === "home";
   const reduceMotion = usePrefersReducedMotion();
-  const { dict } = useTranslation();
+  const { dict, lang } = useTranslation();
+
+  const cvHref = lang === "tr" ? "/tr/cv" : "/cv";
 
   return (
     <section
@@ -153,19 +179,27 @@ const HeroSection = ({ variant = "home" }: HeroSectionProps) => {
                 </p>
 
                 {/*
-                  Two CTAs, deliberately unequal. Downloading the CV keeps the
-                  glass pill; talking is a quieter outline link, because a reader
-                  who is ready to write does not need persuading and one loud
-                  button beside another leaves neither looking like the next step.
+                  Two CTAs, deliberately unequal. The CV keeps the glass pill;
+                  talking is a quieter outline link, because a reader who is ready
+                  to write does not need persuading and one loud button beside
+                  another leaves neither looking like the next step.
+
+                  It sends the reader to the CV page rather than handing over the
+                  PDF. A download asks for the largest commitment at the moment of
+                  least interest — before anything on the page has been read — and
+                  the file is still one click away once they are there.
                 */}
                 <div
                   data-intro-rise=""
                   className="flex w-fit items-center gap-3 max-lg:hidden"
                 >
-                  <ResumeDownloadButton
-                    className={`${glassPill} w-fit lg:inline-flex`}
-                    labelClassName="font-normal leading-tight"
-                  />
+                  <Link
+                    href={cvHref}
+                    className={`group/cv ${glassPill} w-fit leading-tight lg:inline-flex`}
+                  >
+                    {dict.hero.view_cv}
+                    <CvIcon className="shrink-0 text-zinc-500 transition-colors group-hover/cv:text-zinc-800 dark:text-white/55 dark:group-hover/cv:text-white" />
+                  </Link>
                   {/*
                     The `href` stays real so the link survives without JS and can
                     be opened in a new tab; the handler only takes over when it can
@@ -203,10 +237,13 @@ const HeroSection = ({ variant = "home" }: HeroSectionProps) => {
                     </ul>
                   </nav>
 
-                  <ResumeDownloadButton
-                    className={`${mobileResumePill} inline-flex w-fit max-w-full`}
-                    labelClassName="text-center font-nohemi font-normal leading-[1.2]"
-                  />
+                  <Link
+                    href={cvHref}
+                    className={`${mobileResumePill} inline-flex w-fit max-w-full text-center font-nohemi leading-[1.2]`}
+                  >
+                    {dict.hero.view_cv}
+                    <CvIcon className="shrink-0 text-zinc-500 dark:text-white/70" />
+                  </Link>
                 </div>
               </div>
             </div>
