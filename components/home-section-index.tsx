@@ -12,22 +12,9 @@ import { createPortal } from "react-dom";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 
 import { useDesktopViewport } from "@/lib/use-desktop-viewport";
+import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const usePrefersReducedMotion = (): boolean => {
-  const [reduce, setReduce] = useState(false);
-
-  useLayoutEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setReduce(mq.matches);
-    update();
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
-  }, []);
-
-  return reduce;
-}
 
 const scrollToSectionId = (id: HomeSectionIndexId, prefersReducedMotion: boolean) => {
   const el = document.getElementById(id);

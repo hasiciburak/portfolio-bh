@@ -3,7 +3,9 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+
+import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 import { useTranslation } from "./language-provider";
 
 type LanguageSwitchProps = {
@@ -37,20 +39,6 @@ type IndicatorRect = {
 };
 
 gsap.registerPlugin(useGSAP);
-
-const usePrefersReducedMotion = (): boolean => {
-  const [reduce, setReduce] = useState(false);
-
-  useLayoutEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setReduce(mq.matches);
-    update();
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
-  }, []);
-
-  return reduce;
-};
 
 const measureRectAtIndex = (
   container: HTMLDivElement,

@@ -3,27 +3,14 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useRef } from "react";
 
 import { useSmoothScrollReady } from "@/components/smooth-scroll-provider";
 import { PROOF_METRICS } from "@/lib/proof-metrics";
+import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 import { useTranslation } from "@/components/language-provider";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
-
-const usePrefersReducedMotion = (): boolean => {
-  const [reduce, setReduce] = useState(false);
-
-  useLayoutEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setReduce(mq.matches);
-    update();
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
-  }, []);
-
-  return reduce;
-}
 
 /**
  * Splits a figure into the part that counts and the parts that don't.

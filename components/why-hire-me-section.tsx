@@ -4,28 +4,15 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useRef } from "react";
 
 import { isNativeTouchScroll, useSmoothScrollReady } from "@/components/smooth-scroll-provider";
 import { ProofMetrics } from "@/components/proof-metrics";
 import { HIRE_ME_REASONS } from "@/lib/hire-me-reasons";
+import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 import { useTranslation } from "@/components/language-provider";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
-
-const usePrefersReducedMotion = (): boolean => {
-  const [reduce, setReduce] = useState(false);
-
-  useLayoutEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setReduce(mq.matches);
-    update();
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
-  }, []);
-
-  return reduce;
-}
 
 const WhyHireMeSection = () => {
   const pinRootRef = useRef<HTMLElement>(null);

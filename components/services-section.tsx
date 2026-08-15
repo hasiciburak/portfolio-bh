@@ -3,27 +3,14 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useLayoutEffect, useRef, useState, type CSSProperties } from "react";
+import { useRef, type CSSProperties } from "react";
 
 import { useSmoothScrollReady } from "@/components/smooth-scroll-provider";
 import { SERVICE_OFFERINGS } from "@/lib/services";
+import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 import { useTranslation } from "@/components/language-provider";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
-
-const usePrefersReducedMotion = (): boolean => {
-  const [reduce, setReduce] = useState(false);
-
-  useLayoutEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setReduce(mq.matches);
-    update();
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
-  }, []);
-
-  return reduce;
-}
 
 /**
  * Desktop scatter, one entry per card. `x` is a percentage of the deck's width and the
