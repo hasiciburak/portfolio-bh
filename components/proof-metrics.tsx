@@ -121,7 +121,12 @@ export const ProofMetrics = () => {
             <dt className="max-w-[34ch] text-[13px] leading-snug text-zinc-500 dark:text-white/50 sm:text-sm">
               {metric.label}
             </dt>
-            <dd className="font-nohemi text-[32px] font-bold leading-none tracking-tight tabular-nums text-zinc-950 dark:text-white sm:text-[38px] lg:text-[44px]">
+            {/*
+              Stops short of the 64px "Why Hire Me" heading below on purpose —
+              these are the section's evidence, not a second title competing with
+              the one it introduces.
+            */}
+            <dd className="font-nohemi text-[38px] font-bold leading-none tracking-tight tabular-nums text-zinc-950 dark:text-white sm:text-[46px] lg:text-[56px]">
               {metric.figure ? (
                 <>
                   {/*
