@@ -94,7 +94,7 @@ export const ProofMetrics = () => {
   return (
     <div
       ref={rootRef}
-      className="mx-auto w-full max-w-7xl px-4 pt-14 sm:pt-16 lg:pt-20"
+      className="mx-auto w-full max-w-7xl px-4 pt-10 sm:pt-12 lg:pt-12"
     >
       {/*
         An eyebrow rather than a heading, matching the Services section's. A full

@@ -28,10 +28,24 @@ const HeroSection = ({ variant = "home" }: HeroSectionProps) => {
   return (
     <section
       id="hero"
-      className="flex w-full min-h-[100svh] flex-col overflow-x-clip scroll-mt-24 bg-zinc-50 font-sans text-zinc-950 dark:bg-zinc-950 dark:text-white"
+      /*
+       * Full-viewport from `lg` only. The desktop hero earns its height from the
+       * full-bleed portrait column; on mobile that portrait is a fixed 304px
+       * square and the copy packs to the top, so forcing 100svh just parked ~300px
+       * of dead space under the CTA. Sized to its content, the section now ends
+       * with the next one showing — which reads as "keep going" rather than "the
+       * page stopped".
+       */
+      className="flex w-full flex-col overflow-x-clip scroll-mt-24 bg-zinc-50 font-sans text-zinc-950 lg:min-h-[100svh] dark:bg-zinc-950 dark:text-white"
       aria-labelledby="hero-heading"
     >
-      <div className="flex w-full flex-1 flex-col pb-16 sm:pb-24 lg:pb-32">
+      {/*
+        Bottom padding stays modest because the column above already centres its
+        content in a full-viewport grid: whatever is set here lands on top of that
+        centring slack rather than instead of it, and the two together are what
+        opened a 568px hole between the CTA and the section below.
+      */}
+      <div className="flex w-full flex-1 flex-col pb-12 sm:pb-16 lg:pb-16">
         <div className="relative flex flex-1 flex-col">
           <div className="flex flex-1 flex-col gap-6 sm:gap-8 lg:grid lg:min-h-[min(935px,100svh)] lg:grid-cols-2 lg:items-stretch lg:gap-16 xl:gap-20">
             <div
