@@ -64,8 +64,8 @@ export interface ProjectListItem {
   liveUrl?: string;
   tech: SkillItem[];
   detailHref: string;
-  /** First gallery slide, used as the hover preview on the list. */
-  preview?: ProjectGalleryImage;
+  /** Case-study screenshots, scrubbed through by the list's hover preview. */
+  gallery: ProjectGalleryImage[];
 }
 
 /**
@@ -103,7 +103,7 @@ export const getProjectListItems = async (
         liveUrl: project.liveUrl,
         tech: project.tech,
         detailHref: projectHref(project.id, locale),
-        preview: metadata.gallery[0],
+        gallery: metadata.gallery,
       };
     }),
   );

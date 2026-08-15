@@ -43,9 +43,15 @@ const ProjectsSection = ({
   /*
    * One preview element for the whole list rather than one per row: only ever a
    * single row is hovered, and a per-row element would mount a portal per project.
+   *
+   * `shownId` lags `hoveredId` on the way out — it keeps the last project's images
+   * mounted so the preview can fade out. Clearing both at once unmounted the
+   * element mid-tween and the exit never played.
    */
   const [hoveredId, setHoveredId] = useState<string | null>(null);
-  const hovered = projects.find((project) => project.id === hoveredId);
+  const [shownId, setShownId] = useState<string | null>(null);
+  const [slide, setSlide] = useState(0);
+  const shown = projects.find((project) => project.id === shownId);
 
   return (
     <section
@@ -55,7 +61,11 @@ const ProjectsSection = ({
       }`}
       aria-labelledby="projects-heading"
     >
-      <ProjectHoverPreview image={hovered?.preview} active={Boolean(hovered)} />
+      <ProjectHoverPreview
+        images={shown?.gallery}
+        index={slide}
+        active={hoveredId !== null}
+      />
 
       <div className="mx-auto w-full max-w-5xl px-4 py-16 sm:py-20 lg:py-28">
         <header
@@ -89,6 +99,30 @@ const ProjectsSection = ({
                 // that hover, and `ProjectHoverPreview` gates on width besides.
                 if (event.pointerType === "touch") return;
                 setHoveredId(project.id);
+                setShownId(project.id);
+              }}
+              onPointerMove={(event) => {
+                if (event.pointerType === "touch") return;
+
+                /*
+                 * Sweeping the row left to right scrubs the case study's gallery,
+                 * so one pass across a project is a pass through its screenshots.
+                 *
+                 * The rect is read per move rather than cached on enter: the row
+                 * travels under a stationary pointer whenever the page scrolls,
+                 * and a cached rect would map the cursor to the wrong slide.
+                 * Pointer moves are coalesced to a frame, so this is one read per
+                 * frame at most.
+                 */
+                const { left, width } =
+                  event.currentTarget.getBoundingClientRect();
+                const count = project.gallery.length;
+                if (count < 2 || width === 0) return;
+
+                const ratio = (event.clientX - left) / width;
+                setSlide(
+                  Math.min(count - 1, Math.max(0, Math.floor(ratio * count))),
+                );
               }}
               onPointerLeave={() => setHoveredId(null)}
             >

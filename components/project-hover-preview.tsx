@@ -16,7 +16,8 @@ const WIDTH = 260;
 const HEIGHT = 168;
 
 /**
- * A screenshot that trails the pointer while a project row is hovered.
+ * A screenshot that trails the pointer while a project row is hovered, scrubbing
+ * through that project's gallery as the pointer crosses the row.
  *
  * Portalled to `document.body` rather than rendered in place: `#smooth-content`
  * carries a transform for ScrollSmoother, and a transformed ancestor makes
@@ -29,10 +30,12 @@ const HEIGHT = 168;
  * year as text.
  */
 export const ProjectHoverPreview = ({
-  image,
+  images,
+  index,
   active,
 }: {
-  image?: ProjectGalleryImage;
+  images?: ProjectGalleryImage[];
+  index: number;
   active: boolean;
 }) => {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -47,7 +50,7 @@ export const ProjectHoverPreview = ({
    * client render — which is exactly the window in which `createPortal` must not
    * reach for `document.body`.
    */
-  const enabled = isDesktop && !reduceMotion && Boolean(image);
+  const enabled = isDesktop && !reduceMotion && Boolean(images?.length);
 
   useGSAP(
     () => {
@@ -97,7 +100,7 @@ export const ProjectHoverPreview = ({
     { dependencies: [active, enabled] },
   );
 
-  if (!enabled || !image) return null;
+  if (!enabled || !images?.length) return null;
 
   return createPortal(
     <div
@@ -106,14 +109,26 @@ export const ProjectHoverPreview = ({
       className="pointer-events-none fixed left-0 top-0 z-[60] overflow-hidden rounded-xl border border-zinc-950/10 opacity-0 shadow-[0_18px_50px_rgb(9_9_11_/_0.22)] dark:border-white/15"
       style={{ width: WIDTH, height: HEIGHT }}
     >
-      <Image
-        src={image.src}
-        alt=""
-        width={image.width}
-        height={image.height}
-        sizes={`${WIDTH}px`}
-        className="h-full w-full object-cover"
-      />
+      {/*
+        Every slide is mounted and cross-faded by opacity rather than swapping one
+        `src`. Scrubbing changes the image several times per sweep, and a single
+        swapped element would re-request on each change and flash white while the
+        next file arrived. Mounted together they are fetched once, on the first
+        hover — this component renders nothing until then.
+      */}
+      {images.map((image, slide) => (
+        <Image
+          key={image.src}
+          src={image.src}
+          alt=""
+          width={image.width}
+          height={image.height}
+          sizes={`${WIDTH}px`}
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-200 ${
+            slide === index ? "opacity-100" : "opacity-0"
+          }`}
+        />
+      ))}
     </div>,
     document.body,
   );
