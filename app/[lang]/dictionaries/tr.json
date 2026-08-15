@@ -186,7 +186,17 @@
     "copy": "Kopyala",
     "copied": "Kopyalandı",
     "copy_failed": "Kopyalanamadı — yukarıdan seçin",
-    "copy_label": "E-posta adresini kopyala"
+    "copy_label": "E-posta adresini kopyala",
+    "form_name": "Ad",
+    "form_email": "E-posta",
+    "form_message": "Mesaj",
+    "form_send": "Mesajı gönder",
+    "form_sending": "Gönderiliyor…",
+    "form_sent": "Teşekkürler — en kısa sürede döneceğim.",
+    "form_error": "Gönderilemedi. Yukarıdaki adresten yazabilirsin.",
+    "form_name_required": "Adınızı girin",
+    "form_email_invalid": "Geçerli bir e-posta adresi girin",
+    "form_message_required": "Bir mesaj yazın"
   },
   "footer": {
     "credits": "Figma ile tasarlandı, Next.js ve Tailwind CSS ile geliştirildi.",

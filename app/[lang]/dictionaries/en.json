@@ -186,7 +186,17 @@
     "copy": "Copy",
     "copied": "Copied",
     "copy_failed": "Couldn't copy — select it above",
-    "copy_label": "Copy email address"
+    "copy_label": "Copy email address",
+    "form_name": "Name",
+    "form_email": "Email",
+    "form_message": "Message",
+    "form_send": "Send message",
+    "form_sending": "Sending…",
+    "form_sent": "Thanks — I'll get back to you.",
+    "form_error": "Couldn't send. Email me directly above.",
+    "form_name_required": "Enter your name",
+    "form_email_invalid": "Enter a valid email address",
+    "form_message_required": "Enter a message"
   },
   "footer": {
     "credits": "Designed in Figma, built with Next.js & Tailwind CSS.",

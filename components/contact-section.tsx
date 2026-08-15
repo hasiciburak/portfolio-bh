@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
+import { ContactForm } from "@/components/contact-form";
 import { useTranslation } from "@/components/language-provider";
 import { buildContactMailto, contactAddress } from "@/lib/contact-mailto";
 import { SECTION_EYEBROW } from "@/lib/section-eyebrow";
@@ -156,6 +157,11 @@ export const ContactSection = () => {
           {status === "failed" ? copy.copy_failed : null}
         </span>
 
+        {/*
+          The form is the lower-friction path; the address above is the one that
+          cannot break. Neither replaces the other, which is why both are here.
+        */}
+        <ContactForm />
       </div>
     </section>
   );
