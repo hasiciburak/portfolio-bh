@@ -151,9 +151,10 @@ const ServicesSection = () => {
                 <div className="services-card-reveal">
                   {/* Lift, shadow and their timing live on `.services-card` in globals.css. */}
                   <article className="services-card flex gap-4 rounded-2xl border border-zinc-950/10 bg-linear-to-b from-white to-zinc-100 p-5 hover:border-zinc-950/20 dark:border-white/12 dark:from-zinc-900 dark:to-zinc-950 dark:hover:border-white/25 lg:min-h-[248px] lg:flex-col lg:gap-0 lg:p-6 xl:min-h-[268px]">
+                    {/* Colour and its hover state live on `.services-card-index` in globals.css. */}
                     <p
                       aria-hidden
-                      className="shrink-0 font-nohemi text-[32px] font-black leading-none tracking-tight text-zinc-950/15 dark:text-white/15 lg:text-[60px] xl:text-[64px]"
+                      className="services-card-index shrink-0 font-nohemi text-[32px] font-black leading-none tracking-tight lg:text-[60px] xl:text-[64px]"
                     >
                       {String(index + 1).padStart(2, "0")}
                     </p>
