@@ -483,3 +483,53 @@ html[data-intro="reduced"] [data-intro-rise] {
     mask-image: none;
   }
 }
+
+/*
+ * The CV page in print. A recruiter's first instinct with a CV in a tab is Cmd+P,
+ * and what came out was the screen: dark ground, a fixed header stamped over the
+ * first section, and roles broken across sheets mid-bullet.
+ *
+ * Colour is forced back to ink on white rather than left to the browser's own
+ * "background graphics off" default, which drops the fills but keeps the pale
+ * text that was drawn for a dark ground — white on white.
+ */
+@media print {
+  .cv-document,
+  .cv-document * {
+    color: #18181b !important;
+    background: transparent !important;
+    /* Print engines already lay the page out at paper width; the shadows and rings
+       are screen affordances that survive as grey smudges. */
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  .cv-document a {
+    text-decoration: none;
+  }
+
+  /* Chrome and the dock, the entrance curtain, the download button: none of them
+     mean anything on paper. */
+  header[data-intro-chrome],
+  .cv-no-print,
+  footer[aria-label="Site"] {
+    display: none !important;
+  }
+
+  .cv-document {
+    max-width: none;
+    padding: 0 !important;
+  }
+
+  /* A role, a school or a skill group reads as one unit — better a short page than
+     a heading orphaned at the foot of one. */
+  .cv-block {
+    break-inside: avoid;
+  }
+
+  .cv-document h1,
+  .cv-document h2,
+  .cv-document h3 {
+    break-after: avoid;
+  }
+}

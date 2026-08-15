@@ -15,6 +15,7 @@ const sitemap = (): MetadataRoute.Sitemap => {
   const staticPaths = [
     { path: "/", priority: 1, changeFrequency: "monthly" as const },
     { path: "/projects", priority: 0.8, changeFrequency: "monthly" as const },
+    { path: "/cv", priority: 0.8, changeFrequency: "monthly" as const },
   ];
 
   const projectPaths = PROJECT_SLUGS.map((slug) => ({

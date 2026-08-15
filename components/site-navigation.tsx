@@ -100,6 +100,7 @@ export const SiteNavigation = () => {
   const NAV_ITEMS = [
     { href: lang === "tr" ? "/tr" : "/", label: dict.navigation.home },
     { href: lang === "tr" ? "/tr/projects" : "/projects", label: dict.navigation.projects },
+    { href: lang === "tr" ? "/tr/cv" : "/cv", label: dict.cv.nav_label },
   ];
 
   useEffect(() => {

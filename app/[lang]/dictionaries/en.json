@@ -224,5 +224,41 @@
     "gallery_next": "Next screenshot",
     "gallery_expand": "View full size",
     "gallery_close": "Close"
+  },
+  "cv": {
+    "nav_label": "CV",
+    "eyebrow": "Curriculum vitae",
+    "role": "Software Engineer",
+    "meta_description": "The full CV of Burak Haşıcı, software engineer in Istanbul — experience, stack, education and languages on one page.",
+    "summary_heading": "Summary",
+    "summary": "Software engineer with nearly five years across the frontend and the server behind it: React, Next.js, Node.js, NestJS, React Native. Now on HqO’s and Leesman’s platforms, where internal tools I built cut 4–7 hour workflows down to 5 minutes.",
+    "experience_heading": "Experience",
+    "skills_heading": "Technical skills",
+    "education_heading": "Education",
+    "languages_heading": "Languages",
+    "contact_heading": "Contact",
+    "location_label": "Location",
+    "location": "Istanbul, Turkey",
+    "phone_label": "Phone",
+    "email_label": "Email",
+    "profiles_label": "Profiles",
+    "print_hint": "Print this page for a PDF, or take the one below.",
+    "education_entries": {
+      "bahcesehir": {
+        "school": "Bahçeşehir University",
+        "degree": "Marketing, Master’s Degree",
+        "date": "Feb 24’ - Jun 25’"
+      },
+      "kultur": {
+        "school": "Istanbul Kültür University",
+        "degree": "Industrial Engineering, Bachelor’s Degree",
+        "date": "Sep 16’ - Mar 22’"
+      }
+    },
+    "languages_spoken": {
+      "turkish": { "name": "Turkish", "level": "Native" },
+      "english": { "name": "English", "level": "C1" },
+      "german": { "name": "German", "level": "A2" }
+    }
   }
 }

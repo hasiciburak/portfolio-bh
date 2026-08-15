@@ -224,5 +224,41 @@
     "gallery_next": "Sonraki ekran görüntüsü",
     "gallery_expand": "Tam boyutta görüntüle",
     "gallery_close": "Kapat"
+  },
+  "cv": {
+    "nav_label": "CV",
+    "eyebrow": "Özgeçmiş",
+    "role": "Yazılım Mühendisi",
+    "meta_description": "Burak Haşıcı’nın tam özgeçmişi — İstanbul’da yazılım mühendisi: deneyim, teknoloji yığını, eğitim ve diller tek sayfada.",
+    "summary_heading": "Özet",
+    "summary": "Yaklaşık beş yıldır hem arayüzü hem arkasındaki sunucuyu yazan bir yazılım mühendisi: React, Next.js, Node.js, NestJS, React Native. Şu anda HqO ve Leesman platformlarında; geliştirdiğim iç araçlar 4–7 saat süren işleri 5 dakikaya indirdi.",
+    "experience_heading": "Deneyim",
+    "skills_heading": "Teknik Yetenekler",
+    "education_heading": "Eğitim",
+    "languages_heading": "Diller",
+    "contact_heading": "İletişim",
+    "location_label": "Konum",
+    "location": "İstanbul, Türkiye",
+    "phone_label": "Telefon",
+    "email_label": "E-posta",
+    "profiles_label": "Profiller",
+    "print_hint": "Sayfayı yazdırarak PDF alabilir ya da aşağıdakini indirebilirsin.",
+    "education_entries": {
+      "bahcesehir": {
+        "school": "Bahçeşehir Üniversitesi",
+        "degree": "Pazarlama, Yüksek Lisans",
+        "date": "Şub 24’ - Haz 25’"
+      },
+      "kultur": {
+        "school": "İstanbul Kültür Üniversitesi",
+        "degree": "Endüstri Mühendisliği, Lisans",
+        "date": "Eyl 16’ - Mar 22’"
+      }
+    },
+    "languages_spoken": {
+      "turkish": { "name": "Türkçe", "level": "Ana dil" },
+      "english": { "name": "İngilizce", "level": "C1" },
+      "german": { "name": "Almanca", "level": "A2" }
+    }
   }
 }
