@@ -112,7 +112,12 @@ export const ContactSection = () => {
           deliberate end — an edge to stop at — rather than the copy and the form
           trailing off into the footer on the same flat ground.
         */}
-        <div className="rounded-3xl border border-zinc-950/10 bg-white/70 p-6 sm:p-10 lg:p-12 dark:border-white/12 dark:bg-white/[0.04]">
+        {/*
+          No panel on a phone. At 375px its border sits a thumb's width from both
+          screen edges and its padding eats the room the fields need, for an
+          enclosure the single-column stack already reads as without it.
+        */}
+        <div className="sm:rounded-3xl sm:border sm:border-zinc-950/10 sm:bg-white/70 sm:p-10 lg:p-12 sm:dark:border-white/12 sm:dark:bg-white/[0.04]">
           {/* Centred intro, two-column body — the same shape the Services section uses. */}
           <header className="mx-auto max-w-2xl text-center">
             <p className={SECTION_EYEBROW}>{copy.eyebrow}</p>
