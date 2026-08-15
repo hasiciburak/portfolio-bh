@@ -260,6 +260,13 @@ html[data-intro="reduced"] [data-intro-rise] {
   --card-shadow-hover: rgb(13 148 136 / 0.26);
   --card-index: rgb(9 9 11 / 0.15);
   --card-index-hover: rgb(13 148 136 / 0.7);
+  /*
+   * The arrow rests darker than the numeral it sits opposite. The numeral is
+   * decoration and can afford to be almost invisible; the arrow is the only
+   * standing sign that the card goes somewhere, and it has to read on a phone,
+   * where there is no hover to reveal it.
+   */
+  --card-arrow: rgb(9 9 11 / 0.3);
 }
 
 .dark .services-card-reveal {
@@ -268,6 +275,7 @@ html[data-intro="reduced"] [data-intro-rise] {
   --card-shadow-hover: rgb(45 212 191 / 0.3);
   --card-index: rgb(255 255 255 / 0.15);
   --card-index-hover: rgb(45 212 191 / 0.8);
+  --card-arrow: rgb(255 255 255 / 0.3);
 }
 
 /*
@@ -322,6 +330,13 @@ html[data-intro="reduced"] [data-intro-rise] {
   transition: color 220ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+.services-card-arrow {
+  color: var(--card-arrow);
+  transition:
+    color 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 /*
  * `hover: hover` keeps the lift off touch screens, where :hover latches on tap and
  * leaves a card stuck in its raised state until something else is tapped. The
@@ -342,16 +357,34 @@ html[data-intro="reduced"] [data-intro-rise] {
   .services-card-reveal:hover .services-card-index {
     color: var(--card-index-hover);
   }
+
+  .services-card-reveal:hover .services-card-arrow {
+    color: var(--card-index-hover);
+    transform: translate3d(2px, -2px, 0);
+  }
+}
+
+/*
+ * Keyboard focus gets the accent too — outside the `hover: hover` block, because a
+ * keyboard is not a pointer. The lift stays a hover-only affair: the focus ring on
+ * the card already says where focus is, and moving the card under it would only
+ * drag the ring around.
+ */
+.services-card:focus-visible .services-card-index,
+.services-card:focus-visible .services-card-arrow {
+  color: var(--card-index-hover);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .services-card,
   .services-card-index,
+  .services-card-arrow,
   .services-card-reveal::before {
     transition: none;
   }
 
-  .services-card-reveal:hover .services-card {
+  .services-card-reveal:hover .services-card,
+  .services-card-reveal:hover .services-card-arrow {
     transform: none;
   }
 }

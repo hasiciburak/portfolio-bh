@@ -80,6 +80,7 @@
     "eyebrow": "Ne yapıyorum",
     "title": "Ekibinizin ürün çıkarmasına yardım edebileceğim altı alan",
     "subtitle": "İlk Figma çerçevesinden canlı yayına kadar — ihtiyacınız olan parçayı ya da sürecin tamamını devralırım.",
+    "card_cta": "{service} hakkında yaz",
     "offerings": {
       "frontend": {
         "title": "Frontend Geliştirme",
@@ -200,7 +201,8 @@
     "form_error": "Gönderilemedi. Yukarıdaki adresten yazabilirsin.",
     "form_name_required": "Adınızı girin",
     "form_email_invalid": "Geçerli bir e-posta adresi girin",
-    "form_message_required": "Bir mesaj yazın"
+    "form_message_required": "Bir mesaj yazın",
+    "form_prefill": "Merhaba Burak — {service} konusunda desteğine ihtiyacımız var."
   },
   "footer": {
     "credits": "Figma ile tasarlandı, Next.js ve Tailwind CSS ile geliştirildi.",

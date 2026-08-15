@@ -6,6 +6,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef, type CSSProperties } from "react";
 
 import { useSmoothScrollReady } from "@/components/smooth-scroll-provider";
+import { requestContactPrefill } from "@/lib/contact-prefill";
+import { scrollToSectionId } from "@/lib/scroll-to-section";
 import { SECTION_EYEBROW } from "@/lib/section-eyebrow";
 import { SERVICE_OFFERINGS } from "@/lib/services";
 import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
@@ -32,6 +34,29 @@ const DECK_SLOTS = [
   { x: "50%", y: 408, rotate: -2 },
   { x: "83%", y: 376, rotate: 1.5 },
 ];
+
+/** Fills the one slot the service copy in the dictionaries leaves open. */
+const withService = (template: string, service: string) =>
+  template.replace("{service}", service);
+
+const ArrowIcon = () => (
+  <svg
+    aria-hidden
+    viewBox="0 0 24 24"
+    width={20}
+    height={20}
+    fill="none"
+    className="services-card-arrow absolute right-4 top-4 lg:right-5 lg:top-5"
+  >
+    <path
+      d="M7 17L17 7M17 7H9M17 7v8"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
 
 const ServicesSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -148,8 +173,42 @@ const ServicesSection = () => {
                   inline transform written by GSAP would otherwise outrank.
                 */}
                 <div className="services-card-reveal">
+                  {/*
+                    A link, not a button: the card's destination is the contact
+                    section, which has a real `#contact` address — so a middle
+                    click, a modified click and a screen reader's link list all
+                    behave the way they should, and the handler below only takes
+                    over the plain case it can improve on.
+
+                    Named for what it does rather than by its contents, which as a
+                    link would read as the whole card — number, copy and the
+                    keyword list — before the visitor heard where it goes.
+                  */}
                   {/* Lift, shadow and their timing live on `.services-card` in globals.css. */}
-                  <article className="services-card flex gap-4 rounded-2xl border border-zinc-950/10 bg-linear-to-b from-white to-zinc-100 p-5 hover:border-zinc-950/20 dark:border-white/12 dark:from-zinc-900 dark:to-zinc-950 dark:hover:border-white/25 lg:min-h-[248px] lg:flex-col lg:gap-0 lg:p-6 xl:min-h-[268px]">
+                  <a
+                    href="#contact"
+                    aria-label={withService(dict.services.card_cta, service.title)}
+                    onClick={(event) => {
+                      if (
+                        event.metaKey ||
+                        event.ctrlKey ||
+                        event.shiftKey ||
+                        event.altKey ||
+                        event.button !== 0
+                      )
+                        return;
+
+                      event.preventDefault();
+                      // Written before the scroll starts, so the form is already
+                      // filled in by the time it comes into view.
+                      requestContactPrefill(
+                        withService(dict.contact.form_prefill, service.title),
+                      );
+                      scrollToSectionId("contact", reduceMotion);
+                    }}
+                    className="services-card flex gap-4 rounded-2xl border border-zinc-950/10 bg-linear-to-b from-white to-zinc-100 p-5 outline-none hover:border-zinc-950/20 focus-visible:ring-2 focus-visible:ring-zinc-950/25 dark:border-white/12 dark:from-zinc-900 dark:to-zinc-950 dark:hover:border-white/25 dark:focus-visible:ring-white/35 lg:min-h-[248px] lg:flex-col lg:gap-0 lg:p-6 xl:min-h-[268px]"
+                  >
+                    <ArrowIcon />
                     {/* Colour and its hover state live on `.services-card-index` in globals.css. */}
                     <p
                       aria-hidden
@@ -158,8 +217,13 @@ const ServicesSection = () => {
                       {String(index + 1).padStart(2, "0")}
                     </p>
 
-                    {/* `mt-auto` only bites once the card is a column: number pinned top, copy bottom. */}
-                    <div className="min-w-0 lg:mt-auto lg:pt-6">
+                    {/*
+                      `mt-auto` only bites once the card is a column: number pinned top,
+                      copy bottom. The right padding is for the arrow, which on a phone
+                      shares its line with the title; from `lg` the copy has dropped to
+                      the foot of the card and the corner is clear again.
+                    */}
+                    <div className="min-w-0 pr-7 lg:mt-auto lg:pr-0 lg:pt-6">
                       <h3 className="font-nohemi text-lg font-bold leading-[1.2] text-zinc-950 dark:text-white sm:text-xl xl:text-[22px]">
                         {service.title}
                       </h3>
@@ -170,7 +234,7 @@ const ServicesSection = () => {
                         {service.keywords.join(" · ")}
                       </p>
                     </div>
-                  </article>
+                  </a>
                 </div>
               </li>
             );

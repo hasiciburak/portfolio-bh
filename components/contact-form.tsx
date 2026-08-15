@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { useTranslation } from "@/components/language-provider";
+import { onContactPrefill } from "@/lib/contact-prefill";
 
 type Status = "idle" | "sending" | "sent" | "error";
 type Field = "name" | "email" | "message";
@@ -34,6 +35,38 @@ export const ContactForm = () => {
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<Partial<Record<Field, string>>>({});
 
+  /*
+   * Only the message is controlled, because it is the only field anything else on
+   * the page writes to. Name and email stay uncontrolled so the browser's own
+   * autofill keeps working without React arguing with it.
+   */
+  const [message, setMessage] = useState("");
+  const messageRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(
+    () =>
+      onContactPrefill((next) => {
+        setMessage(next);
+        setErrors((prev) => (prev.message ? { ...prev, message: undefined } : prev));
+
+        const field = messageRef.current;
+        if (!field) return;
+
+        /*
+         * `preventScroll`, because a service card fires this while ScrollSmoother is
+         * still easing the page toward the section — letting focus scroll as well
+         * would land the two on different positions. And no focus at all on touch,
+         * where it would throw the keyboard up over the section the visitor was
+         * being sent to look at.
+         */
+        if (!window.matchMedia("(hover: hover)").matches) return;
+        field.focus({ preventScroll: true });
+        // Caret after the prepared line, ready to keep typing rather than overwrite it.
+        field.setSelectionRange(next.length, next.length);
+      }),
+    [],
+  );
+
   const validate = (values: Record<Field, string>) => {
     const next: Partial<Record<Field, string>> = {};
     if (!values.name.trim()) next.name = copy.form_name_required;
@@ -47,7 +80,14 @@ export const ContactForm = () => {
     event.preventDefault();
     if (status === "sending") return;
 
-    const data = new FormData(event.currentTarget);
+    /*
+     * Held in a local, not read off the event after the await: React nulls
+     * `currentTarget` once the handler returns, and the reset below runs a network
+     * round trip later — long after that. Reading it there threw, the throw landed
+     * in the catch, and a message that had just been delivered reported as failed.
+     */
+    const form = event.currentTarget;
+    const data = new FormData(form);
     const values = {
       name: String(data.get("name") ?? ""),
       email: String(data.get("email") ?? ""),
@@ -73,7 +113,9 @@ export const ContactForm = () => {
       if (!response.ok) throw new Error(String(response.status));
 
       setStatus("sent");
-      event.currentTarget.reset();
+      form.reset();
+      // `reset()` cannot clear a controlled field; the state behind it has to go too.
+      setMessage("");
     } catch {
       setStatus("error");
     }
@@ -142,10 +184,15 @@ export const ContactForm = () => {
         <textarea
           id="contact-message"
           name="message"
+          ref={messageRef}
           rows={5}
           placeholder={copy.form_message_placeholder}
           maxLength={4000}
-          onChange={() => clearError("message")}
+          value={message}
+          onChange={(event) => {
+            setMessage(event.target.value);
+            clearError("message");
+          }}
           aria-invalid={Boolean(errors.message)}
           aria-describedby={errors.message ? "contact-message-error" : undefined}
           className={`${FIELD_BASE} resize-y ${errors.message ? FIELD_INVALID : ""}`}

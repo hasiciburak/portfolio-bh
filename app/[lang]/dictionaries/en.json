@@ -80,6 +80,7 @@
     "eyebrow": "What I do",
     "title": "Six ways I can help your team ship",
     "subtitle": "From the first Figma frame to the production deploy — take the part you need, or the whole run.",
+    "card_cta": "Talk to me about {service}",
     "offerings": {
       "frontend": {
         "title": "Frontend Development",
@@ -200,7 +201,8 @@
     "form_error": "Couldn't send. Email me directly above.",
     "form_name_required": "Enter your name",
     "form_email_invalid": "Enter a valid email address",
-    "form_message_required": "Enter a message"
+    "form_message_required": "Enter a message",
+    "form_prefill": "Hi Burak — we'd like your help with {service}."
   },
   "footer": {
     "credits": "Designed in Figma, built with Next.js & Tailwind CSS.",
