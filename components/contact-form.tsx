@@ -29,7 +29,7 @@ const FIELD_INVALID =
  * rather than as a generic failure after a round trip.
  */
 export const ContactForm = () => {
-  const { dict } = useTranslation();
+  const { dict, lang } = useTranslation();
   const copy = dict.contact;
 
   const [status, setStatus] = useState<Status>("idle");
@@ -107,6 +107,9 @@ export const ContactForm = () => {
         body: JSON.stringify({
           ...values,
           company: String(data.get("company") ?? ""),
+          // Which language they were reading. Tells me which locale is actually
+          // being used, and which one to answer in.
+          lang,
         }),
       });
 

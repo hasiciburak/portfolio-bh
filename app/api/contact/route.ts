@@ -1,5 +1,7 @@
 import { Resend } from "resend";
 
+import type { Locale } from "@/app/[lang]/dictionaries";
+import { renderContactEmail } from "@/lib/contact-email";
 import { contactAddress } from "@/lib/contact-mailto";
 import { SITE_SOCIAL_LINKS } from "@/lib/social-links";
 
@@ -72,6 +74,15 @@ export async function POST(request: Request) {
   const honeypot = String(body.company ?? "").trim();
 
   /*
+   * Which locale they were reading, if the form said. Narrowed against the two we
+   * serve rather than passed through: it is printed in the email, and anything a
+   * client can put in the body is a string we did not write.
+   */
+  const rawLang = String(body.lang ?? "");
+  const lang: Locale | undefined =
+    rawLang === "en" || rawLang === "tr" ? rawLang : undefined;
+
+  /*
    * A bot that fills every field it finds gets a 200 and nothing else. Telling it
    * why it was rejected is how it learns to skip the field next time.
    */
@@ -96,13 +107,18 @@ export async function POST(request: Request) {
 
   try {
     const resend = new Resend(process.env.RESEND_API_KEY);
+    // Both bodies, always: Gmail's preview line and every plain-text client read
+    // `text`, so sending only the HTML would leave those showing markup or nothing.
+    const { html, text } = renderContactEmail({ name, email, message, lang });
+
     const { error } = await resend.emails.send({
       from: `Portfolio <${FROM}>`,
       to: [TO],
       // Hitting reply goes to the sender rather than the Resend sender address.
       replyTo: email,
       subject: `Portfolio — ${name}`,
-      text: `${name} <${email}>\n\n${message}`,
+      html,
+      text,
     });
 
     if (error) {
