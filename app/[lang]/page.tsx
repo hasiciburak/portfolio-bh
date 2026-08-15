@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 
+import { ContactSection } from "@/components/contact-section";
 import { HomeSectionIndex } from "@/components/home-section-index";
 import HeroSection from "@/components/hero-section";
 import MySkillsetSection from "@/components/my-skillset-section";
@@ -47,6 +48,8 @@ const Home = async ({ params }: { params: Promise<{ lang: string }> }) => {
       />
       <MySkillsetSection />
       <WorkExperienceSection />
+      {/* The page used to end on the CV and leave the reader with nowhere to go. */}
+      <ContactSection />
     </div>
   );
 };

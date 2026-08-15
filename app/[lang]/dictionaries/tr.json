@@ -52,7 +52,7 @@
     }
   },
   "why_hire_me": {
-    "title": "Neden Beni İşe Almalısınız?",
+    "title": "Neden Benimle Çalışmalısınız?",
     "reasons": {
       "interfaces": {
         "title": "Kullanıcıların ilk dokunuşta “anladığı” arayüzler inşa ederim",
@@ -178,6 +178,15 @@
         ]
       }
     }
+  },
+  "contact": {
+    "eyebrow": "İletişim",
+    "title": "İş konuşmaya hazır mısın?",
+    "subtitle": "Bana en hızlı e-postayla ulaşırsın; şablon olmayan her mesajı okuyorum.",
+    "copy": "Kopyala",
+    "copied": "Kopyalandı",
+    "copy_failed": "Kopyalanamadı — yukarıdan seçin",
+    "copy_label": "E-posta adresini kopyala"
   },
   "footer": {
     "credits": "Figma ile tasarlandı, Next.js ve Tailwind CSS ile geliştirildi.",

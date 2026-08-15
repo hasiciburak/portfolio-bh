@@ -52,7 +52,7 @@
     }
   },
   "why_hire_me": {
-    "title": "Why Hire Me?",
+    "title": "Why Work With Me?",
     "reasons": {
       "interfaces": {
         "title": "I build interfaces that users “get” on the first tap",
@@ -178,6 +178,15 @@
         ]
       }
     }
+  },
+  "contact": {
+    "eyebrow": "Get in touch",
+    "title": "Ready to talk?",
+    "subtitle": "Email is the fastest way to reach me, and I read every one that isn't a template.",
+    "copy": "Copy",
+    "copied": "Copied",
+    "copy_failed": "Couldn't copy — select it above",
+    "copy_label": "Copy email address"
   },
   "footer": {
     "credits": "Designed in Figma, built with Next.js & Tailwind CSS.",
