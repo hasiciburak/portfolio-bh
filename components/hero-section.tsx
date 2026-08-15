@@ -29,6 +29,32 @@ const mobileResumePill =
 
 const MOBILE_SOCIAL = SITE_SOCIAL_LINKS.slice(0, 4);
 
+/*
+ * A speech bubble rather than the arrow this started as. The arrow described the
+ * mechanism — the link scrolls down — but the CV button beside it is also a
+ * downward arrow, and two down-arrows side by side read as the same gesture
+ * twice. The bubble describes the destination instead, which is what the label
+ * already says.
+ */
+const TalkIcon = ({ className }: { className?: string }) => (
+  <svg
+    className={className}
+    width={17}
+    height={17}
+    viewBox="0 0 24 24"
+    fill="none"
+    aria-hidden
+  >
+    <path
+      d="M17.5 4.5h-11A2.5 2.5 0 0 0 4 7v6.5A2.5 2.5 0 0 0 6.5 16H8v3.5L12.5 16h5a2.5 2.5 0 0 0 2.5-2.5V7a2.5 2.5 0 0 0-2.5-2.5Z"
+      stroke="currentColor"
+      strokeWidth={1.75}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
 export interface HeroSectionProps {
   variant?: "home";
 }
@@ -155,12 +181,7 @@ const HeroSection = ({ variant = "home" }: HeroSectionProps) => {
                     className={`group/talk ${ghostPill}`}
                   >
                     {dict.navigation.contact}
-                    <span
-                      aria-hidden
-                      className="text-zinc-500 transition-transform duration-300 group-hover/talk:translate-y-0.5 dark:text-white/55"
-                    >
-                      &darr;
-                    </span>
+                    <TalkIcon className="shrink-0 text-zinc-500 transition-colors group-hover/talk:text-zinc-800 dark:text-white/55 dark:group-hover/talk:text-white" />
                   </a>
                 </div>
 
