@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef, type CSSProperties } from "react";
 
+import { ServicesCursor } from "@/components/services-cursor";
 import { useSmoothScrollReady } from "@/components/smooth-scroll-provider";
 import { requestContactPrefill } from "@/lib/contact-prefill";
 import { scrollToSectionId } from "@/lib/scroll-to-section";
@@ -60,6 +61,7 @@ const ArrowIcon = () => (
 
 const ServicesSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
+  const deckRef = useRef<HTMLOListElement>(null);
   const reduceMotion = usePrefersReducedMotion();
   const smootherReady = useSmoothScrollReady();
   const { dict } = useTranslation();
@@ -150,7 +152,7 @@ const ServicesSection = () => {
         </header>
 
         {/* An ordered list, so the printed 01–06 can stay decorative for a screen reader. */}
-        <ol className="services-deck">
+        <ol ref={deckRef} className="services-deck">
           {services.map((service, index) => {
             const slot = DECK_SLOTS[index % DECK_SLOTS.length];
 
@@ -199,12 +201,20 @@ const ServicesSection = () => {
                         return;
 
                       event.preventDefault();
-                      // Written before the scroll starts, so the form is already
-                      // filled in by the time it comes into view.
+
+                      /*
+                       * Scroll first, fill second. Filling the form puts focus in the
+                       * textarea, and `focus({ preventScroll: true })` is the only
+                       * thing keeping the browser from jumping the page to it — where
+                       * that option is unsupported, or where anything else moves focus
+                       * first, the jump lands before ScrollSmoother has started and the
+                       * whole travel is lost. Started in this order there is nothing
+                       * for the jump to skip.
+                       */
+                      scrollToSectionId("contact", reduceMotion);
                       requestContactPrefill(
                         withService(dict.contact.form_prefill, service.title),
                       );
-                      scrollToSectionId("contact", reduceMotion);
                     }}
                     className="services-card flex gap-4 rounded-2xl border border-zinc-950/10 bg-linear-to-b from-white to-zinc-100 p-5 outline-none hover:border-zinc-950/20 focus-visible:ring-2 focus-visible:ring-zinc-950/25 dark:border-white/12 dark:from-zinc-900 dark:to-zinc-950 dark:hover:border-white/25 dark:focus-visible:ring-white/35 lg:min-h-[248px] lg:flex-col lg:gap-0 lg:p-6 xl:min-h-[268px]"
                   >
@@ -240,6 +250,8 @@ const ServicesSection = () => {
             );
           })}
         </ol>
+
+        <ServicesCursor deckRef={deckRef} label={dict.services.cursor_label} />
       </div>
     </section>
   );

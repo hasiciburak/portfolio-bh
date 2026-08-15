@@ -81,6 +81,7 @@
     "title": "Six ways I can help your team ship",
     "subtitle": "From the first Figma frame to the production deploy — take the part you need, or the whole run.",
     "card_cta": "Talk to me about {service}",
+    "cursor_label": "Let's talk",
     "offerings": {
       "frontend": {
         "title": "Frontend Development",

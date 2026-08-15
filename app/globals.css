@@ -330,6 +330,15 @@ html[data-intro="reduced"] [data-intro-rise] {
   transition: color 220ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/*
+ * Only once the badge is actually running, and only on the card itself — the deck's
+ * empty space between the cards keeps the normal pointer, so nobody loses their
+ * cursor in the gaps. The attribute is written by services-cursor.tsx.
+ */
+.services-deck[data-cursor="custom"] .services-card {
+  cursor: none;
+}
+
 .services-card-arrow {
   color: var(--card-arrow);
   transition:

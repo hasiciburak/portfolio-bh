@@ -81,6 +81,7 @@
     "title": "Ekibinizin ürün çıkarmasına yardım edebileceğim altı alan",
     "subtitle": "İlk Figma çerçevesinden canlı yayına kadar — ihtiyacınız olan parçayı ya da sürecin tamamını devralırım.",
     "card_cta": "{service} hakkında yaz",
+    "cursor_label": "Konuşalım",
     "offerings": {
       "frontend": {
         "title": "Frontend Geliştirme",
