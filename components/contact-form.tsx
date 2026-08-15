@@ -9,8 +9,12 @@ type Field = "name" | "email" | "message";
 
 const EMAIL_SHAPE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+/*
+ * Fields sit on the card, so they take the lighter surface and the card takes the
+ * border. Giving both a fill of the same weight read as a frame inside a frame.
+ */
 const FIELD_BASE =
-  "w-full rounded-xl border border-zinc-950/12 bg-white/70 px-3.5 py-2.5 text-[15px] text-zinc-900 outline-none transition-colors placeholder:text-zinc-400 focus-visible:border-zinc-950/30 focus-visible:ring-2 focus-visible:ring-zinc-950/15 dark:border-white/15 dark:bg-white/[0.06] dark:text-white dark:placeholder:text-white/35 dark:focus-visible:border-white/35 dark:focus-visible:ring-white/20";
+  "w-full rounded-xl border border-zinc-950/10 bg-white px-3.5 py-2.5 text-[15px] text-zinc-900 outline-none transition-colors placeholder:text-zinc-400 focus-visible:border-zinc-950/30 focus-visible:ring-2 focus-visible:ring-zinc-950/15 dark:border-white/12 dark:bg-white/[0.07] dark:text-white dark:placeholder:text-white/35 dark:focus-visible:border-white/35 dark:focus-visible:ring-white/20";
 
 const FIELD_INVALID =
   "border-red-500/60 focus-visible:border-red-500/70 focus-visible:ring-red-500/20 dark:border-red-400/60 dark:focus-visible:border-red-400/70";
@@ -80,7 +84,9 @@ export const ContactForm = () => {
     setErrors((prev) => (prev[field] ? { ...prev, [field]: undefined } : prev));
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="mt-10 text-left sm:mt-12">
+    // The panel around the whole section is the frame; a second one here would
+    // nest a card inside a card.
+    <form onSubmit={handleSubmit} noValidate className="text-left">
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label htmlFor="contact-name" className="mb-1.5 block text-sm text-zinc-600 dark:text-white/60">
@@ -91,6 +97,7 @@ export const ContactForm = () => {
             name="name"
             type="text"
             autoComplete="name"
+            placeholder={copy.form_name_placeholder}
             maxLength={100}
             onChange={() => clearError("name")}
             aria-invalid={Boolean(errors.name)}
@@ -113,6 +120,7 @@ export const ContactForm = () => {
             name="email"
             type="email"
             autoComplete="email"
+            placeholder={copy.form_email_placeholder}
             maxLength={254}
             onChange={() => clearError("email")}
             aria-invalid={Boolean(errors.email)}
@@ -135,6 +143,7 @@ export const ContactForm = () => {
           id="contact-message"
           name="message"
           rows={5}
+          placeholder={copy.form_message_placeholder}
           maxLength={4000}
           onChange={() => clearError("message")}
           aria-invalid={Boolean(errors.message)}
@@ -158,31 +167,30 @@ export const ContactForm = () => {
         <input id="contact-company" name="company" type="text" tabIndex={-1} autoComplete="off" />
       </div>
 
-      <div className="mt-5 flex flex-wrap items-center gap-4">
-        <button
-          type="submit"
-          disabled={status === "sending"}
-          className="inline-flex items-center justify-center rounded-full bg-zinc-950 px-5 py-2.5 text-[15px] font-medium leading-tight text-white outline-none transition-colors hover:bg-zinc-800 focus-visible:ring-2 focus-visible:ring-zinc-950/30 disabled:opacity-60 dark:bg-white dark:text-zinc-950 dark:hover:bg-white/90 dark:focus-visible:ring-white/40"
-        >
-          {status === "sending" ? copy.form_sending : copy.form_send}
-        </button>
+      {/* Full width, so the column ends on one unambiguous next step. */}
+      <button
+        type="submit"
+        disabled={status === "sending"}
+        className="mt-5 w-full rounded-full bg-zinc-950 px-5 py-3 text-[15px] font-medium leading-tight text-white outline-none transition-colors hover:bg-zinc-800 focus-visible:ring-2 focus-visible:ring-zinc-950/30 disabled:opacity-60 dark:bg-white dark:text-zinc-950 dark:hover:bg-white/90 dark:focus-visible:ring-white/40"
+      >
+        {status === "sending" ? copy.form_sending : copy.form_send}
+      </button>
 
-        {/*
-          One live region for both outcomes, outside the button so the button's
-          own name never changes underneath a screen reader mid-submit.
-        */}
-        <p
-          aria-live="polite"
-          className={`text-sm ${
-            status === "error"
-              ? "text-red-600 dark:text-red-400"
-              : "text-zinc-600 dark:text-white/60"
-          }`}
-        >
-          {status === "sent" ? copy.form_sent : null}
-          {status === "error" ? copy.form_error : null}
-        </p>
-      </div>
+      {/*
+        One live region for both outcomes, outside the button so the button's own
+        name never changes underneath a screen reader mid-submit.
+      */}
+      <p
+        aria-live="polite"
+        className={`mt-3 min-h-5 text-sm ${
+          status === "error"
+            ? "text-red-600 dark:text-red-400"
+            : "text-zinc-600 dark:text-white/60"
+        }`}
+      >
+        {status === "sent" ? copy.form_sent : null}
+        {status === "error" ? copy.form_error : null}
+      </p>
     </form>
   );
 };

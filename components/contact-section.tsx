@@ -99,69 +99,97 @@ export const ContactSection = () => {
       className="w-full scroll-mt-24 bg-zinc-50 font-sans text-zinc-950 dark:bg-zinc-950 dark:text-white"
       aria-labelledby="contact-heading"
     >
-      <div className="mx-auto w-full max-w-3xl px-4 py-16 text-center sm:py-20 lg:py-28">
-        <p className={SECTION_EYEBROW}>{copy.eyebrow}</p>
-
-        <h2
-          id="contact-heading"
-          className="mt-3 font-nohemi text-[40px] font-bold leading-[1.2] tracking-tight text-zinc-950 dark:text-white sm:text-5xl lg:text-[48px]"
-        >
-          {copy.title}
-        </h2>
-
-        <p className="mx-auto mt-4 max-w-[52ch] text-base leading-relaxed text-zinc-600 dark:text-white/70 sm:text-lg">
-          {copy.subtitle}
-        </p>
-
+      {/*
+        Asymmetric on purpose, to land symmetric on screen. A full section's worth
+        of top padding stacked on the previous section's bottom padding put 224px
+        above the panel against 152px below it. The panel only needs enough space
+        to clear what is already there; the footer's own padding does the same job
+        underneath.
+      */}
+      <div className="mx-auto w-full max-w-7xl px-4 pb-16 pt-10 sm:pb-20 lg:pb-28">
         {/*
-          The address is readable text before it is anything else, so it survives a
-          browser with no mail client — the failure this section exists for.
+          One panel around the whole closing section. It gives the page a
+          deliberate end — an edge to stop at — rather than the copy and the form
+          trailing off into the footer on the same flat ground.
         */}
-        <div className="mt-8 flex flex-col items-center gap-3 sm:mt-10 sm:flex-row sm:justify-center">
-          <a
-            href={buildContactMailto(
-              EMAIL_LINK.href,
-              dict.navigation.contact_subject,
-              dict.navigation.contact_greeting,
-            )}
-            className="rounded-lg font-nohemi text-xl font-bold tracking-tight text-zinc-950 underline decoration-zinc-950/20 underline-offset-[6px] outline-none transition-colors hover:decoration-zinc-950/60 focus-visible:ring-2 focus-visible:ring-zinc-950/25 dark:text-white dark:decoration-white/25 dark:hover:decoration-white/70 dark:focus-visible:ring-white/35 sm:text-2xl"
-          >
-            {address}
-          </a>
+        <div className="rounded-3xl border border-zinc-950/10 bg-white/70 p-6 sm:p-10 lg:p-12 dark:border-white/12 dark:bg-white/[0.04]">
+          {/* Centred intro, two-column body — the same shape the Services section uses. */}
+          <header className="mx-auto max-w-2xl text-center">
+            <p className={SECTION_EYEBROW}>{copy.eyebrow}</p>
 
-          <button
-            type="button"
-            onClick={handleCopy}
-            aria-label={copy.copy_label}
-            className="inline-flex shrink-0 items-center gap-2 rounded-full border border-zinc-950/12 px-3.5 py-1.5 text-[13px] text-zinc-700 outline-none transition-colors hover:border-zinc-950/25 hover:text-zinc-950 focus-visible:ring-2 focus-visible:ring-zinc-950/25 dark:border-white/15 dark:text-white/70 dark:hover:border-white/30 dark:hover:text-white dark:focus-visible:ring-white/35"
-          >
-            <CopyIcon copied={status === "copied"} />
-            {/*
-              Hidden from the accessibility tree so the button's accessible name
-              stays put while the visible label changes; the live region below
-              announces the outcome instead.
+            <h2
+              id="contact-heading"
+              className="mt-3 font-nohemi text-[40px] font-bold leading-[1.2] tracking-tight text-zinc-950 dark:text-white sm:text-5xl lg:text-[48px]"
+            >
+              {copy.title}
+            </h2>
+
+            <p className="mt-4 text-base leading-relaxed text-zinc-600 dark:text-white/70 sm:text-lg">
+              {copy.subtitle}
+            </p>
+          </header>
+
+          {/*
+          Two ways in, side by side rather than stacked: the address is the one
+          that cannot break, the form is the one that costs least to use. Stacked,
+          the form pushed the address far enough up the page to read as an
+          afterthought.
+        */}
+          <div className="mt-10 grid gap-10 sm:mt-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] lg:gap-14">
+            <div>
+              <p className="text-sm text-zinc-500 dark:text-white/50">
+                {copy.direct_label}
+              </p>
+
+              {/*
+              The address is readable text before it is anything else, so it
+              survives a browser with no mail client — the failure this section
+              exists for.
             */}
-            <span aria-hidden>
-              {status === "copied"
-                ? copy.copied
-                : status === "failed"
-                  ? copy.copy_failed
-                  : copy.copy}
-            </span>
-          </button>
+              <div className="mt-3 flex flex-wrap items-center gap-3">
+                <a
+                  href={buildContactMailto(
+                    EMAIL_LINK.href,
+                    dict.navigation.contact_subject,
+                    dict.navigation.contact_greeting,
+                  )}
+                  className="rounded-lg font-nohemi text-xl font-bold tracking-tight text-zinc-950 underline decoration-zinc-950/20 underline-offset-[6px] outline-none transition-colors hover:decoration-zinc-950/60 focus-visible:ring-2 focus-visible:ring-zinc-950/25 dark:text-white dark:decoration-white/25 dark:hover:decoration-white/70 dark:focus-visible:ring-white/35 sm:text-2xl"
+                >
+                  {address}
+                </a>
+
+                <button
+                  type="button"
+                  onClick={handleCopy}
+                  aria-label={copy.copy_label}
+                  className="inline-flex shrink-0 items-center gap-2 rounded-full border border-zinc-950/12 px-3.5 py-1.5 text-[13px] text-zinc-700 outline-none transition-colors hover:border-zinc-950/25 hover:text-zinc-950 focus-visible:ring-2 focus-visible:ring-zinc-950/25 dark:border-white/15 dark:text-white/70 dark:hover:border-white/30 dark:hover:text-white dark:focus-visible:ring-white/35"
+                >
+                  <CopyIcon copied={status === "copied"} />
+                  {/*
+                  Hidden from the accessibility tree so the button's accessible
+                  name stays put while the visible label changes; the live region
+                  below announces the outcome instead.
+                */}
+                  <span aria-hidden>
+                    {status === "copied"
+                      ? copy.copied
+                      : status === "failed"
+                        ? copy.copy_failed
+                        : copy.copy}
+                  </span>
+                </button>
+              </div>
+
+              {/* Sibling, not child: nested it would rewrite the button's name on every change. */}
+              <span aria-live="polite" className="sr-only">
+                {status === "copied" ? copy.copied : null}
+                {status === "failed" ? copy.copy_failed : null}
+              </span>
+            </div>
+
+            <ContactForm />
+          </div>
         </div>
-
-        {/* Sibling, not child: nested it would rewrite the button's name on every change. */}
-        <span aria-live="polite" className="sr-only">
-          {status === "copied" ? copy.copied : null}
-          {status === "failed" ? copy.copy_failed : null}
-        </span>
-
-        {/*
-          The form is the lower-friction path; the address above is the one that
-          cannot break. Neither replaces the other, which is why both are here.
-        */}
-        <ContactForm />
       </div>
     </section>
   );
