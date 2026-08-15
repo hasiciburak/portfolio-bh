@@ -7,6 +7,7 @@ import { useRef } from "react";
 
 import { useSmoothScrollReady } from "@/components/smooth-scroll-provider";
 import { PROOF_METRICS } from "@/lib/proof-metrics";
+import { SECTION_EYEBROW } from "@/lib/section-eyebrow";
 import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 import { useTranslation } from "@/components/language-provider";
 
@@ -102,7 +103,7 @@ export const ProofMetrics = () => {
         and the two would compete; at eyebrow weight it labels the numbers without
         claiming to open a section of its own.
       */}
-      <h2 className="mb-6 text-xs font-semibold uppercase tracking-[0.14em] text-zinc-500 dark:text-white/45 sm:mb-7 sm:text-sm">
+      <h2 className={`mb-6 sm:mb-7 ${SECTION_EYEBROW}`}>
         {dict.proof.title}
       </h2>
 

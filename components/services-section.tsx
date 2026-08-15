@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef, type CSSProperties } from "react";
 
 import { useSmoothScrollReady } from "@/components/smooth-scroll-provider";
+import { SECTION_EYEBROW } from "@/lib/section-eyebrow";
 import { SERVICE_OFFERINGS } from "@/lib/services";
 import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 import { useTranslation } from "@/components/language-provider";
@@ -111,9 +112,7 @@ const ServicesSection = () => {
         {/* Centred to match the other home sections — Why Hire Me, Skillset and Work
             Experience all centre their headings, and this was the only one that did not. */}
         <header className="services-reveal mx-auto mb-10 max-w-3xl text-center sm:mb-12 lg:mb-16">
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-zinc-500 dark:text-white/45 sm:text-sm">
-            {dict.services.eyebrow}
-          </p>
+          <p className={SECTION_EYEBROW}>{dict.services.eyebrow}</p>
           <h2
             id="services-heading"
             className="mt-3 font-nohemi text-[34px] font-bold leading-[1.1] tracking-tight text-zinc-950 dark:text-white sm:text-[42px] lg:text-5xl"
