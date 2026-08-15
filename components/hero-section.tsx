@@ -113,11 +113,28 @@ const HeroSection = ({ variant = "home" }: HeroSectionProps) => {
                   {dict.hero.bio_desktop}
                 </p>
 
-                <ResumeDownloadButton
+                {/*
+                  Two CTAs, deliberately unequal. Downloading the CV keeps the
+                  glass pill; talking is a quieter outline link, because a reader
+                  who is ready to write does not need persuading and one loud
+                  button beside another leaves neither looking like the next step.
+                */}
+                <div
                   data-intro-rise=""
-                  className={`${glassPill} w-fit max-lg:hidden lg:inline-flex`}
-                  labelClassName="font-normal leading-tight"
-                />
+                  className="flex w-fit items-center gap-3 max-lg:hidden"
+                >
+                  <ResumeDownloadButton
+                    className={`${glassPill} w-fit lg:inline-flex`}
+                    labelClassName="font-normal leading-tight"
+                  />
+                  <a
+                    href="#contact"
+                    className="inline-flex items-center gap-2 rounded-full border border-zinc-900/15 px-4 py-2.5 text-base text-zinc-700 outline-none transition-colors hover:border-zinc-900/30 hover:text-zinc-950 focus-visible:ring-2 focus-visible:ring-zinc-950/25 dark:border-white/20 dark:text-white/75 dark:hover:border-white/40 dark:hover:text-white dark:focus-visible:ring-white/35"
+                  >
+                    {dict.navigation.contact}
+                    <span aria-hidden>&darr;</span>
+                  </a>
+                </div>
 
                 <div data-intro-rise="" className="flex flex-col gap-4 sm:gap-5 lg:hidden">
                   <nav aria-label="Social profiles">
