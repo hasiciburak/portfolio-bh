@@ -57,9 +57,11 @@ export const ContactForm = () => {
          * still easing the page toward the section — letting focus scroll as well
          * would land the two on different positions. And no focus at all on touch,
          * where it would throw the keyboard up over the section the visitor was
-         * being sent to look at.
+         * being sent to look at. `any-hover` rather than `hover`, so an iPad with a
+         * trackpad — which reports `hover: none` regardless of what is attached —
+         * counts as the pointer setup it is.
          */
-        if (!window.matchMedia("(hover: hover)").matches) return;
+        if (!window.matchMedia("(any-hover: hover)").matches) return;
         field.focus({ preventScroll: true });
         // Caret after the prepared line, ready to keep typing rather than overwrite it.
         field.setSelectionRange(next.length, next.length);
