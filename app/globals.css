@@ -3,6 +3,27 @@
 /* Manual theme toggle (`next-themes` sets `light`/`dark` on `<html>`) — not `prefers-color-scheme`. */
 @custom-variant dark (&:where(.dark, .dark *));
 
+/*
+ * `hover:` on `any-hover`, not Tailwind's default `hover`. Safari on iPadOS answers
+ * `(hover: hover)` with `none` whatever is plugged in — the media feature describes the
+ * *primary* input, and on an iPad that is always the touchscreen. A Magic Keyboard
+ * trackpad or a Bluetooth mouse moves a real cursor across the page and still never
+ * matched, so every `hover:` utility on the site was dead there.
+ *
+ * `any-hover` asks whether *any* attached input can hover, which is the question these
+ * utilities actually mean. It flips true the moment a pointer is paired and stays false
+ * on a bare touchscreen, so the reason for the gate — :hover latching on tap and leaving
+ * a card stuck in its raised state — still holds where it applies. `group-hover:` and
+ * friends compose with this variant, so they follow along.
+ */
+@custom-variant hover {
+  @media (any-hover: hover) {
+    &:hover {
+      @slot;
+    }
+  }
+}
+
 @font-face {
   font-family: Nohemi;
   src: url("/fonts/Nohemi-Thin.otf") format("opentype");
@@ -347,12 +368,13 @@ html[data-intro="reduced"] [data-intro-rise] {
 }
 
 /*
- * `hover: hover` keeps the lift off touch screens, where :hover latches on tap and
+ * `any-hover: hover` keeps the lift off touch screens, where :hover latches on tap and
  * leaves a card stuck in its raised state until something else is tapped. The
  * wrapper is the hover target because the shadow lives on it, and it boxes the
- * card exactly.
+ * card exactly. `any-hover` rather than `hover` so an iPad with a trackpad — which
+ * reports `hover: none` no matter what is attached — gets the lift too.
  */
-@media (hover: hover) {
+@media (any-hover: hover) {
   .services-card-reveal:hover .services-card {
     transform: translate3d(0, -6px, 0);
   }

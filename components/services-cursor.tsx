@@ -30,7 +30,13 @@ export const ServicesCursor = ({ deckRef, label }: ServicesCursorProps) => {
   const cursorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const fine = window.matchMedia("(hover: hover) and (pointer: fine)");
+    /*
+     * `any-*`, not the primary-input `hover`/`pointer`: iPadOS Safari reports the
+     * touchscreen for those two whether or not a trackpad is attached, so the badge
+     * never appeared on an iPad driving a real cursor. A bare touchscreen answers
+     * `none`/`coarse` here as well, which is the case this gate exists for.
+     */
+    const fine = window.matchMedia("(any-hover: hover) and (any-pointer: fine)");
     const still = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     const sync = () => setEnabled(fine.matches && !still.matches);
