@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
+import { BookCallButton } from "@/components/book-call-button";
 import { ContactForm } from "@/components/contact-form";
 import { useTranslation } from "@/components/language-provider";
 import { buildContactMailto, contactAddress } from "@/lib/contact-mailto";
@@ -190,6 +191,8 @@ export const ContactSection = () => {
                 {status === "copied" ? copy.copied : null}
                 {status === "failed" ? copy.copy_failed : null}
               </span>
+
+              <BookCallButton />
             </div>
 
             <ContactForm />

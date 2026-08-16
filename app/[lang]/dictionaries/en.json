@@ -191,6 +191,8 @@
     "copy_failed": "Couldn't copy — select it above",
     "copy_label": "Copy email address",
     "direct_label": "Write to me directly",
+    "book_label": "Prefer a call?",
+    "book_cta": "Book 30 minutes",
     "form_name": "Name",
     "form_email": "Email",
     "form_message": "Message",

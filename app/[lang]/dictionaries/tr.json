@@ -191,6 +191,8 @@
     "copy_failed": "Kopyalanamadı — yukarıdan seçin",
     "copy_label": "E-posta adresini kopyala",
     "direct_label": "Doğrudan yaz",
+    "book_label": "Görüşme tercih ediyorsan",
+    "book_cta": "30 dakika ayır",
     "form_name": "Ad",
     "form_email": "E-posta",
     "form_message": "Mesaj",
