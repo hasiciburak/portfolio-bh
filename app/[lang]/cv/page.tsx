@@ -6,6 +6,7 @@ import { getDictionary, hasLocale, type Locale } from "@/app/[lang]/dictionaries
 import {
   OG_IMAGE,
   OG_LOCALE,
+  PERSON_ID,
   SITE_NAME,
   languageAlternates,
   localeUrl,
@@ -59,8 +60,27 @@ const CvPage = async ({ params }: { params: Promise<{ lang: string }> }) => {
     notFound();
   }
 
+  /*
+   * ProfilePage is the type Google documents for "a page about one person", and
+   * naming the Person by id rather than describing them again keeps this page
+   * pointing at the same entity the site-wide graph already defines. Two Person
+   * nodes with the same name and different properties is how a site ends up
+   * arguing with itself about who it is about.
+   */
+  const profileJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    url: localeUrl(lang as Locale, "/cv"),
+    inLanguage: lang,
+    mainEntity: { "@id": PERSON_ID },
+  };
+
   return (
     <main className="flex w-full flex-1 flex-col bg-background text-foreground">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(profileJsonLd) }}
+      />
       <CvDocument />
     </main>
   );

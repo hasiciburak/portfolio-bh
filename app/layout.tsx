@@ -34,9 +34,20 @@ const brandWordmark = localFont({
  * true for every route: the origin relative metadata URLs resolve against, and
  * the crawler directives.
  */
+/*
+ * Search Console's meta-tag verification, supplied as an environment variable so
+ * the token can be pasted into Vercel without a commit — and so a preview
+ * deployment does not claim to be the verified property. Omitted entirely when
+ * unset: an empty `content` attribute fails verification rather than skipping it.
+ */
+const googleSiteVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_ORIGIN),
   title: SITE_TAB_TITLE,
+  ...(googleSiteVerification
+    ? { verification: { google: googleSiteVerification } }
+    : {}),
   description:
     "Software developer and UI/UX designer based in Istanbul, Turkey.",
   authors: [{ name: SITE_NAME, url: SITE_ORIGIN }],
