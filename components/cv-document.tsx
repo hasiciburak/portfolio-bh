@@ -1,16 +1,14 @@
 "use client";
 
-import Image from "next/image";
-
+import { CompanyLogoRow } from "@/components/company-logo";
 import { useTranslation } from "@/components/language-provider";
-import { NonpublicLogo } from "@/components/nonpublic-logo";
 import { ResumeDownloadButton } from "@/components/resume-download-button";
 import { CV_EDUCATION, CV_LANGUAGE_IDS, CV_PHONE, CV_PHONE_HREF } from "@/lib/cv";
 import { contactAddress } from "@/lib/contact-mailto";
 import { SECTION_EYEBROW } from "@/lib/section-eyebrow";
 import { SKILLSET_COLLABORATION, SKILLSET_ROWS } from "@/lib/skillset-data";
 import { SITE_SOCIAL_LINKS } from "@/lib/social-links";
-import { WORK_EXPERIENCE_ENTRIES } from "@/lib/work-experience";
+import { localizedWorkExperience } from "@/lib/work-experience";
 
 const EMAIL_LINK = SITE_SOCIAL_LINKS.find(({ id }) => id === "email");
 
@@ -41,16 +39,7 @@ export const CvDocument = () => {
   const { dict } = useTranslation();
   const copy = dict.cv;
 
-  const roles = WORK_EXPERIENCE_ENTRIES.map((entry) => {
-    const key = entry.id as keyof typeof dict.work_experience.entries;
-    const localized = dict.work_experience.entries[key];
-    return {
-      ...entry,
-      title: localized?.title || entry.title,
-      date: localized?.date || entry.date,
-      bullets: localized?.bullets || entry.bullets,
-    };
-  });
+  const roles = localizedWorkExperience(dict);
 
   const skillRows = SKILLSET_ROWS.map((row) => {
     const key = row.id as keyof typeof dict.skillset.categories;
@@ -141,6 +130,16 @@ export const CvDocument = () => {
           </div>
         </dl>
 
+        {/*
+          The two questions that decide whether a recruiter reads any further —
+          which hours I overlap with, and how a contract can be papered without a
+          visa. Left unanswered they are a reason to close the tab, so they sit
+          above the fold rather than in an email three days later.
+        */}
+        <p className="mt-5 max-w-[70ch] text-sm leading-relaxed text-zinc-600 dark:text-white/60">
+          {copy.engagement}
+        </p>
+
         {/* Hidden from print: paper cannot download, and the hint describes the
             very action the reader is already taking. */}
         <div className="cv-no-print mt-8 flex flex-wrap items-center gap-4">
@@ -185,30 +184,47 @@ export const CvDocument = () => {
                   id={`cv-role-${role.id}`}
                   className="font-nohemi text-lg font-bold leading-snug text-zinc-950 dark:text-white"
                 >
-                  {role.title}
+                  {role.company}
                 </h3>
-                <p className="text-sm text-zinc-500 dark:text-white/45">{role.date}</p>
+                <p className="text-sm text-zinc-500 dark:text-white/45">
+                  {role.location}
+                </p>
               </div>
 
-              {/* The mark is decoration next to a title that already names the
-                  company, so it stays out of the accessibility tree. */}
-              <div aria-hidden className="mt-3 flex h-7 items-center">
-                {role.id === "nonpublic" ? (
-                  <NonpublicLogo
-                    width={role.logo.width}
-                    height={role.logo.height}
-                    className="h-auto max-h-7 w-auto text-zinc-950 dark:text-white"
-                  />
-                ) : (
-                  <Image
-                    src={role.logo.src}
-                    alt=""
-                    width={role.logo.width}
-                    height={role.logo.height}
-                    className="h-auto max-h-7 w-auto"
-                  />
-                )}
-              </div>
+              {/* The marks are decoration next to a title that already names the
+                  company, so they stay out of the accessibility tree. */}
+              <CompanyLogoRow
+                logos={role.logos}
+                decorative
+                className="mt-3 flex h-7 items-center gap-3"
+                logoClassName="h-auto max-h-7 w-auto"
+              />
+
+              {/* Titles and dates, one row per stint — the shape a reader scanning
+                  for tenure is looking for, and the only way a return to the same
+                  product reads as continuity rather than two separate jobs. */}
+              <dl className="mt-3 flex flex-col gap-1">
+                {role.roles.map((stint) => (
+                  <div
+                    key={stint.id}
+                    className="flex flex-wrap items-baseline justify-between gap-x-6"
+                  >
+                    <dt className="text-[15px] font-medium text-zinc-900 dark:text-white">
+                      {stint.title}
+                    </dt>
+                    <dd className="text-sm text-zinc-500 dark:text-white/45">
+                      {stint.date}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+
+              {/* What the company does. Four of the five names on this page mean
+                  nothing outside their own market, and a recruiter shouldn't have
+                  to search one to know what the work was. */}
+              <p className="mt-2.5 max-w-[70ch] text-[13px] leading-relaxed text-zinc-500 dark:text-white/45">
+                {role.context}
+              </p>
 
               <ul className="mt-3 flex list-disc flex-col gap-1.5 pl-5 text-[15px] leading-relaxed text-zinc-700 marker:text-zinc-400 dark:text-white/75 dark:marker:text-white/30">
                 {role.bullets.map((bullet) => (

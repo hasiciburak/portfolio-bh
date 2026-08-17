@@ -39,6 +39,7 @@ export const SKILLSET_ROWS: SkillRow[] = [
     skills: [
       { name: "TypeScript", icon: "typescript" },
       { name: "JavaScript", icon: "javascript" },
+      { name: "C#", icon: "csharp" },
       { name: "Swift", icon: "swift" },
       { name: "Dart", icon: "dart" },
       { name: "Python", icon: "python" },
@@ -59,11 +60,32 @@ export const SKILLSET_ROWS: SkillRow[] = [
     ],
   },
   {
+    /*
+     * High up on purpose: the CV opens by calling the work full-stack, and a stack
+     * list that stopped at the browser was quietly arguing the opposite.
+     *
+     * ".NET" wears the Microsoft mark because no icon set ships a .NET glyph — its
+     * own platform's logo reads as the right family, where the C# icon next to it
+     * would claim the language twice.
+     */
+    id: "backend",
+    title: "Backend & Cloud",
+    skills: [
+      { name: "Node.js", icon: "nodejs" },
+      { name: "NestJS", icon: "nestjs" },
+      { name: "Express", icon: "express" },
+      { name: ".NET", icon: "microsoft" },
+      { name: "AWS", icon: "aws" },
+      { name: "Docker", icon: "docker" },
+    ],
+  },
+  {
     id: "ui",
     title: "UI & Styling",
     skills: [
       { name: "TailwindCSS", icon: "tailwind" },
       { name: "Tailwind UI", icon: "tailwind" },
+      { name: "Sass", icon: "sass" },
       { name: "Material UI", icon: "materialUi" },
       { name: "Ant Design", icon: "antDesign" },
       { name: "Bootstrap", icon: "bootstrap" },
@@ -84,6 +106,7 @@ export const SKILLSET_ROWS: SkillRow[] = [
       { name: "React Query", icon: "reactQuery" },
       { name: "GraphQL", icon: "graphql" },
       { name: "PostgreSQL", icon: "postgresql" },
+      { name: "SQL Server", icon: "sqlServer" },
       { name: "MongoDB", icon: "mongodb" },
     ],
   },

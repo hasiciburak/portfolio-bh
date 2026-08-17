@@ -30,13 +30,20 @@ export const PROOF_METRICS: ProofMetric[] = [
     label: "Lighthouse performance score on a company site built with Next.js",
   },
   {
-    // elephantapps — "achieving up to 80% performance improvements"
-    id: "react-perf",
-    value: "80%",
-    label: "Faster React applications after optimisation work for UK clients",
+    /*
+     * hqo — "used by both tenants and landlords across more than 1,500 properties"
+     *
+     * The one figure here that isn't a speed-up, and the only one that says anything
+     * about scale. It renders as written rather than counting up: `splitFigure`
+     * takes a single run of digits, and a thousands separator differs per locale.
+     */
+    id: "properties",
+    value: "1,500+",
+    label: "Properties running the platform whose events features I ship",
   },
   {
-    // fibabanka — "Improved UI performance by up to two times"
+    // fibabanka — "Reduced screen render times by roughly 50%", which is the same
+    // claim stated the way a reader can picture: half the time is twice the speed.
     id: "legacy-ui",
     value: "2×",
     label: "UI speed against the Java/XML banking screens it replaced",

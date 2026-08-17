@@ -20,17 +20,36 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
  * writes `%80`. Capturing both sides keeps the count working in either, and the
  * lazy leading group stops `%` being swallowed into the number.
  *
- * Only whole numbers animate. `5 dk`, `100`, `%80` and `2×` all qualify today;
- * anything with a decimal falls through and renders as written rather than
- * counting through a separator that differs per locale.
+ * Only whole numbers animate. `5 dk`, `100`, `%80`, `2×` and `1,500+` all qualify;
+ * anything with a decimal falls through and renders as written.
  */
-const FIGURE = /^(\D*?)(\d+)(\D*)$/;
+const FIGURE = /^(\D*?)([\d.,]*\d)(\D*)$/;
+
+/**
+ * A `.` or `,` is a thousands mark only where it groups three digits — and the same
+ * character has to do it every time, so `1.500` and `1,500` are figures while `1.5`
+ * is a decimal and `1.500,25` is neither. The locale writes the separator, which is
+ * why it travels with the figure instead of being assumed.
+ */
+const GROUPED = /^\d{1,3}([.,])\d{3}(?:\1\d{3})*$/;
 
 const splitFigure = (value: string) => {
   const match = FIGURE.exec(value);
   if (!match) return null;
-  return { prefix: match[1], count: match[2], suffix: match[3] };
+
+  const [, prefix, display, suffix] = match;
+  const separator = GROUPED.exec(display)?.[1] ?? "";
+  const count = separator ? display.split(separator).join("") : display;
+  if (!/^\d+$/.test(count)) return null;
+
+  return { prefix, display, count, separator, suffix };
 };
+
+/** Puts the figure's own separator back between the groups the counter just wrote. */
+const groupDigits = (value: number, separator: string) =>
+  separator
+    ? String(value).replace(/\B(?=(?:\d{3})+$)/g, separator)
+    : String(value);
 
 export const ProofMetrics = () => {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -70,6 +89,7 @@ export const ProofMetrics = () => {
         const target = Number(el.dataset.count);
         if (!Number.isFinite(target)) return;
 
+        const separator = el.dataset.separator ?? "";
         const tally = { value: 0 };
         el.textContent = "0";
 
@@ -79,7 +99,7 @@ export const ProofMetrics = () => {
           ease: "power2.out",
           snap: { value: 1 },
           onUpdate: () => {
-            el.textContent = String(Math.round(tally.value));
+            el.textContent = groupDigits(Math.round(tally.value), separator);
           },
           scrollTrigger: { trigger: root, start: "top 85%", once: true },
         });
@@ -138,8 +158,11 @@ export const ProofMetrics = () => {
                   <span className="sr-only">{metric.value}</span>
                   <span aria-hidden>
                     {metric.figure.prefix}
-                    <span data-count={metric.figure.count}>
-                      {metric.figure.count}
+                    <span
+                      data-count={metric.figure.count}
+                      data-separator={metric.figure.separator || undefined}
+                    >
+                      {metric.figure.display}
                     </span>
                     {metric.figure.suffix}
                   </span>

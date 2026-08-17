@@ -42,9 +42,9 @@
         "value": "100",
         "label": "Next.js ile geliştirdiğim kurumsal sitede Lighthouse skoru"
       },
-      "react-perf": {
-        "value": "%80",
-        "label": "İngiltere merkezli müşteriler için optimizasyon sonrası"
+      "properties": {
+        "value": "1.500+",
+        "label": "Etkinlik özelliklerini geliştirdiğim platformu kullanan mülk sayısı"
       },
       "legacy-ui": {
         "value": "2×",
@@ -118,6 +118,7 @@
       "ai": "Yapay Zekâ",
       "languages": "Diller",
       "frontend": "Web & Mobil",
+      "backend": "Backend & Bulut",
       "ui": "Arayüz",
       "state-data": "State & Veri",
       "testing": "Test",
@@ -128,56 +129,61 @@
     "title": "İş Deneyimi",
     "entries": {
       "hqo": {
-        "title": "HqO (ElephantApps aracılığıyla) - Yazılım Mühendisi (AI Native)",
-        "date": "Aralık 25’ - Halen",
+        "company": "HqO / Leesman (ElephantApps aracılığıyla)",
+        "location": "Uzaktan — Boston, ABD & Londra, BK",
+        "context": "Mülk sahipleri ve kurumsal kiracılar için çalışma alanı deneyimi ve analitik platformu. HqO, Leesman’ı 2024’te satın aldı.",
+        "roles": {
+          "software-engineer": { "title": "Yazılım Mühendisi", "date": "Aralık 25’ - Halen" },
+          "frontend-developer": { "title": "Frontend Geliştirici", "date": "Aralık 22’ - Haziran 24’" }
+        },
         "bullets": [
-          "HqO ve Leesman platformlarında React, Next.js, Node.js ve NestJS ile uçtan uca uygulamalar geliştirdim.",
-          "Etkinlikler (events) alanında çalışarak hem kiracıların hem de mülk sahiplerinin kullandığı özellikleri hayata geçirdim.",
-          "Leesman yazılımının HqO uygulamasına taşınmasını kapsayan ürün migrasyonunda görev aldım.",
-          "Mevcut Leesman platformunda müşteri taleplerine yönelik yeni özellikler geliştirdim.",
-          "Leesman ekibinin iç süreçlerini otomatikleştiren yapay zekâ destekli uygulamalar geliştirerek 4–7 saat süren işleri 5 dakikaya indirdim.",
-          "Günlük geliştirme sürecinde Cursor ve Claude Code gibi yapay zekâ araçlarını yoğun biçimde kullandım.",
-          "Birleşik Krallık, Slovakya, Polonya ve ABD’de bulunan müşteriler ve geliştiricilerle farklı saat dilimlerinde iş birliği içinde çalıştım."
+          "HqO’nun Leesman’ı satın almasının ardından, daha önce kurulmasına katkıda bulunduğum platformun migrasyonunda çalışmak üzere ürüne geri döndüm — iki dönemin toplamında aynı alanda yaklaşık üç yıl.",
+          "HqO ve Leesman platformlarında React, Next.js, Node.js ve NestJS ile uçtan uca özellikler geliştirdim.",
+          "1.500’den fazla mülkte hem kiracıların hem de mülk sahiplerinin kullandığı etkinlikler (events) alanında özellikler hayata geçirdim.",
+          "Leesman ekibinin rapor üretimini otomatikleştiren yapay zekâ destekli iç araçlar geliştirerek 4–7 saat süren manuel işi 5 dakikanın altına indirdim.",
+          "Ana raporlama panosunun yüklenme süresini kod bölme, memoizasyon ve sorgu optimizasyonuyla %50 azalttım.",
+          "Birleşik Krallık, Polonya, Slovakya ve ABD’deki ekip arkadaşları ve müşterilerle dört saat diliminde asenkron çalıştım; müşteri taleplerini netleştirmeden teslime kadar uçtan uca üstlendim."
         ]
       },
       "nonpublic": {
-        "title": "Nonpublic - Frontend Geliştirici",
-        "date": "Mayıs - Kasım 25’",
+        "company": "NonPublic",
+        "location": "Uzaktan — Sidney, Avustralya",
+        "context": "ASIC düzenlemesine tabi (Avustralya Finansal Hizmetler Lisansı) özel piyasalar ve halka arz öncesi yatırım platformu. Yatırımcı mobil uygulaması ile şirketin web varlığını teslim etmek üzere altı aylık çalışma.",
+        "roles": {
+          "frontend-developer": { "title": "Frontend Geliştirici", "date": "Mayıs - Kasım 25’" }
+        },
         "bullets": [
-          "Sidney, Avustralya merkezli, küresel olarak dağıtılmış bir ekiple iş birliği içinde müşteri odaklı ve arka ofis uygulamalarının geliştirilmesine katkıda bulundum.",
-          "Arayüz tasarımı için Figma kullanarak React, React Native, TypeScript, React Query ve SASS ile kullanıcı kayıt/başlangıç (onboarding) akışları dahil olmak üzere web ve mobil uygulamalar geliştirip bakımını üstlendim.",
-          "React Native ile yatırımcı odaklı bir mobil uygulama geliştirdim.",
-          "Pazarlama ekibiyle ortaklaşa çalışarak Next.js, TypeScript, SASS ve Sanity CMS kullanarak yüksek performanslı şirket web sitesini (Lighthouse'ta 100 performans puanı) hayata geçirdim."
+          "Avustralya ve Almanya’ya dağılmış bir ekiple çalışarak, düzenlemeye tabi bir yatırım platformunun müşteriye dönük ve arka ofis uygulamalarını geliştirip bakımını üstlendim.",
+          "React, React Native, TypeScript, TanStack Query ve SASS ile kullanıcı başlangıç (onboarding) ve KYC’ye komşu akışları geliştirdim.",
+          "React Native ile yatırımcıya dönük bir mobil uygulama yayına aldım.",
+          "Şirketin pazarlama sitesini Next.js, TypeScript, SASS ve Sanity CMS ile teslim ettim; Lighthouse performans puanı 100 oldu."
         ]
       },
       "fibabanka": {
-        "title": "Fibabanka (Veriport aracılığıyla) - Frontend Geliştirici",
-        "date": "Temmuz 24’ - Mayıs 25’",
+        "company": "Fibabanka (Veriport aracılığıyla)",
+        "location": "İstanbul, Türkiye",
+        "context": "Türkiye’de faaliyet gösteren bir ticari banka; platform tüm şubelerde her gün kullanılıyor.",
+        "roles": {
+          "frontend-developer": { "title": "Frontend Geliştirici", "date": "Temmuz 24’ - Mayıs 25’" }
+        },
         "bullets": [
-          "Tüm şubelerde muhasebe, müşteri hizmetleri ve EFT için kullanılan ve orijinal olarak Java/XML ile geliştirilmiş temel bankacılık uygulamalarını; React, Redux ve özelleştirilmiş bir Material UI sürümü uygulayarak dönüştürdüm.",
-          "Arka uçta XML ve Java ile oluşturulmuş eski ekranları analiz ettim ve bulguları Confluence üzerinde belgeledim.",
-          "Arayüz performansını, XML tabanlı uygulamalara kıyasla belirli alanlarda iki kata kadar iyileştirdim.",
-          "Şirketin arayüz kütüphanesi için özel bileşenler geliştirdim, bunları Storybook ile belgeledim ve bileşen belgeleri için JSDoc kullandım."
-        ]
-      },
-      "elephantapps": {
-        "title": "ElephantApps (Leesman için sözleşmeli) - Frontend Geliştirici",
-        "date": "Aralık 22’ - Haziran 24’",
-        "bullets": [
-          "React ve Next.js kullanarak özel web uygulamaları geliştirdim.",
-          "React uygulamalarını optimize ederek %80'e varan performans artışları sağladım. Müşteri taleplerini Jira üzerinden yönettim ve çözdüm.",
-          "Redux, Styled Components, Axios ve Redux Thunk kullanarak ölçeklenebilir çözümler inşa ettim.",
-          "İngiltere merkezli uluslararası müşterilerle iş birliği yaparak özelliklerin zamanında teslim edilmesini sağladım.",
-          "İş akışlarını ve uygulamaları Jira ile Confluence kullanarak belgeledim."
+          "Temel bankacılık ekranlarını (muhasebe, müşteri hizmetleri, EFT) eski Java/XML yığınından React, Redux ve özelleştirilmiş bir Material UI temasına taşıdım; tüm şubelere yayıldı.",
+          "Ekran render sürelerini, XML tabanlı eski uygulamaya kıyasla yaklaşık %50 azalttım.",
+          "Eski Java/XML ekranlarının davranışını analiz edip Confluence’ta belgeleyerek migrasyonun riskini düşürdüm.",
+          "Bankanın iç arayüz kütüphanesi için yeniden kullanılabilir bileşenler geliştirdim ve bunları Storybook ile JSDoc kullanarak belgeledim."
         ]
       },
       "digiturk": {
-        "title": "Digiturk (beIN Media Group) - Frontend Geliştirici",
-        "date": "Şubat 22’ - Aralık 22’",
+        "company": "Digiturk (beIN Media Group)",
+        "location": "İstanbul, Türkiye",
+        "context": "Ücretli TV (pay-TV) ve spor yayıncılığı grubu.",
+        "roles": {
+          "frontend-developer": { "title": "Frontend Geliştirici", "date": "Şubat 22’ - Aralık 22’" }
+        },
         "bullets": [
-          "Çağrı merkezi ekiplerinden gelen Jira taleplerini ele aldım ve çözüme kavuşturdum.",
-          "Şirket içi Ar-Ge projeleri için React kullanarak web uygulamaları geliştirdim.",
-          "Durum yönetimi için Redux, ara katman için Redux Saga, API istekleri için Axios ve arayüz geliştirmede Bootstrap, Styled Components ve Emotion içeren modern bir teknoloji yığını kullandım."
+          "Ar-Ge projeleri için React, Redux ve Redux Saga kullanarak şirket içi web uygulamaları geliştirdim.",
+          "Çağrı merkezi ekiplerinin bildirdiği canlı ortam sorunlarını Jira üzerinden çözdüm.",
+          "Arayüz katmanında Axios, Bootstrap, Styled Components ve Emotion ile çalıştım."
         ]
       }
     }
@@ -231,17 +237,18 @@
   "cv": {
     "nav_label": "CV",
     "eyebrow": "Özgeçmiş",
-    "role": "Yazılım Mühendisi",
+    "role": "Yazılım Mühendisi · Full-stack",
     "meta_description": "Burak Haşıcı’nın tam özgeçmişi — İstanbul’da yazılım mühendisi: deneyim, teknoloji yığını, eğitim ve diller tek sayfada.",
     "summary_heading": "Özet",
-    "summary": "Yaklaşık beş yıldır hem arayüzü hem arkasındaki sunucuyu yazan bir yazılım mühendisi: React, Next.js, Node.js, NestJS, React Native. Şu anda HqO ve Leesman platformlarında; geliştirdiğim iç araçlar 4–7 saat süren işleri 5 dakikaya indirdi.",
+    "summary": "Proptech, fintech ve medya alanlarında 4,5 yılı aşkın canlı ortam deneyimine sahip full-stack yazılım mühendisi; React, Next.js, Node.js, NestJS, .NET ve React Native ile ürün geliştirip yayına alıyorum. Yaklaşık üç yılı çalışma alanı deneyimi teknolojisinde geçti: önce Leesman platformunu kurdum, satın alma sonrası aynı platformu HqO’ya taşımak üzere geri döndüm. Yığının her katmanında rahatım: arayüzde TypeScript, arka uçta REST API’ler ve servisler, canlı ortamda AWS (Lambda, S3, SQS, RDS). Mobil, arka uç ve altyapı dahil olmak üzere canlı bir B2B SaaS ürününü tek başıma tasarlayıp yayına aldım. Yapay zekâ araçlarını gerçek teslim işinde her gün kullanıyorum; geliştirdiğim iç araçlar saatler süren işleri dakikalara indirdi. Birleşik Krallık, Almanya, Polonya, Slovakya, Avustralya ve ABD’ye dağılmış ekiplerle çalışma deneyimim var.",
     "experience_heading": "Deneyim",
     "skills_heading": "Teknik Yetenekler",
     "education_heading": "Eğitim",
     "languages_heading": "Diller",
     "contact_heading": "İletişim",
     "location_label": "Konum",
-    "location": "İstanbul, Türkiye",
+    "location": "İstanbul, Türkiye (UTC+3)",
+    "engagement": "CET/CEST ile tam saat örtüşmesi · Employer of Record ya da B2B sözleşmesiyle çalışabilirim — vize sponsorluğu gerekmiyor.",
     "phone_label": "Telefon",
     "email_label": "E-posta",
     "profiles_label": "Profiller",
@@ -260,7 +267,7 @@
     },
     "languages_spoken": {
       "turkish": { "name": "Türkçe", "level": "Ana dil" },
-      "english": { "name": "İngilizce", "level": "C1" },
+      "english": { "name": "İngilizce", "level": "C1 · 4 yıldır iş dili" },
       "german": { "name": "Almanca", "level": "A2" }
     }
   }

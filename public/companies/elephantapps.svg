@@ -1,3 +1,6 @@
-<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<!-- viewBox cropped to the mark's own ink (the 48x48 export padded it by ~10 units
+     vertically), so constraining this to the same height as the HqO wordmark beside
+     it renders the two at the same size instead of one 20% smaller. -->
+<svg width="47.09" height="38.25" viewBox="0.42 5.56 47.09 38.25" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M13.1362 43.8104H7.65221L4.58274 28.3351L0.421875 30.3728V29.5291C0.422109 29.4971 5.76493 23.7506 5.76493 23.7506L10.0768 15.2082C10.0768 15.2082 25.6962 10.9765 25.7181 10.9506L30.4392 5.56201L38.1782 9.45787L47.5116 22.18L41.5942 41.3624H39.1839V40.5187L40.8713 39.675L40.1394 25.8721L35.211 27.2961L32.1191 43.8104H26.6351L25.1068 35.4599L14.8657 36.4514" fill="#FF5354"/>
 </svg>

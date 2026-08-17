@@ -42,9 +42,9 @@
         "value": "100",
         "label": "Lighthouse performance score on a Next.js company site"
       },
-      "react-perf": {
-        "value": "80%",
-        "label": "faster React apps after optimisation for UK clients"
+      "properties": {
+        "value": "1,500+",
+        "label": "properties running the platform whose events features I ship"
       },
       "legacy-ui": {
         "value": "2×",
@@ -118,6 +118,7 @@
       "ai": "AI & Agentic",
       "languages": "Languages",
       "frontend": "Web & Mobile",
+      "backend": "Backend & Cloud",
       "ui": "UI & Styling",
       "state-data": "State & Data",
       "testing": "Testing",
@@ -128,56 +129,61 @@
     "title": "Work Experience",
     "entries": {
       "hqo": {
-        "title": "HqO (via ElephantApps) - Software Engineer (AI Native)",
-        "date": "Dec 25’ - Present",
+        "company": "HqO / Leesman (via ElephantApps)",
+        "location": "Remote — Boston, US & London, UK",
+        "context": "Workplace experience and analytics platform for landlords and enterprise tenants. HqO acquired Leesman in 2024.",
+        "roles": {
+          "software-engineer": { "title": "Software Engineer", "date": "Dec 25’ - Present" },
+          "frontend-developer": { "title": "Frontend Developer", "date": "Dec 22’ - Jun 24’" }
+        },
         "bullets": [
-          "Developed full-stack applications with React, Next.js, Node.js, and NestJS on HqO’s and Leesman’s platforms.",
-          "Worked in the events domain, delivering features used by both tenants and landlords.",
-          "Took part in the product migration of the Leesman software into the HqO application.",
-          "Supported the existing Leesman platform by developing new features in response to customer requests.",
-          "Built AI-powered applications that automated internal workflows for the Leesman team, cutting tasks that previously took 4–7 hours down to 5 minutes.",
-          "Used AI tooling such as Cursor and Claude Code extensively throughout day-to-day development.",
-          "Collaborated across time zones with customers and fellow developers based in the UK, Slovakia, Poland, and the US."
+          "Returned to the product after HqO’s acquisition of Leesman to work on migrating the platform I had previously helped build — nearly three years in the same domain across both engagements.",
+          "Built full-stack features across HqO’s and Leesman’s platforms using React, Next.js, Node.js, and NestJS.",
+          "Delivered features in the events domain used by both tenants and landlords across more than 1,500 properties.",
+          "Built AI-powered internal tooling that automated report generation for the Leesman team, reducing a 4–7 hour manual workflow to under 5 minutes.",
+          "Cut load times on the main reporting dashboard by 50% through code splitting, memoisation, and query optimisation.",
+          "Worked asynchronously across four time zones with colleagues and customers in the UK, Poland, Slovakia, and the US, owning client requests end to end from clarification through delivery."
         ]
       },
       "nonpublic": {
-        "title": "Nonpublic - Frontend Developer",
-        "date": "May - Nov 25’",
+        "company": "NonPublic",
+        "location": "Remote — Sydney, AU",
+        "context": "Private markets and pre-IPO investment platform, ASIC-regulated (Australian Financial Services Licence). Six-month engagement to deliver the investor mobile application and company web presence.",
+        "roles": {
+          "frontend-developer": { "title": "Frontend Developer", "date": "May - Nov 25’" }
+        },
         "bullets": [
-          "Contributed to the development of customer-facing and back-office applications in collaboration with a globally distributed team (HQ in Sydney, Australia).",
-          "Built and maintained web and mobile applications, including onboarding flows, using React, React Native, TypeScript, React Query, and SASS, with Figma for UI design.",
-          "Developed an investor-focused mobile application with React Native.",
-          "Partnered with the marketing team to deliver a high-performance company website (achieved 100 performance score in Lighthouse) using Next.js, TypeScript, SASS, and Sanity CMS."
+          "Built and maintained customer-facing and back-office applications for a regulated investment platform, working with a distributed team across Australia and Germany.",
+          "Developed onboarding and KYC-adjacent flows in React, React Native, TypeScript, TanStack Query, and SASS.",
+          "Shipped an investor-facing mobile application with React Native.",
+          "Delivered the company marketing site with Next.js, TypeScript, SASS, and Sanity CMS, achieving a Lighthouse performance score of 100."
         ]
       },
       "fibabanka": {
-        "title": "Fibabanka (via Veriport) - Frontend Developer",
-        "date": "Jul 24’ - May 25’",
+        "company": "Fibabanka (via Veriport)",
+        "location": "Istanbul, Türkiye",
+        "context": "Turkish commercial bank; the platform is used daily across all branches.",
+        "roles": {
+          "frontend-developer": { "title": "Frontend Developer", "date": "Jul 24’ - May 25’" }
+        },
         "bullets": [
-          "Transformed core banking applications originally developed in Java/XML, used across all branches for accounting, customer services, and EFT, by implementing React, Redux, and a customized version of Material UI.",
-          "Analyzed legacy screens built with XML and Java on the backend and documented findings in Confluence.",
-          "Improved UI performance by up to two times in certain areas compared to the XML-based applications.",
-          "Developed custom UI components for the company’s UI library, documented them with Storybook, and used JSDoc for component documentation."
-        ]
-      },
-      "elephantapps": {
-        "title": "ElephantApps (contracted to Leesman) - Frontend Developer",
-        "date": "Dec 22’ - Jun 24’",
-        "bullets": [
-          "Developed custom web applications using React and Next.js.",
-          "Optimized React applications, achieving up to 80% performance improvements. Managed and resolved client requests via Jira.",
-          "Built scalable solutions using Redux, Styled Components, Axios, and Redux Thunk.",
-          "Collaborated with UK-based international clients, ensuring timely delivery of features.",
-          "Documented workflows and applications using Jira and Confluence."
+          "Migrated core banking screens (accounting, customer services, EFT) from a legacy Java/XML stack to React, Redux, and a customised Material UI theme, rolled out across all branches.",
+          "Reduced screen render times by roughly 50% compared to the legacy XML-based implementation.",
+          "Analysed and documented legacy Java/XML screen behaviour in Confluence to de-risk the migration.",
+          "Built and documented reusable components for the bank’s internal UI library using Storybook and JSDoc."
         ]
       },
       "digiturk": {
-        "title": "Digiturk (beIN Media Group) - Frontend Developer",
-        "date": "Feb 22’ - Dec 22’",
+        "company": "Digiturk (beIN Media Group)",
+        "location": "Istanbul, Türkiye",
+        "context": "Pay-TV and sports broadcasting group.",
+        "roles": {
+          "frontend-developer": { "title": "Frontend Developer", "date": "Feb 22’ - Dec 22’" }
+        },
         "bullets": [
-          "Addressed and resolved Jira requests from call center teams.",
-          "Developed web applications for in-house R&D projects using React.",
-          "Utilized a modern tech stack including Redux for state management, Redux Saga for middleware, Axios for API fetching, and Bootstrap, Styled Components, and Emotion for UI development."
+          "Developed internal web applications for R&D projects using React, Redux, and Redux Saga.",
+          "Resolved production issues raised by call center teams through Jira.",
+          "Worked with Axios, Bootstrap, Styled Components, and Emotion across the UI layer."
         ]
       }
     }
@@ -231,17 +237,18 @@
   "cv": {
     "nav_label": "CV",
     "eyebrow": "Curriculum vitae",
-    "role": "Software Engineer",
+    "role": "Software Engineer · Full-stack",
     "meta_description": "The full CV of Burak Haşıcı, software engineer in Istanbul — experience, stack, education and languages on one page.",
     "summary_heading": "Summary",
-    "summary": "Software engineer with nearly five years across the frontend and the server behind it: React, Next.js, Node.js, NestJS, React Native. Now on HqO’s and Leesman’s platforms, where internal tools I built cut 4–7 hour workflows down to 5 minutes.",
+    "summary": "Full-stack software engineer with 4.5+ years of production experience across proptech, fintech, and media, building and shipping products with React, Next.js, Node.js, NestJS, .NET, and React Native. Nearly three years in workplace experience technology, first building the Leesman platform and later returning to migrate it into HqO after the acquisition. Comfortable across the stack: TypeScript on the frontend, REST APIs and services on the backend, and AWS (Lambda, S3, SQS, RDS) in production. Designed and shipped a production B2B SaaS single-handedly across mobile, backend, and infrastructure. Daily user of AI tooling in real delivery work, including internal tools that cut multi-hour workflows to minutes. Experienced working with distributed teams across the UK, Germany, Poland, Slovakia, Australia, and the US.",
     "experience_heading": "Experience",
     "skills_heading": "Technical skills",
     "education_heading": "Education",
     "languages_heading": "Languages",
     "contact_heading": "Contact",
     "location_label": "Location",
-    "location": "Istanbul, Turkey",
+    "location": "Istanbul, Türkiye (UTC+3)",
+    "engagement": "Full overlap with CET/CEST · Available via Employer of Record or B2B contract — no visa sponsorship required.",
     "phone_label": "Phone",
     "email_label": "Email",
     "profiles_label": "Profiles",
@@ -260,7 +267,7 @@
     },
     "languages_spoken": {
       "turkish": { "name": "Turkish", "level": "Native" },
-      "english": { "name": "English", "level": "C1" },
+      "english": { "name": "English", "level": "C1 · working language for 4 years" },
       "german": { "name": "German", "level": "A2" }
     }
   }

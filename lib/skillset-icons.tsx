@@ -5,11 +5,16 @@ import {
   AppleDark,
   AppleLight,
   Atlassian,
+  AWS,
   Bitbucket,
   Bootstrap5,
   C,
+  CSharp,
   Cypress,
   Dart,
+  Docker,
+  ExpressJsDark,
+  ExpressJsLight,
   Figma,
   FramerDark,
   FramerLight,
@@ -24,15 +29,19 @@ import {
   Jira,
   MaterialUI,
   Microsoft,
+  MicrosoftSQLServer,
   MongoDB,
   Miro,
+  NestJS,
   NextJs,
+  NodeJs,
   OpenAI,
   PostgreSQL,
   Python,
   React as ReactLogo,
   ReactQuery,
   Redux,
+  Sass,
   Sketch,
   Slack,
   Storybook,
@@ -95,7 +104,25 @@ const LinearIcon: SkillIconComponent = ({ size = 24, ...props }) => (
   </svg>
 );
 
+/**
+ * Marks whose ink is essentially black and that `developer-icons` ships no light twin
+ * for. The chip desaturates every logo at rest, which would leave these as a dark
+ * smudge on a dark ground, so on dark they are flattened to white outright — a plain
+ * inversion would keep them legible but repaint AWS's orange as blue.
+ */
+const whiteOnDark = (glyph: SkillIconComponent): SkillIconComponent => {
+  const Glyph = glyph;
+
+  const WhiteOnDark: SkillIconComponent = ({ className = "", ...props }) => (
+    <Glyph {...props} className={`${className} dark:brightness-0 dark:invert`} />
+  );
+  return WhiteOnDark;
+};
+
 const AppleIcon = themedIcon(AppleDark, AppleLight);
+const AwsIcon = whiteOnDark(AWS);
+const ExpressIcon = themedIcon(ExpressJsDark, ExpressJsLight);
+const SqlServerIcon = whiteOnDark(MicrosoftSQLServer);
 const OpenAIIcon: SkillIconComponent = ({ className = "", ...props }) => (
   // developer-icons ships OpenAI as a black glyph only — invert it on dark surfaces.
   <OpenAI {...props} className={`${className} dark:invert`} />
@@ -110,15 +137,19 @@ export const SKILL_ICON_COMPONENTS = {
   antigravity: Google,
   apple: AppleIcon,
   atlassian: Atlassian,
+  aws: AwsIcon,
   bitbucket: Bitbucket,
   bootstrap: Bootstrap5,
   c: C,
   claude: ClaudeIcon,
   codex: OpenAIIcon,
+  csharp: CSharp,
   cursor: CursorGlyph,
   cypress: Cypress,
   dart: Dart,
+  docker: Docker,
   expo: ExpoGlyph,
+  express: ExpressIcon,
   figma: Figma,
   formik: FormikGlyph,
   framer: FramerIcon,
@@ -134,13 +165,17 @@ export const SKILL_ICON_COMPONENTS = {
   microsoft: Microsoft,
   mongodb: MongoDB,
   miro: Miro,
+  nestjs: NestJS,
   nextjs: NextJs,
+  nodejs: NodeJs,
   postgresql: PostgreSQL,
   python: Python,
   react: ReactLogo,
   reactQuery: ReactQuery,
   redux: Redux,
+  sass: Sass,
   sketch: Sketch,
+  sqlServer: SqlServerIcon,
   slack: Slack,
   storybook: Storybook,
   styledComponents: StyledComponentsGlyph,
