@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Geist_Mono, Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ThemeProvider } from "@/components/theme-provider";
 import { INTRO_BOOT_SCRIPT } from "@/lib/entrance-intro";
 import { SITE_NAME, SITE_ORIGIN } from "@/lib/site-metadata";
@@ -91,6 +92,7 @@ export default function RootLayout({
           {children}
         </ThemeProvider>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
