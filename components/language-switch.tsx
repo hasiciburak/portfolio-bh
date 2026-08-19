@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
+import { localePath, stripLocalePrefix } from "@/lib/site-metadata";
 import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 import { useTranslation } from "./language-provider";
 
@@ -198,18 +199,11 @@ export const LanguageSwitch = ({ variant }: LanguageSwitchProps) => {
   const handleSelect = (targetLang: "en" | "tr") => {
     if (targetLang === lang) return;
 
-    let newPathname = pathname;
-    if (targetLang === "tr") {
-      newPathname = `/tr${pathname}`;
-    } else {
-      if (pathname.startsWith("/tr/")) {
-        newPathname = pathname.slice(3);
-      } else if (pathname === "/tr") {
-        newPathname = "/";
-      }
-    }
-
-    router.push(newPathname);
+    // Strip the current locale off before re-prefixing, rather than editing the
+    // path in place per direction. The old version concatenated `/tr` onto the
+    // home path `/` and pushed `/tr/`, so every switch from the English home
+    // page cost a 308 — and gave Google a redirecting URL to log.
+    router.push(localePath(targetLang, stripLocalePrefix(pathname)));
   };
 
   return (

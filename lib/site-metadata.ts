@@ -76,3 +76,13 @@ export const languageAlternates = (path = "/") => ({
   tr: localeUrl("tr", path),
   "x-default": localeUrl("en", path),
 });
+
+/**
+ * The inverse of `localePath`: strips a `/tr` prefix back off, so a path can be
+ * re-prefixed for the other locale. `/tr` and `/tr/` both come back as `/`,
+ * which is the case the language switcher used to get wrong — it concatenated
+ * `/tr` onto the home path `/` and produced `/tr/`, a URL that only exists to
+ * 308 to `/tr`. Google logged that hop as "Page with redirect".
+ */
+export const stripLocalePrefix = (pathname: string): string =>
+  pathname.replace(/^\/tr(?=\/|$)/, "").replace(/\/$/, "") || "/";
