@@ -214,6 +214,19 @@
     "form_message_required": "Enter a message",
     "form_prefill": "Hi Burak — we'd like your help with {service}."
   },
+  "github_graph": {
+    "title": "Contributions",
+    "total_count": "{{count}} contributions in the last year",
+    "private_summary": "including {{count}} commits across {{repos}} private repos",
+    "private_summary_one_repo": "including {{count}} commits in one private repo",
+    "day_tooltip": "{{count}} contributions on {{date}}",
+    "day_tooltip_one": "1 contribution on {{date}}",
+    "empty_day_tooltip": "No contributions on {{date}}",
+    "legend_less": "Less",
+    "legend_more": "More",
+    "profile_link": "View GitHub profile and contribution history",
+    "error": "Unable to load GitHub activity. Please try again later."
+  },
   "footer": {
     "credits": "Designed in Figma, built with Next.js & Tailwind CSS.",
     "copyright": "© 2026 Burak Haşıcı. All rights reserved."

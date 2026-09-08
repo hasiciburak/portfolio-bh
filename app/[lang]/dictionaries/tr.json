@@ -214,6 +214,19 @@
     "form_message_required": "Bir mesaj yazın",
     "form_prefill": "Merhaba Burak — {service} konusunda desteğine ihtiyacımız var."
   },
+  "github_graph": {
+    "title": "Katkılar",
+    "total_count": "Son bir yılda {{count}} katkı",
+    "private_summary": "bunun {{count}} commit’i {{repos}} private repoda",
+    "private_summary_one_repo": "bunun {{count}} commit’i tek bir private repoda",
+    "day_tooltip": "{{date}} tarihinde {{count}} katkı",
+    "day_tooltip_one": "{{date}} tarihinde 1 katkı",
+    "empty_day_tooltip": "{{date}} tarihinde katkı yok",
+    "legend_less": "Az",
+    "legend_more": "Çok",
+    "profile_link": "GitHub profilini ve katkı geçmişini görüntüle",
+    "error": "GitHub aktivitesi yüklenemedi. Lütfen daha sonra tekrar deneyin."
+  },
   "footer": {
     "credits": "Figma ile tasarlandı, Next.js ve Tailwind CSS ile geliştirildi.",
     "copyright": "© 2026 Burak Haşıcı. Tüm hakları saklıdır."

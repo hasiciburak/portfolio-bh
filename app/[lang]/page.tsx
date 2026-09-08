@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 
 import { ContactSection } from "@/components/contact-section";
 import { HomeSectionIndex } from "@/components/home-section-index";
+import GithubGraphSection from "@/components/github-graph-section";
 import HeroSection from "@/components/hero-section";
 import MySkillsetSection from "@/components/my-skillset-section";
 import ProjectsSection from "@/components/projects-section";
@@ -18,6 +19,13 @@ import { projectsHref } from "@/lib/projects";
  * the language being rendered.
  */
 const HOME_PROJECT_LIMIT = 3;
+
+/**
+ * The contributions graph is the one piece of this page that goes stale on its own,
+ * so the route re-renders hourly rather than freezing at whatever the last deploy
+ * happened to fetch. It matches the cache window in `lib/github-contributions.ts`.
+ */
+export const revalidate = 3600;
 
 const Home = async ({ params }: { params: Promise<{ lang: string }> }) => {
   const { lang } = await params;
@@ -48,6 +56,12 @@ const Home = async ({ params }: { params: Promise<{ lang: string }> }) => {
       />
       <MySkillsetSection />
       <WorkExperienceSection />
+      {/*
+        Reads as the receipt on the section above it: the roles are claims a reader
+        takes on trust, this is a year of work they can count. It stays ahead of
+        Contact so the page still ends on somewhere to go.
+      */}
+      <GithubGraphSection />
       {/* The page used to end on the CV and leave the reader with nowhere to go. */}
       <ContactSection />
     </div>
