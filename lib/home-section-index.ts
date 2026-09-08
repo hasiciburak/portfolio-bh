@@ -5,6 +5,7 @@ export const HOME_SECTION_INDEX_ENTRIES = [
   { id: "projects", label: "Projects" },
   { id: "skillset", label: "My Skillset" },
   { id: "work-experience", label: "Work Experience" },
+  { id: "github-graph", label: "My Github Graph" },
   { id: "contact", label: "Contact" },
 ] as const;
 
