@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { useTheme } from "next-themes";
 import { useEffect, useRef, useState } from "react";
 
+import { GlassSurface } from "@/components/glass-surface";
 import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 
 type ThemeSwitchProps = {
@@ -16,9 +17,12 @@ type ThemeSwitchProps = {
  * from a JS-resolved theme. next-themes stamps `.dark` on <html> before the body
  * paints, so the control is already the right colour on the very first frame —
  * a resolved-theme prop could not be, and the swap read as a dark → light flash.
+ *
+ * The header variant carries type colour only: the capsule around it — the fill,
+ * the rim, the shadow and the liquid-glass refraction — is <GlassSurface>, the
+ * same material as the nav pill, so the floating header controls stay one surface.
  */
-const CHROME_HEADER =
-  "border-zinc-900/12 bg-white/85 text-zinc-900 shadow-[0_14px_36px_rgb(15_23_42_/_0.06)] dark:border-white/[0.22] dark:bg-[rgb(22_22_26_/_0.52)] dark:text-white dark:shadow-[0_12px_40px_rgb(0_0_0_/_0.35)]";
+const CHROME_HEADER = "text-zinc-900 dark:text-white";
 
 const CHROME_DRAWER =
   "border-zinc-200/90 bg-zinc-100 text-zinc-900 dark:border-white/[0.15] dark:bg-zinc-900 dark:text-white";
@@ -253,7 +257,7 @@ export const ThemeSwitch = ({ variant }: ThemeSwitchProps) => {
 
   const chrome = isDrawer
     ? `relative w-full rounded-xl border p-1.5 ${CHROME_DRAWER}`
-    : `relative inline-flex rounded-full border p-1.5 backdrop-blur-xl backdrop-saturate-150 ${CHROME_HEADER}`;
+    : `relative inline-flex rounded-full p-1.5 ${CHROME_HEADER}`;
 
   const layout = isDrawer
     ? "grid w-full grid-cols-3 gap-1"
@@ -266,7 +270,7 @@ export const ThemeSwitch = ({ variant }: ThemeSwitchProps) => {
     setTheme(id);
   };
 
-  return (
+  const control = (
     <div
       ref={containerRef}
       role="group"
@@ -317,5 +321,15 @@ export const ThemeSwitch = ({ variant }: ThemeSwitchProps) => {
         );
       })}
     </div>
+  );
+
+  /*
+     The drawer copy sits on an opaque sheet inside the mobile menu, where a lens
+     would have nothing behind it to bend — it stays a flat control.
+  */
+  return isDrawer ? (
+    control
+  ) : (
+    <GlassSurface className="inline-flex rounded-full">{control}</GlassSurface>
   );
 }

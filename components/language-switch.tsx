@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 import { localePath, stripLocalePrefix } from "@/lib/site-metadata";
+import { GlassSurface } from "@/components/glass-surface";
 import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 import { useTranslation } from "./language-provider";
 
@@ -13,9 +14,9 @@ type LanguageSwitchProps = {
   variant: "header" | "drawer";
 };
 
-/* Same CSS-driven surfaces as ThemeSwitch — see the note there. */
-const CHROME_HEADER =
-  "border-zinc-900/12 bg-white/85 text-zinc-900 shadow-[0_14px_36px_rgb(15_23_42_/_0.06)] dark:border-white/[0.22] dark:bg-[rgb(22_22_26_/_0.52)] dark:text-white dark:shadow-[0_12px_40px_rgb(0_0_0_/_0.35)]";
+/* Same CSS-driven surfaces as ThemeSwitch, and the same <GlassSurface> capsule
+   around the header variant — see the note there. */
+const CHROME_HEADER = "text-zinc-900 dark:text-white";
 
 const CHROME_DRAWER =
   "border-zinc-200/90 bg-zinc-100 text-zinc-900 dark:border-white/[0.15] dark:bg-zinc-900 dark:text-white";
@@ -188,7 +189,7 @@ export const LanguageSwitch = ({ variant }: LanguageSwitchProps) => {
 
   const chrome = isDrawer
     ? `relative w-full rounded-xl border p-1.5 ${CHROME_DRAWER}`
-    : `relative inline-flex rounded-full border p-1.5 backdrop-blur-xl backdrop-saturate-150 ${CHROME_HEADER}`;
+    : `relative inline-flex rounded-full p-1.5 ${CHROME_HEADER}`;
 
   const layout = isDrawer
     ? "grid w-full grid-cols-2 gap-1"
@@ -206,7 +207,7 @@ export const LanguageSwitch = ({ variant }: LanguageSwitchProps) => {
     router.push(localePath(targetLang, stripLocalePrefix(pathname)));
   };
 
-  return (
+  const control = (
     <div
       ref={containerRef}
       role="group"
@@ -258,5 +259,15 @@ export const LanguageSwitch = ({ variant }: LanguageSwitchProps) => {
         );
       })}
     </div>
+  );
+
+  /*
+     The drawer copy sits on an opaque sheet inside the mobile menu, where a lens
+     would have nothing behind it to bend — it stays a flat control.
+  */
+  return isDrawer ? (
+    control
+  ) : (
+    <GlassSurface className="inline-flex rounded-full">{control}</GlassSurface>
   );
 };

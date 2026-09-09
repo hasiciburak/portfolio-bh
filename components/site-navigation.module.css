@@ -1,70 +1,14 @@
 /*
- * Portfolio-v2 nav (Figma node 8:100): translucent pill shell + frosted active segment.
+ * Portfolio-v2 nav (Figma node 8:100): the active segment inside the pill, the
+ * mobile scrim, and the hamburger morph. The pill *shell* itself is no longer
+ * here — it is a liquid-glass capsule now, shared with the header switches in
+ * `glass-surface.module.css`.
  *
  * Light is the base state and `:global(.dark)` (the class next-themes stamps on
  * <html> before first paint) overrides it. Keyed off CSS rather than a resolved
  * theme passed down from React on purpose: a JS-resolved variant cannot be right
  * until hydration, which made the whole shell fade dark → light on every load.
  */
-
-.navShell {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  transform: translateZ(0);
-
-  border-radius: 9999px;
-  color: inherit;
-}
-
-.navShell > * {
-  position: relative;
-  z-index: 1;
-}
-
-/* ─── Light capsule (paired chrome for non-hero surfaces) ─── */
-
-/*
- * Denser than the Figma fill (0.72 / 18px). The pill is fixed over a page that
- * scrolls 40–64px headlines behind it, and at the design value the type read
- * straight through the glass. The values below are the switches' — every floating
- * surface in the header now shares one fill, blur and saturation.
- */
-.navShell {
-  border: 1px solid rgb(24 24 27 / 0.1);
-
-  background: rgb(255 255 255 / 0.85);
-
-  backdrop-filter: blur(24px) saturate(150%);
-  -webkit-backdrop-filter: blur(24px) saturate(150%);
-
-  box-shadow:
-    0 14px 36px rgb(15 23 42 / 0.08),
-    0 1px 0 rgb(255 255 255 / 0.85) inset;
-}
-
-/* ─── Dark capsule (Portfolio-v2 / node 8:100: charcoal glass + thin rim) ─── */
-
-:global(.dark) .navShell {
-  border: 1px solid rgb(255 255 255 / 0.3);
-
-  background:
-    linear-gradient(
-      180deg,
-      rgb(255 255 255 / 0.1) 0%,
-      rgb(255 255 255 / 0.03) 45%,
-      rgb(0 0 0 / 0.12) 100%
-    ),
-    rgb(22 22 26 / 0.84);
-
-  backdrop-filter: blur(28px) saturate(135%);
-  -webkit-backdrop-filter: blur(28px) saturate(135%);
-
-  box-shadow:
-    0 12px 40px rgb(0 0 0 / 0.38),
-    0 1px 0 rgb(255 255 255 / 0.22) inset,
-    0 -1px 0 rgb(0 0 0 / 0.28) inset;
-}
 
 /* ─── Segments (Figma: active pill rgba(255,255,255,0.2); inactive flush) ─── */
 

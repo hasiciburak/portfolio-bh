@@ -7,6 +7,7 @@ import gsap from "gsap";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
 
 import { BrandWordmark } from "@/components/brand-wordmark";
+import { GlassSurface } from "@/components/glass-surface";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { LanguageSwitch } from "@/components/language-switch";
 import { SiteSocialIcon } from "@/components/social-icons";
@@ -214,12 +215,6 @@ export const SiteNavigation = () => {
     };
   }, [menuOpen, menuMounted]);
 
-  const pillNavClassName = [
-    "grid w-full max-w-[24rem] shrink-0 gap-1 rounded-full p-1 sm:w-auto",
-    styles.navShell,
-    "font-sans text-zinc-950 dark:text-white",
-  ].join(" ");
-
   const pillNavGridStyle = {
     gridTemplateColumns: `repeat(${NAV_ITEMS.length}, minmax(0, 1fr))`,
   } as const;
@@ -373,39 +368,46 @@ export const SiteNavigation = () => {
               <ThemeSwitch variant="header" />
             </div>
           </div>
-          <nav
-            aria-label="Main"
-            style={pillNavGridStyle}
-            className={`relative z-[1] ${pillNavClassName}`}
-          >
-            {NAV_ITEMS.map(({ href, label }) => {
-              const isHomeLink = href === "/" || href === "/tr";
-              const active = isHomeLink
-                ? pathname === "/" || pathname === "/tr"
-                : pathname === href || (pathname.startsWith(href) && href !== "/" && href !== "/tr");
+          {/*
+            The capsule is the glass; the <nav> inside is just the grid. Keeping
+            them separate means the landmark stays a real <nav> — <Glass> renders
+            a div — and the lens measures the pill, not the link row.
+          */}
+          <GlassSurface className="relative z-[1] w-full max-w-[24rem] shrink-0 rounded-full p-1 sm:w-auto">
+            <nav
+              aria-label="Main"
+              style={pillNavGridStyle}
+              className="grid gap-1 font-sans text-zinc-950 dark:text-white"
+            >
+              {NAV_ITEMS.map(({ href, label }) => {
+                const isHomeLink = href === "/" || href === "/tr";
+                const active = isHomeLink
+                  ? pathname === "/" || pathname === "/tr"
+                  : pathname === href || (pathname.startsWith(href) && href !== "/" && href !== "/tr");
 
-              const textTone = active
-                ? "font-bold text-zinc-950 dark:text-white"
-                : "font-normal text-zinc-950/88 dark:text-white/88";
+                const textTone = active
+                  ? "font-bold text-zinc-950 dark:text-white"
+                  : "font-normal text-zinc-950/88 dark:text-white/88";
 
-              return (
-                <Link
-                  key={href}
-                  href={href}
-                  aria-current={active ? "page" : undefined}
-                  className={[
-                    styles.segment,
-                    active ? styles.segmentActive : "",
-                    "flex min-h-[42px] min-w-0 items-center justify-center whitespace-nowrap rounded-full border border-transparent px-2 text-center text-base leading-normal",
-                    textTone,
-                    SEGMENT_FOCUS,
-                  ].join(" ")}
-                >
-                  {label}
-                </Link>
-              );
-            })}
-          </nav>
+                return (
+                  <Link
+                    key={href}
+                    href={href}
+                    aria-current={active ? "page" : undefined}
+                    className={[
+                      styles.segment,
+                      active ? styles.segmentActive : "",
+                      "flex min-h-[42px] min-w-0 items-center justify-center whitespace-nowrap rounded-full border border-transparent px-2 text-center text-base leading-normal",
+                      textTone,
+                      SEGMENT_FOCUS,
+                    ].join(" ")}
+                  >
+                    {label}
+                  </Link>
+                );
+              })}
+            </nav>
+          </GlassSurface>
         </div>
       </div>
 
