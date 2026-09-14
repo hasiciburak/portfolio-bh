@@ -8,15 +8,11 @@ import { GlassSurface } from "@/components/glass-surface";
 import { useTranslation } from "@/components/language-provider";
 import { CAL_BOOKING_URL, CAL_LINK, CAL_NAMESPACE } from "@/lib/cal";
 
-/** Modal layout, shared by the declarative attribute and the programmatic open. */
-const CAL_MODAL_CONFIG = { layout: "month_view" } as const;
-
 /**
- * Layout only. Theme must not live on this attribute: `resolvedTheme` is
- * unknown on the server and known on the client, so putting it here is a
- * hydration mismatch. The modal theme is applied after mount via `cal("ui")`.
+ * Layout only. Theme is not part of this: `resolvedTheme` is unknown on the
+ * server and known on the client, so it is applied after mount via `cal("ui")`.
  */
-const CAL_CONFIG = JSON.stringify(CAL_MODAL_CONFIG);
+const CAL_MODAL_CONFIG = { layout: "month_view" } as const;
 
 const CalendarIcon = ({ className }: { className?: string }) => (
   <svg
@@ -72,7 +68,14 @@ const applyTheme = (cal: CalApi, theme: "dark" | "light") => {
  * Cloudflare cookie the moment it loads, which Lighthouse scored against the
  * whole site for a button most visitors never reach. If a click lands before
  * the script has arrived, the handler holds the navigation and opens the modal
- * itself once it has; after that Cal's own `data-cal-link` listener takes over.
+ * once it has.
+ *
+ * The click is ours in every state — the anchor deliberately carries no
+ * `data-cal-link`. Cal's embed listens for that attribute on `document` and
+ * opens the modal, but it never calls `preventDefault()`, so on a real anchor
+ * the browser followed the `href` too: a modal *and* a new tab, on every click
+ * after the first (hover had already loaded the script). One handler, one
+ * `preventDefault`, one `cal("modal")` — nothing for a second listener to do.
  */
 export const BookCallButton = () => {
   const { dict } = useTranslation();
@@ -104,11 +107,8 @@ export const BookCallButton = () => {
   }, [theme]);
 
   const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    // Loaded: Cal's document-level listener opens the modal and cancels the
-    // navigation itself.
-    if (calRef.current) return;
-
     event.preventDefault();
+    // Already loaded: the cached promise resolves on the next microtask.
     void load().then((cal) => {
       cal("modal", { calLink: CAL_LINK, config: CAL_MODAL_CONFIG });
     });
@@ -121,18 +121,13 @@ export const BookCallButton = () => {
       {/*
         The same quiet glass capsule as the hero's secondary CTA — this is the
         secondary action of the contact panel, under the form. The capsule owns
-        the fill and rim; the anchor stays the Cal.com target with its
-        `data-cal-*` attributes, so the embed's document-level click listener
-        still finds it.
+        the fill and rim; the anchor stays the click target and the no-JS link.
       */}
       <GlassSurface tone="quiet" className="mt-3 rounded-full">
         <a
           href={CAL_BOOKING_URL}
           target="_blank"
           rel="noopener noreferrer"
-          data-cal-namespace={CAL_NAMESPACE}
-          data-cal-link={CAL_LINK}
-          data-cal-config={CAL_CONFIG}
           onPointerEnter={load}
           onFocus={load}
           onTouchStart={load}
