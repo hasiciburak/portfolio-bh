@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
 
+import { GlassLightboxControl, type LensPhoto } from "@/components/glass-lightbox-control";
 import type { ProjectGalleryImage } from "@/lib/project-content";
 
 interface GalleryCopy {
@@ -19,12 +20,15 @@ const prefersReducedMotion = () =>
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 /**
- * Shared chrome for every control floating over the lightbox backdrop. `fixed`
+ * Shared box for every control floating over the lightbox backdrop. `fixed`
  * anchors to the viewport rather than the dialog's content box, so the controls
  * stay put whatever the aspect ratio of the current image.
+ *
+ * This is now only position and size: the surface is a glass lens refracting the
+ * photo behind it, and the border and hover state ride on the button inside it.
+ * See `glass-lightbox-control.tsx`.
  */
-const lightboxControl =
-  "fixed inline-flex items-center justify-center rounded-full border border-white/15 bg-white/10 text-white backdrop-blur-md outline-none transition hover:border-white/25 hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-white/50 disabled:pointer-events-none disabled:opacity-30";
+const lightboxControl = "fixed rounded-full transition-opacity";
 
 /**
  * Below `sm` the arrows pair up in the bottom-right corner, clear of the image and
@@ -32,7 +36,7 @@ const lightboxControl =
  * vertical centre. Both layouts come from one element, so there is no duplicated
  * markup and no breakpoint at which a control is missing.
  */
-const lightboxArrow = `${lightboxControl} bottom-[max(1rem,env(safe-area-inset-bottom))] h-11 w-11 pb-0.5 text-2xl leading-none sm:bottom-auto sm:top-1/2 sm:h-12 sm:w-12 sm:-translate-y-1/2`;
+const lightboxArrow = `${lightboxControl} bottom-[max(1rem,env(safe-area-inset-bottom))] h-11 w-11 sm:bottom-auto sm:top-1/2 sm:h-12 sm:w-12 sm:-translate-y-1/2`;
 
 /** Horizontal travel, in px, before a touch counts as a page rather than a tap. */
 const SWIPE_THRESHOLD = 48;
@@ -124,6 +128,47 @@ export const ProjectGallery = ({
   );
 
   const isLightboxOpen = activeIndex !== null;
+
+  /*
+   * The photo's on-screen box, so the controls floating over it can refract a
+   * copy of it. Measured here rather than in each control: there is one photo and
+   * three controls, and `currentSrc` is only knowable from the rendered element —
+   * using it (instead of the raw `src`) means the copies reuse the file the
+   * browser has already downloaded and optimised, at no extra network cost.
+   */
+  const photoRef = useRef<HTMLImageElement>(null);
+  const [lensPhoto, setLensPhoto] = useState<LensPhoto | null>(null);
+
+  useEffect(() => {
+    const photo = photoRef.current;
+    if (!isLightboxOpen || !photo) {
+      setLensPhoto(null);
+      return undefined;
+    }
+
+    const measure = () => {
+      const { left, top, width, height } = photo.getBoundingClientRect();
+      if (!width || !height) return;
+      setLensPhoto({ src: photo.currentSrc || photo.src, rect: { left, top, width, height } });
+    };
+
+    // `observe()` fires once immediately, which seeds the first measurement, and
+    // again when the image lands or the viewport reflows it — a lightbox photo is
+    // sized by `max-h-[82vh]`/`max-w-[92vw]`, so both axes move with the window.
+    const observer = new ResizeObserver(measure);
+    observer.observe(photo);
+    window.addEventListener("resize", measure);
+    // Paging swaps the `src` on the same element. The observer only fires if the
+    // box changes, so two images of identical dimensions would leave `currentSrc`
+    // — and therefore the refracted copy — showing the previous photo.
+    photo.addEventListener("load", measure);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", measure);
+      photo.removeEventListener("load", measure);
+    };
+  }, [isLightboxOpen, activeIndex]);
 
   // The slide itself is one element, so there is no scroll container to snap —
   // the swipe is measured by hand and only pages on a decisive horizontal drag.
@@ -279,6 +324,7 @@ export const ProjectGallery = ({
             className="flex touch-pan-y flex-col items-center gap-3"
           >
             <Image
+              ref={photoRef}
               src={activeImage.src}
               alt={activeImage.alt}
               width={activeImage.width}
@@ -299,36 +345,39 @@ export const ProjectGallery = ({
 
         {isPageable ? (
           <>
-            <button
-              type="button"
+            <GlassLightboxControl
+              photo={lensPhoto}
               onClick={() => stepLightbox(-1)}
               disabled={!canStepBack}
-              aria-label={copy.prev}
+              label={copy.prev}
               /* 4.25rem clears the next button (1rem edge + 2.75rem button + 0.5rem gap). */
               className={`${lightboxArrow} right-[4.25rem] sm:left-4 sm:right-auto lg:left-6`}
+              buttonClassName="pb-0.5 text-2xl leading-none"
             >
               <span aria-hidden>&#8249;</span>
-            </button>
-            <button
-              type="button"
+            </GlassLightboxControl>
+            <GlassLightboxControl
+              photo={lensPhoto}
               onClick={() => stepLightbox(1)}
               disabled={!canStepForward}
-              aria-label={copy.next}
+              label={copy.next}
               className={`${lightboxArrow} right-4 lg:right-6`}
+              buttonClassName="pb-0.5 text-2xl leading-none"
             >
               <span aria-hidden>&#8250;</span>
-            </button>
+            </GlassLightboxControl>
           </>
         ) : null}
 
-        <button
-          type="button"
+        <GlassLightboxControl
+          photo={lensPhoto}
           onClick={() => dialogRef.current?.close()}
-          aria-label={copy.close}
-          className={`${lightboxControl} right-2 top-2 h-10 w-10 text-lg sm:right-4 sm:top-4`}
+          label={copy.close}
+          className={`${lightboxControl} right-2 top-2 h-10 w-10 sm:right-4 sm:top-4`}
+          buttonClassName="text-lg"
         >
           <span aria-hidden>&#10005;</span>
-        </button>
+        </GlassLightboxControl>
       </dialog>
     </section>
   );
