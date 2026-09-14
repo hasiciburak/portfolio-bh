@@ -128,12 +128,23 @@ const HeroSection = ({ variant = "home" }: HeroSectionProps) => {
                 "relative flex w-full justify-center max-lg:px-4 lg:col-start-2 lg:h-full lg:min-h-0 lg:items-stretch",
               ].join(" ")}
             >
+              {/*
+                On mobile the portrait is a sticker: the illustration's own 4:5
+                proportion, a paper-coloured border, a slight tilt and a drop
+                shadow — a print left on the page rather than a cut-out. The
+                previous square-with-one-huge-corner crop fought the drawing,
+                whose composition runs diagonally (head top-left, street bottom-
+                right), and its big bottom-right radius sliced exactly that
+                corner off. The tilt is a transform, so it composes with the
+                intro's clip-path wipe (which clips in the element's own space)
+                and ends clean once the intro sets `clip-path: none`.
+              */}
               <div
                 data-intro-portrait=""
                 className={[
-                  "relative mx-auto aspect-square w-full max-w-[min(100%,304px)] overflow-hidden rounded-br-[148px] rounded-tl-[28px] rounded-tr-[28px] rounded-bl-[28px]",
-                  "sm:max-w-[371px] sm:rounded-br-[185.5px] sm:rounded-tl-[32px] sm:rounded-tr-[32px] sm:rounded-bl-[32px]",
-                  "lg:mx-0 lg:aspect-auto lg:h-full lg:min-h-[100svh] lg:w-full lg:max-w-none lg:shrink-0 lg:rounded-none",
+                  "relative mx-auto my-2 aspect-[4/5] w-full max-w-[min(100%,304px)] overflow-hidden rounded-[22px] border-[7px] border-[#fffdf7] shadow-[0_18px_40px_-18px_rgba(9,9,11,0.45)] -rotate-[2.5deg] dark:border-[#f4f1ea] dark:shadow-[0_18px_40px_-18px_rgba(0,0,0,0.9)]",
+                  "sm:max-w-[371px] sm:rounded-[26px] sm:border-8",
+                  "lg:mx-0 lg:my-0 lg:aspect-auto lg:h-full lg:min-h-[100svh] lg:w-full lg:max-w-none lg:shrink-0 lg:rotate-0 lg:rounded-none lg:border-0 lg:shadow-none",
                 ].join(" ")}
               >
                 <Image
@@ -143,7 +154,7 @@ const HeroSection = ({ variant = "home" }: HeroSectionProps) => {
                   preload
                   fetchPriority="high"
                   sizes="(max-width: 640px) 304px, (max-width: 1024px) 371px, 50vw"
-                  className="object-cover object-top max-lg:object-[50%_18%]"
+                  className="object-cover object-top max-lg:object-[50%_12%]"
                 />
               </div>
             </div>
