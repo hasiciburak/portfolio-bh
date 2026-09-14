@@ -9,20 +9,58 @@ import { SITE_NAME, SITE_ORIGIN } from "@/lib/site-metadata";
 import { SITE_TAB_TITLE } from "@/lib/site-tab-title";
 import "./globals.css";
 
+/*
+ * Body face. Only `latin` is preloaded: the site's own name carries ş and ı, so
+ * Chrome fetches Inter's `latin-ext` block (85 KB) too, but it does so on first
+ * layout — after the swap-in fallback has already painted — and listing it here
+ * would put those bytes ahead of the hero image on a bandwidth-bound first load.
+ */
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
 });
 
+/* Tech-chip badges only, so not worth a preload ahead of the hero image. */
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  preload: false,
+});
+
+/*
+ * Display face. Served through next/font rather than `@font-face` in globals.css:
+ * the files get hashed, immutable URLs — `public/` assets are served with
+ * `max-age=0, must-revalidate`, which cost returning visitors a revalidation per
+ * weight — and a metric-matched fallback face, so the swap does not shift layout.
+ * WOFF2 subsets of the OTFs (Latin + Latin Extended, no hinting), a third smaller
+ * over the wire than the OTFs were; the OTFs kept under `public/fonts` are the
+ * ones the Open Graph image still reads with `fs`, since Satori needs OTF/TTF.
+ *
+ * Deliberately *not* preloaded. Seven weights is ~115 KB, and a preload puts all
+ * of them on the wire the moment the HTML arrives, at the same priority as the
+ * hero portrait — which on a throttled mobile profile pushed LCP from 2.3 s to
+ * 3.7 s. Left to the stylesheet, Chrome requests only the weights the page lays
+ * out, and `swap` paints the fallback until they land.
+ */
+const nohemi = localFont({
+  src: [
+    { path: "./fonts/Nohemi-ExtraLight.woff2", weight: "200" },
+    { path: "./fonts/Nohemi-Light.woff2", weight: "300" },
+    { path: "./fonts/Nohemi-Regular.woff2", weight: "400" },
+    { path: "./fonts/Nohemi-Medium.woff2", weight: "500" },
+    { path: "./fonts/Nohemi-SemiBold.woff2", weight: "600" },
+    { path: "./fonts/Nohemi-Bold.woff2", weight: "700" },
+    { path: "./fonts/Nohemi-Black.woff2", weight: "900" },
+  ],
+  variable: "--font-nohemi-face",
+  display: "swap",
+  preload: false,
 });
 
 /** Wordmark (#HSC): HK Grotesk Wide Black — licensed font bundled under fonts/. */
 const brandWordmark = localFont({
-  src: "../public/fonts/hkgroteskwide-black.otf",
+  src: "./fonts/hkgroteskwide-black.woff2",
   variable: "--font-brand-wordmark",
   weight: "900",
   display: "swap",
@@ -76,7 +114,7 @@ export default function RootLayout({
   return (
     <html
       suppressHydrationWarning
-      className={`${inter.variable} ${geistMono.variable} ${brandWordmark.variable} h-full antialiased`}
+      className={`${inter.variable} ${geistMono.variable} ${nohemi.variable} ${brandWordmark.variable} h-full antialiased`}
     >
       <head>
         {/*

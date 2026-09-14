@@ -37,7 +37,7 @@ const Home = async ({ params }: { params: Promise<{ lang: string }> }) => {
   const projects = await getProjectListItems(lang as Locale, HOME_PROJECT_LIMIT);
 
   return (
-    <div className="flex w-full flex-1 flex-col bg-background">
+    <main className="flex w-full flex-1 flex-col bg-background">
       <HomeSectionIndex />
       <HeroSection variant="home" />
       {/* Availability and the proof numbers both ride inside the hero now. */}
@@ -64,7 +64,7 @@ const Home = async ({ params }: { params: Promise<{ lang: string }> }) => {
       <GithubGraphSection />
       {/* The page used to end on the CV and leave the reader with nowhere to go. */}
       <ContactSection />
-    </div>
+    </main>
   );
 };
 
