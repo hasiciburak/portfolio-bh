@@ -67,6 +67,31 @@
     0 -1px 0 rgb(0 0 0 / 0.3) inset;
 }
 
+/* ─── Quiet tone: the secondary of a pair ─── */
+
+/*
+ * Same rim, same blur, same lens — only the fill thins and the drop shadow goes.
+ * That is what made the old ghost CTA read as secondary next to the primary, and
+ * it still does: a capsule that sits *in* the page rather than floating over it.
+ */
+.surface[data-tone="quiet"] {
+  /* A dark hairline, not the white rim the floating capsules use: on the light
+     page a thin white fill inside a white edge has nothing to be seen against. */
+  border-color: rgb(24 24 27 / 0.18);
+
+  background: rgb(255 255 255 / 0.22);
+
+  box-shadow: 0 1px 0 rgb(255 255 255 / 0.6) inset;
+}
+
+:global(.dark) .surface[data-tone="quiet"] {
+  border-color: rgb(255 255 255 / 0.18);
+
+  background: rgb(255 255 255 / 0.05);
+
+  box-shadow: 0 1px 0 rgb(255 255 255 / 0.1) inset;
+}
+
 /*
  * Reduced transparency is an accessibility setting, not a taste one: someone who
  * asks for it wants a legible surface, not a lens. An opaque fill also leaves

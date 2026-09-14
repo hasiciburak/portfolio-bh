@@ -45,11 +45,19 @@ const HEADER_OPTICS: Partial<GlassOptics> = {
   glow: 0.35,
 };
 
-type GlassSurfaceProps = GlassProps;
+type GlassSurfaceProps = GlassProps & {
+  /**
+   * `quiet` is the same glass with a thinner fill and no drop shadow — for the
+   * second of a pair, where two identical capsules would give a recruiter two
+   * equal calls to action and therefore none.
+   */
+  tone?: "default" | "quiet";
+};
 
-export const GlassSurface = ({ className, optics, style, ...rest }: GlassSurfaceProps) => {
+export const GlassSurface = ({ className, optics, style, tone = "default", ...rest }: GlassSurfaceProps) => {
   return (
     <Glass
+      data-tone={tone === "quiet" ? "quiet" : undefined}
       className={[styles.surface, className].filter(Boolean).join(" ")}
       optics={optics ? { ...HEADER_OPTICS, ...optics } : HEADER_OPTICS}
       /*

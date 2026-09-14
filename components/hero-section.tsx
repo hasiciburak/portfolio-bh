@@ -9,20 +9,30 @@ import { SiteSocialIcon } from "@/components/social-icons";
 import { scrollToSectionId } from "@/lib/scroll-to-section";
 import { SITE_SOCIAL_LINKS } from "@/lib/social-links";
 import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
+import { GlassSurface } from "@/components/glass-surface";
 import { useTranslation } from "@/components/language-provider";
 
+/*
+ * The desktop CTAs are the same liquid-glass capsule as the header — see
+ * `glass-surface.tsx`. The capsule (fill, rim, blur, lens) is <GlassSurface>;
+ * these two classes are only the link inside it: layout, type colour, a hover
+ * wash on top of the glass, and the focus ring.
+ *
+ * On this flat hero background the lens has nothing to bend, so here the material
+ * is doing consistency, not refraction: the CTAs read as the same family as the
+ * nav pill rather than as a second, slightly different frosted style.
+ */
 const glassPill =
-  "inline-flex items-center justify-center gap-2.5 rounded-full border border-zinc-900/18 bg-white/72 px-4 py-2.5 text-base text-zinc-950 shadow-[0_10px_40px_rgb(15_23_42_/_0.08),inset_0_1px_0_rgb(255_255_255_/_0.92),inset_0_-1px_0_rgb(15_23_42_/_0.06)] backdrop-blur-xl backdrop-saturate-150 transition-colors hover:bg-white/90 dark:border-white/35 dark:bg-white/10 dark:text-white dark:shadow-[0_10px_40px_rgb(0_0_0_/_0.18),inset_0_1px_0_rgb(255_255_255_/_0.35),inset_0_-1px_0_rgb(0_0_0_/_0.08)] dark:hover:bg-white/15";
+  "inline-flex items-center justify-center gap-2.5 rounded-full px-4 py-2.5 text-base text-zinc-950 transition-colors hover:bg-white/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/25 dark:text-white dark:hover:bg-white/10 dark:focus-visible:ring-white/35";
 
 /*
- * The secondary CTA. Same shell as `glassPill` — radius, padding, blur, saturate —
- * so the two read as one family, minus the white fill and the drop shadow, which
- * is what makes it the quieter of the pair. An outline alone was too little: next
- * to a blurred, shadowed pill a bare hairline reads as unfinished rather than
- * secondary.
+ * The secondary CTA. Same capsule via `tone="quiet"` — a thinner fill and no drop
+ * shadow, which is what makes it the quieter of the pair. An outline alone was
+ * too little: next to a filled, shadowed pill a bare hairline reads as unfinished
+ * rather than secondary.
  */
 const ghostPill =
-  "inline-flex items-center justify-center gap-2 rounded-full border border-zinc-900/20 bg-white/25 px-4 py-2.5 text-base leading-tight text-zinc-800 backdrop-blur-xl backdrop-saturate-150 transition-colors hover:border-zinc-900/35 hover:bg-white/45 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/25 dark:border-white/25 dark:bg-white/[0.06] dark:text-white/85 dark:hover:border-white/40 dark:hover:bg-white/12 dark:hover:text-white dark:focus-visible:ring-white/35";
+  "inline-flex items-center justify-center gap-2 rounded-full px-4 py-2.5 text-base leading-tight text-zinc-800 transition-colors hover:bg-white/30 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/25 dark:text-white/85 dark:hover:bg-white/[0.08] dark:hover:text-white dark:focus-visible:ring-white/35";
 
 const mobileResumePill =
   "inline-flex items-center justify-center gap-2.5 rounded-full bg-zinc-950/[0.065] px-[15px] py-[10px] text-base text-zinc-950 backdrop-blur-[2px] transition-colors hover:bg-zinc-950/[0.1] dark:bg-[rgba(170,170,170,0.1)] dark:text-white dark:hover:bg-[rgba(170,170,170,0.16)]";
@@ -193,30 +203,34 @@ const HeroSection = ({ variant = "home" }: HeroSectionProps) => {
                   data-intro-rise=""
                   className="flex w-fit items-center gap-3 max-lg:hidden"
                 >
-                  <Link
-                    href={cvHref}
-                    className={`group/cv ${glassPill} w-fit leading-tight lg:inline-flex`}
-                  >
-                    {dict.hero.view_cv}
-                    <CvIcon className="shrink-0 text-zinc-500 transition-colors group-hover/cv:text-zinc-800 dark:text-white/55 dark:group-hover/cv:text-white" />
-                  </Link>
+                  <GlassSurface className="rounded-full">
+                    <Link
+                      href={cvHref}
+                      className={`group/cv ${glassPill} w-fit leading-tight lg:inline-flex`}
+                    >
+                      {dict.hero.view_cv}
+                      <CvIcon className="shrink-0 text-zinc-500 transition-colors group-hover/cv:text-zinc-800 dark:text-white/55 dark:group-hover/cv:text-white" />
+                    </Link>
+                  </GlassSurface>
                   {/*
                     The `href` stays real so the link survives without JS and can
                     be opened in a new tab; the handler only takes over when it can
                     do better, which on this page means handing the target to
                     ScrollSmoother rather than letting the browser jump.
                   */}
-                  <a
-                    href="#contact"
-                    onClick={(event) => {
-                      event.preventDefault();
-                      scrollToSectionId("contact", reduceMotion);
-                    }}
-                    className={`group/talk ${ghostPill}`}
-                  >
-                    {dict.navigation.contact}
-                    <TalkIcon className="shrink-0 text-zinc-500 transition-colors group-hover/talk:text-zinc-800 dark:text-white/55 dark:group-hover/talk:text-white" />
-                  </a>
+                  <GlassSurface tone="quiet" className="rounded-full">
+                    <a
+                      href="#contact"
+                      onClick={(event) => {
+                        event.preventDefault();
+                        scrollToSectionId("contact", reduceMotion);
+                      }}
+                      className={`group/talk ${ghostPill}`}
+                    >
+                      {dict.navigation.contact}
+                      <TalkIcon className="shrink-0 text-zinc-500 transition-colors group-hover/talk:text-zinc-800 dark:text-white/55 dark:group-hover/talk:text-white" />
+                    </a>
+                  </GlassSurface>
                 </div>
 
                 <div data-intro-rise="" className="flex flex-col gap-4 sm:gap-5 lg:hidden">
