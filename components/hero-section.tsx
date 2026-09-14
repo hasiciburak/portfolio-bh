@@ -140,7 +140,8 @@ const HeroSection = ({ variant = "home" }: HeroSectionProps) => {
                   src="/images/hero-portrait.png"
                   alt="Burak Haşıcı portrait"
                   fill
-                  priority
+                  preload
+                  fetchPriority="high"
                   sizes="(max-width: 640px) 304px, (max-width: 1024px) 371px, 50vw"
                   className="object-cover object-top max-lg:object-[50%_18%]"
                 />
