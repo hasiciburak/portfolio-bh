@@ -4,6 +4,7 @@ import { getCalApi } from "@calcom/embed-react";
 import { useTheme } from "next-themes";
 import { useCallback, useEffect, useRef } from "react";
 
+import { GlassSurface } from "@/components/glass-surface";
 import { useTranslation } from "@/components/language-provider";
 import { CAL_BOOKING_URL, CAL_LINK, CAL_NAMESPACE } from "@/lib/cal";
 
@@ -117,22 +118,31 @@ export const BookCallButton = () => {
     <div className="mt-8">
       <p className="text-sm text-zinc-500 dark:text-white/50">{copy.book_label}</p>
 
-      <a
-        href={CAL_BOOKING_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-        data-cal-namespace={CAL_NAMESPACE}
-        data-cal-link={CAL_LINK}
-        data-cal-config={CAL_CONFIG}
-        onPointerEnter={load}
-        onFocus={load}
-        onTouchStart={load}
-        onClick={handleClick}
-        className="group/book mt-3 inline-flex items-center gap-2 rounded-full border border-zinc-950/12 px-4 py-2.5 text-[15px] text-zinc-800 outline-none transition-colors hover:border-zinc-950/25 hover:text-zinc-950 focus-visible:ring-2 focus-visible:ring-zinc-950/25 dark:border-white/15 dark:text-white/80 dark:hover:border-white/30 dark:hover:text-white dark:focus-visible:ring-white/35"
-      >
-        <CalendarIcon className="shrink-0 text-zinc-500 transition-colors group-hover/book:text-zinc-800 dark:text-white/55 dark:group-hover/book:text-white" />
-        {copy.book_cta}
-      </a>
+      {/*
+        The same quiet glass capsule as the hero's secondary CTA — this is the
+        secondary action of the contact panel, under the form. The capsule owns
+        the fill and rim; the anchor stays the Cal.com target with its
+        `data-cal-*` attributes, so the embed's document-level click listener
+        still finds it.
+      */}
+      <GlassSurface tone="quiet" className="mt-3 rounded-full">
+        <a
+          href={CAL_BOOKING_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-cal-namespace={CAL_NAMESPACE}
+          data-cal-link={CAL_LINK}
+          data-cal-config={CAL_CONFIG}
+          onPointerEnter={load}
+          onFocus={load}
+          onTouchStart={load}
+          onClick={handleClick}
+          className="group/book inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-[15px] text-zinc-800 outline-none transition-colors hover:bg-white/30 hover:text-zinc-950 focus-visible:ring-2 focus-visible:ring-zinc-950/25 dark:text-white/80 dark:hover:bg-white/[0.08] dark:hover:text-white dark:focus-visible:ring-white/35"
+        >
+          <CalendarIcon className="shrink-0 text-zinc-500 transition-colors group-hover/book:text-zinc-800 dark:text-white/55 dark:group-hover/book:text-white" />
+          {copy.book_cta}
+        </a>
+      </GlassSurface>
     </div>
   );
 };
