@@ -70,6 +70,10 @@ export type SkillIconComponent = ComponentType<
   Partial<SVGProps<SVGSVGElement>> & { size?: number }
 >;
 
+/** A component's own name, for composing the wrapper's `displayName`. */
+const glyphName = (glyph: SkillIconComponent) =>
+  glyph.displayName || glyph.name || "Icon";
+
 /**
  * `developer-icons` names each pair by glyph colour, not by the theme it belongs to:
  * `*Light` is the near-white glyph (for dark backgrounds) and `*Dark` is the near-black
@@ -82,12 +86,18 @@ const themedIcon = (
   const DarkGlyph = darkGlyph;
   const LightGlyph = lightGlyph;
 
-  return ({ className = "", ...props }) => (
+  const ThemedIcon: SkillIconComponent = ({ className = "", ...props }) => (
     <>
       <LightGlyph {...props} className={`${className} hidden dark:block`} />
       <DarkGlyph {...props} className={`${className} block dark:hidden`} />
     </>
   );
+
+  // Named after the pair it wraps, so React DevTools and any component-level
+  // warning point at the icon rather than at a dozen identical anonymous nodes.
+  ThemedIcon.displayName = `ThemedIcon(${glyphName(darkGlyph)})`;
+
+  return ThemedIcon;
 }
 
 /** `developer-icons` has no Linear glyph — brand mark drawn in Linear's purple */
