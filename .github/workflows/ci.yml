@@ -1,0 +1,42 @@
+name: CI
+
+# Pull requests into main, and main itself — a direct push to main deploys, so
+# the checks have to run there too, not only on the PR that preceded it.
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+# A second push to the same branch makes the first run's answer worthless.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      # `ci`, not `install`: it installs exactly what package-lock.json pins and
+      # fails if the two have drifted, which is the state a build should catch.
+      - run: npm ci
+
+      - run: npm run typecheck
+
+      - run: npm run lint
+
+      # The build is the check that catches what the other two cannot — Next's
+      # own server/client boundary and prerender errors. It needs no secrets:
+      # the contributions fetcher falls back to the public calendar without a
+      # token, and to rendering nothing if that call fails.
+      - run: npm run build
