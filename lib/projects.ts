@@ -9,8 +9,10 @@ export interface ProjectEntry {
   /** Doubles as the URL slug: /projects/<id> */
   id: string;
   year: string;
-  repoUrl: string;
+  /** Omit for private repositories — the source button is then left out. */
+  repoUrl?: string;
   liveUrl?: string;
+  appStoreUrl?: string;
   tech: SkillItem[];
 }
 

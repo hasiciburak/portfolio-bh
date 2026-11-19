@@ -60,8 +60,9 @@ export interface ProjectListItem {
   name: string;
   summary: string;
   year: string;
-  repoUrl: string;
+  repoUrl?: string;
   liveUrl?: string;
+  appStoreUrl?: string;
   tech: SkillItem[];
   detailHref: string;
   /** Case-study screenshots, scrubbed through by the list's hover preview. */
@@ -101,6 +102,7 @@ export const getProjectListItems = async (
         year: project.year,
         repoUrl: project.repoUrl,
         liveUrl: project.liveUrl,
+        appStoreUrl: project.appStoreUrl,
         tech: project.tech,
         detailHref: projectHref(project.id, locale),
         gallery: metadata.gallery,

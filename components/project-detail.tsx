@@ -8,6 +8,7 @@ import { projectsHref, type ProjectEntry } from "@/lib/projects";
 import { SKILL_ICON_COMPONENTS } from "@/lib/skillset-icons";
 
 const GithubIcon = SKILL_ICON_COMPONENTS.github;
+const AppleIcon = SKILL_ICON_COMPONENTS.apple;
 
 /**
  * Case-study page shell. Server component — `children` is the compiled MDX body,
@@ -79,15 +80,28 @@ export const ProjectDetail = ({
         </section>
 
         <div className="mt-8 flex flex-wrap items-center gap-3">
-          <a
-            href={project.repoUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 rounded-xl border border-zinc-200/95 bg-white px-4 py-2.5 text-sm font-medium text-zinc-900 shadow-sm outline-none transition-colors hover:border-zinc-300 hover:bg-zinc-50 focus-visible:ring-2 focus-visible:ring-zinc-950/25 dark:border-white/15 dark:bg-white/[0.06] dark:text-white/90 dark:shadow-none dark:hover:border-white/25 dark:hover:bg-white/[0.1] dark:focus-visible:ring-white/35"
-          >
-            <GithubIcon size={18} className="shrink-0" aria-hidden />
-            {copy.view_source}
-          </a>
+          {project.appStoreUrl ? (
+            <a
+              href={project.appStoreUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 rounded-xl border border-zinc-200/95 bg-white px-4 py-2.5 text-sm font-medium text-zinc-900 shadow-sm outline-none transition-colors hover:border-zinc-300 hover:bg-zinc-50 focus-visible:ring-2 focus-visible:ring-zinc-950/25 dark:border-white/15 dark:bg-white/[0.06] dark:text-white/90 dark:shadow-none dark:hover:border-white/25 dark:hover:bg-white/[0.1] dark:focus-visible:ring-white/35"
+            >
+              <AppleIcon size={18} className="shrink-0" aria-hidden />
+              {copy.view_app_store}
+            </a>
+          ) : null}
+          {project.repoUrl ? (
+            <a
+              href={project.repoUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 rounded-xl border border-zinc-200/95 bg-white px-4 py-2.5 text-sm font-medium text-zinc-900 shadow-sm outline-none transition-colors hover:border-zinc-300 hover:bg-zinc-50 focus-visible:ring-2 focus-visible:ring-zinc-950/25 dark:border-white/15 dark:bg-white/[0.06] dark:text-white/90 dark:shadow-none dark:hover:border-white/25 dark:hover:bg-white/[0.1] dark:focus-visible:ring-white/35"
+            >
+              <GithubIcon size={18} className="shrink-0" aria-hidden />
+              {copy.view_source}
+            </a>
+          ) : null}
           {project.liveUrl ? (
             <a
               href={project.liveUrl}
