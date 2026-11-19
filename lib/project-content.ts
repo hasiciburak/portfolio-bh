@@ -33,6 +33,10 @@ interface ProjectContentModule {
  * template-literal import path.
  */
 const projectContent = {
+  tastemap: {
+    en: () => import("@/content/projects/tastemap.en.mdx"),
+    tr: () => import("@/content/projects/tastemap.tr.mdx"),
+  },
   "portfolio-bh": {
     en: () => import("@/content/projects/portfolio-bh.en.mdx"),
     tr: () => import("@/content/projects/portfolio-bh.tr.mdx"),
