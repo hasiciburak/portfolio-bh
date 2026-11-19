@@ -1,0 +1,185 @@
+export const metadata = {
+  name: "Taste Map",
+  summary:
+    "iPhone ve iPad için kişisel bir yemek haritası; App Store'da yayında. Mekânlara yıldız verilmiyor, ikili karşılaştırmayla sıralanıyorlar. Ziyaretler kaydediliyor, bu akşamın önerisini ise cihaz üzerindeki bir model gerekçesiyle açıklıyor. SwiftUI ve SwiftData ile geliştirildi; yanında iki dilli bir Next.js sitesi var.",
+  gallery: [
+    {
+      src: "/projects/tastemap/overview.jpg",
+      alt: "Taste Map'in üç iPhone ekranı: ikili sıralama sorusu, bir mekân kartı açık harita ve damak zevki istatistikleri",
+      caption: "Genel bakış",
+      width: 3200,
+      height: 2000,
+    },
+    {
+      src: "/projects/tastemap/map.jpg",
+      alt: "Fotoğraflı pinler, kavisli mutfak etiketleri ve küme sayılarıyla harita sekmesi; yanında bir pinin mekân kartına dönüştüğü aynı harita",
+      caption: "Harita: pinler ve mekân kartı",
+      width: 3200,
+      height: 2000,
+    },
+    {
+      src: "/projects/tastemap/ranking.jpg",
+      alt: "İki restoran arasında 'Hangisi daha iyiydi?' karşılaştırması, bunun sonucunda oluşan sıralı liste ve Date spots adlı bir kullanıcı listesi",
+      caption: "İkili sıralama ve listeler",
+      width: 3200,
+      height: 2000,
+    },
+    {
+      src: "/projects/tastemap/decide.jpg",
+      alt: "Her mekânın neden uygun olduğunu anlatan kısa notlarla Decide önerileri, ziyaret geçmişiyle bir mekân detay sayfası ve istatistik ekranı",
+      caption: "Decide, mekân detayı ve istatistikler",
+      width: 3200,
+      height: 2000,
+    },
+    {
+      src: "/projects/tastemap/ipad.jpg",
+      alt: "Tam ekran harita ve üstte sekme çubuğuyla iPad yerleşimi; yanında iPhone'daki sıralı liste",
+      caption: "iPad ve iPhone",
+      width: 3200,
+      height: 2000,
+    },
+    {
+      src: "/projects/tastemap/landing.jpg",
+      alt: "Taste Map web sitesinin 'What's inside' bölümü: koyu temalı uygulama ekranlarıyla özellik kartlarından oluşan bir bento ızgarası",
+      caption: "Web sitesi",
+      width: 3200,
+      height: 2000,
+    },
+  ],
+};
+
+Taste Map, tek başıma tasarlayıp geliştirdiğim ve App Store'da yayına aldığım bir iOS uygulaması:
+yemek yediğiniz ve denemek istediğiniz her yerin size ait, özel bir haritası. SwiftUI ve SwiftData
+ile yazıldı, hiçbir backend'i yok. App Store'un istediği sayfaları ise küçük bir Next.js sitesi
+taşıyor.
+
+## Bağlam
+
+Yıllarca restoran listemi bir not uygulamasında tuttum. Liste iki noktada işe yaramıyordu. Birincisi,
+yıldız puanları zamanla anlamını yitiriyordu: geçen bahar dört yıldız verdiğim bir yer, geçen hafta
+dört yıldız verdiğim bir yerin yanında hiçbir şey ifade etmiyordu. İkincisi, listeye gerçekten
+sorduğum tek soruyu yanıtlayamıyordu: bu akşam nerede yiyeceğim?
+
+Uygulama bu iki işin etrafında kuruldu. Puanlamanın yerini sıralama aldı; böylece her mekânın
+diğerlerine göre bir yeri var. *Decide* akışı ise listeyi bir öneriye dönüştürüyor. Geri kalan her
+şey (harita, ziyaret kaydı, istatistikler) bu ikisini beslemek için var.
+
+İki kısıt baştan belliydi. Uygulama **hesap ya da sunucu olmadan** çalışmalıydı; çünkü yemek
+günlüğü kişisel bir şey ve bunun için altyapı işletmek istemiyordum. Ayrıca **İngilizce ve
+Türkçe** yayına çıkmalıydı; ikisi de doğal okunmalıydı, biri diğerinin çevirisi gibi değil.
+
+## Neler geliştirdim
+
+- **İkili karşılaştırmayla sıralama.** Yeni bir mekâna hiçbir zaman puan verilmiyor. Uygulama,
+  daha önce sıraladığınız mekânlarla karşılaştırarak "hangisi daha iyiydi?" diye soruyor. İkili
+  arama sayesinde mekân yaklaşık log₂ n soruda yerine oturuyor; 14 mekânlık bir sıralama dört soru
+  sürüyor. "Karar veremedim" cevabı oturumu erkenden bitiriyor. Her ekleme ve silmeden sonra
+  sıralar boşluksuz (1…n) kalıyor.
+- **Gittiğiniz yerleri gösteren bir harita.** Pinler, kavisli mutfak etiketleri taşıyan fotoğraflı
+  çıkartmalar. Yakınlaştırdıkça ölçekleniyor, kümeler hâlinde gruplanıyor ve bulundukları yerde
+  bir mekân kartına dönüşüyorlar. Apple Haritalar'daki kafe ve restoranlar tek dokunuşla
+  kaydedilebiliyor; filtre çipleri ise haritayı duruma, listeye, mutfağa ya da fiyata göre
+  daraltıyor.
+- **Cihaz üzerinde notlar üreten Decide.** Birkaç hızlı soru (ne kadar uzağa, kiminle, hangi
+  mutfak) listeyi bir avuç öneriye indiriyor. Apple Intelligence'ın desteklendiği cihazlarda her
+  öneri, Foundation Models framework'üyle cihaz üzerinde üretilen kısa bir "neden bu mekân" notuyla
+  geliyor. Desteklenmeyen cihazlarda öneriler not olmadan gösteriliyor.
+
+<ImageRow
+  images={[
+    { src: "/projects/tastemap/app-store/tr/01.jpg", alt: "App Store görseli: fotoğraflı pinler ve mutfak etiketleriyle yemek haritası", width: 1320, height: 2868 },
+    { src: "/projects/tastemap/app-store/tr/02.jpg", alt: "App Store görseli: 'Hangisi daha iyiydi?' sorusuyla karşılaştırılan iki restoran", width: 1320, height: 2868 },
+    { src: "/projects/tastemap/app-store/tr/03.jpg", alt: "App Store görseli: bu akşam için, her biri kısa bir gerekçeyle gelen üç öneri", width: 1320, height: 2868 },
+  ]}
+/>
+
+- **Ziyaret kaydı.** Her ziyarette tarih, puan, yenen yemekler, kiminle gidildiği, ne kadar
+  harcandığı, bir not ve fotoğraflar kaydediliyor. Bu kayıtlar damak zevki istatistiklerini ve
+  paylaşılabilir bir yıllık yemek özetini besliyor.
+
+<ImageRow
+  images={[
+    { src: "/projects/tastemap/app-store/tr/04.jpg", alt: "App Store görseli: yıldız puanı, yemekler, birlikte gidilen kişiler ve harcamayla bir ziyaret kaydı", width: 1320, height: 2868 },
+    { src: "/projects/tastemap/app-store/tr/05.jpg", alt: "App Store görseli: ziyaret sayıları, mutfaklar, semtler ve dışarıda yeme takvimiyle damak zevki istatistikleri", width: 1320, height: 2868 },
+    { src: "/projects/tastemap/app-store/tr/06.jpg", alt: "App Store görseli: paylaşılabilir, kaydırılarak gezilen yıllık yemek özeti", width: 1320, height: 2868 },
+  ]}
+/>
+
+- **Uygulamanın dışındaki uygulama.** "Nerede yesem?" ve "Ziyaret kaydet" widget'ları, App Intents
+  üzerinden Siri ve Kestirmeler eylemleri, Spotlight indeksleme ve Google Haritalar ya da Apple
+  Haritalar'dan paylaşılan bir mekânı ekleyen bir paylaşım uzantısı. Google Haritalar Takeout içe
+  aktarımı mevcut kayıtlı yerleri getiriyor; liste bağlantıları ise doğrudan bir içe aktarma
+  ekranında açılıyor.
+
+<ImageRow
+  images={[
+    { src: "/projects/tastemap/app-store/tr/09.jpg", alt: "App Store görseli: ana ekrandaki 'Nerede yesem?' ve 'Ziyaret kaydet' widget'ları", width: 1320, height: 2868 },
+    { src: "/projects/tastemap/app-store/tr/07.jpg", alt: "App Store görseli: hikâye kartı olarak paylaşılan bir liste", width: 1320, height: 2868 },
+  ]}
+/>
+
+- **iPhone, iPad ve Mac.** iPad'de sekme çubuğu, kayıtlı listelerinizi gösteren bir kenar çubuğuna
+  dönüşüyor. Uygulama hedefi ayrıca macOS için de yerel olarak derleniyor.
+- **Web sitesi.** Statik olarak üretilen, iki dilli bir Next.js 16 sitesi. App Store Connect'in
+  bağlantı verdiği tanıtım, gizlilik politikası, kullanım koşulları ve destek sayfalarını içeriyor.
+  Paylaşılan liste bağlantılarının uygulamada açılmasını sağlayan Universal Link dosyalarını da o
+  sunuyor. Çerez, analitik ya da form yok; JavaScript olmadan da sorunsuz okunuyor.
+
+## Kararlar ve ödünleşimler
+
+**Önce yerel bileşenler.** Kod tabanındaki kural şu: özel bir şey çizmeden önce `List`, `Form`,
+`Menu`, kaydırma eylemleri ve Liquid Glass kullanılır; görsel bir sorun da üstüne boya atarak
+değil, doğru sistem stili seçilerek çözülür. Özel tasarım emeği, bunu hak eden yerlere gitti:
+harita pinleri ve sıralama akışı. Geri kalan her şey erişilebilirliği, Dynamic Type'ı ve yeni
+işletim sistemi görünümünü sistemden hazır alıyor.
+
+**SwiftData, sunucu yok.** Mekânlar, ziyaretler ve listeler cihazdaki SwiftData modelleri. Bu,
+gizliliği anlatmayı kolaylaştırdı: kayıt yok, siz dışa aktarmadıkça ya da paylaşmadıkça hiçbir şey
+telefondan çıkmıyor. Bir altyapı katmanını da tümüyle ortadan kaldırdı. Bedeli ise cihazlar arası
+her özelliğin varsayılmak yerine emekle kazanılması gerekmesi. Bu ödünleşimi bilerek kabul ettim.
+
+<ImageRow
+  images={[
+    { src: "/projects/tastemap/app-store/tr/10.jpg", alt: "App Store görseli: hesap, reklam ve takip olmadan gizlilik odaklı tasarım", width: 1320, height: 2868 },
+  ]}
+/>
+
+**Saf mantık görünümlerin dışında.** Sıralama, filtreleme, Decide motoru, derin bağlantı ayrıştırma
+ve istatistikler düz struct ve enum'lar; böylece bir model container'ı olmadan test edilebiliyorlar.
+Bu katmanı 210 Swift Testing kontrolü kapsıyor. SwiftData'ya dokunan her test, gerçek veri deposu
+yerine bellekte geçici bir container kullanıyor.
+
+**Tek kod tabanı, tek platform soyutlaması.** Paylaşılan kod hiçbir zaman doğrudan UIKit'e
+uzanmıyor. Küçük bir `Platform.swift` katmanı görselleri, renkleri, sheet boyutlarını ve liste
+stillerini sarmalıyor; böylece aynı ekranlar hem iOS hem macOS için derleniyor. Alternatif
+ikonlar ve Instagram Stories gibi gerçekten iOS'a özel özellikler `#if os(iOS)` arkasında duruyor.
+
+**Veri sızdırmayan bağlantılar.** Paylaşılan bir liste bağlantısı, listeyi URL'nin fragment
+kısmında taşıyor. Fragment sunucuya hiç ulaşmıyor, tanıtım sayfası da onu okumuyor. Böylece
+bağlantı uygulaması olmayan biri tarafından açılabiliyor ve kimsenin listesi hiçbir yerde
+kaydedilmiyor.
+
+## Zorluklar
+
+**Türkçe gibi okunan Türkçe.** Metinleri çevirmek işin kolay kısmıydı; kulağa doğru gelmelerini
+sağlamak değildi. Yalnızca ton için birkaç tur düzeltme yapıldı: Decide notları kullanıcıya *sen*
+diye hitap ediyor, çoğullar metin birleştirme yerine çekim kurallarıyla üretiliyor, iki metin
+arasında seçim yapan ternary ifadeler ise yasak; çünkü yerelleştirmeyi sessizce atlıyorlar.
+
+**Bir özelliği geri tutmak.** İsteğe bağlı, özel bir iCloud senkronizasyonu geliştirdim; parçalara
+bölünmüş ve checksum ile doğrulanan medya aktarımı da buna dahildi. Sonra yayından önce gizledim.
+Yerel testler geçiyordu ama iki cihaz arasındaki aktarımı gerçek donanımda doğrulamamıştım ve
+"senkronizasyon" özelliğini tahmine dayanarak yayına çıkarmak istemedim. Bunun sonradan bir bedeli
+oldu: bir zamanlar senkronize edilmiş bir veri deposu, açılışta şema geçişini reddetti. Çözüm,
+depoyu bir kenara kopyalıyor, CloudKit'in kayıt tablolarını temizliyor ve tek bir kayda dokunmadan
+yeniden açıyor.
+
+**Yayına çıkmak başlı başına bir proje.** Yirmiyi aşkın TestFlight build'i, üç cihaz boyutu için
+App Store ekran görüntüleri, iki dilde mağaza metinleri ve yasal sayfalar en az özellikler kadar
+özen istedi. Web sitesinin var olma sebebi de bu iş; sayfaların yalnızca yayındaki sürümün
+gerçekten yaptıklarını anlatmasının sebebi de.
+
+**Yapay zekâ destekli, yine de gözden geçirilmiş.** Süreç boyunca kodlama ajanlarıyla çalıştım.
+Onları kuralları belirleyen bir depo rehberi yönlendirdi: yalnızca tasarım token'ları, her görünüm
+için bir önizleme ve bir değişikliğin bitmiş sayılmasından önce simülatörde doğrulama. Ajanlar beni
+hızlandırdı. Kod tabanını benim kılan ise her değişikliği bu kurallara bağlı tutmaktı.

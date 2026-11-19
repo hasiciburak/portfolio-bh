@@ -13,6 +13,7 @@ import { SKILL_ICON_COMPONENTS } from "@/lib/skillset-icons";
 export type { ProjectListItem };
 
 const GithubIcon = SKILL_ICON_COMPONENTS.github;
+const AppleIcon = SKILL_ICON_COMPONENTS.apple;
 
 /**
  * `page` is the projects index, where this block is the whole route: its title is
@@ -162,15 +163,28 @@ const ProjectsSection = ({
 
                   {/* Sits above the stretched overlay so these stay separately clickable. */}
                   <div className="relative z-10 flex shrink-0 items-center gap-1">
-                    <a
-                      href={project.repoUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label={`${copy.view_source} — ${project.name}`}
-                      className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-zinc-500 outline-none transition-colors hover:bg-zinc-950/5 hover:text-zinc-950 focus-visible:ring-2 focus-visible:ring-zinc-950/25 dark:text-white/50 dark:hover:bg-white/10 dark:hover:text-white dark:focus-visible:ring-white/35"
-                    >
-                      <GithubIcon size={18} className="shrink-0" aria-hidden />
-                    </a>
+                    {project.appStoreUrl ? (
+                      <a
+                        href={project.appStoreUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label={`${copy.view_app_store} — ${project.name}`}
+                        className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-zinc-500 outline-none transition-colors hover:bg-zinc-950/5 hover:text-zinc-950 focus-visible:ring-2 focus-visible:ring-zinc-950/25 dark:text-white/50 dark:hover:bg-white/10 dark:hover:text-white dark:focus-visible:ring-white/35"
+                      >
+                        <AppleIcon size={18} className="shrink-0" aria-hidden />
+                      </a>
+                    ) : null}
+                    {project.repoUrl ? (
+                      <a
+                        href={project.repoUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label={`${copy.view_source} — ${project.name}`}
+                        className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-zinc-500 outline-none transition-colors hover:bg-zinc-950/5 hover:text-zinc-950 focus-visible:ring-2 focus-visible:ring-zinc-950/25 dark:text-white/50 dark:hover:bg-white/10 dark:hover:text-white dark:focus-visible:ring-white/35"
+                      >
+                        <GithubIcon size={18} className="shrink-0" aria-hidden />
+                      </a>
+                    ) : null}
                     {project.liveUrl ? (
                       <a
                         href={project.liveUrl}

@@ -1,5 +1,7 @@
 import type { MDXComponents } from "mdx/types";
 
+import { ImageRow } from "@/components/mdx-image-row";
+
 /**
  * Global MDX element styles. Required at the project root for `@next/mdx` to work
  * with the App Router. Maps markdown output onto the site's own type scale — the
@@ -56,6 +58,8 @@ const components: MDXComponents = {
   hr: () => (
     <hr className="mt-10 border-t border-zinc-200/95 dark:border-white/12" />
   ),
+  /** `<ImageRow images={[…]} />` — tall screenshots between paragraphs. */
+  ImageRow,
 };
 
 export function useMDXComponents(): MDXComponents {

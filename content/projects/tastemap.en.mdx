@@ -1,0 +1,177 @@
+export const metadata = {
+  name: "Taste Map",
+  summary:
+    "A personal food map for iPhone and iPad, live on the App Store. Places are ranked head-to-head instead of starred, visits are logged, and an on-device model explains tonight's pick. Built in SwiftUI and SwiftData, with a bilingual Next.js site alongside it.",
+  gallery: [
+    {
+      src: "/projects/tastemap/overview.jpg",
+      alt: "Three iPhone screens of Taste Map: a head-to-head ranking question, the map with a place card open, and the taste stats overview",
+      caption: "Overview",
+      width: 3200,
+      height: 2000,
+    },
+    {
+      src: "/projects/tastemap/map.jpg",
+      alt: "The map tab with photo pins, curved cuisine labels and cluster counts, next to the same map with a pin expanded into a place card",
+      caption: "Map — pins and place card",
+      width: 3200,
+      height: 2000,
+    },
+    {
+      src: "/projects/tastemap/ranking.jpg",
+      alt: "A 'Which was better?' comparison between two restaurants, the resulting ranked list and a user list called Date spots",
+      caption: "Head-to-head ranking and lists",
+      width: 3200,
+      height: 2000,
+    },
+    {
+      src: "/projects/tastemap/decide.jpg",
+      alt: "Decide picks with a short note on why each place fits, a place detail page with its visit log, and the taste stats screen",
+      caption: "Decide, place detail and stats",
+      width: 3200,
+      height: 2000,
+    },
+    {
+      src: "/projects/tastemap/ipad.jpg",
+      alt: "The iPad layout with the full-screen map and a top tab bar, beside the ranked list on iPhone",
+      caption: "iPad and iPhone",
+      width: 3200,
+      height: 2000,
+    },
+    {
+      src: "/projects/tastemap/landing.jpg",
+      alt: "The 'What's inside' section of the Taste Map website: a bento grid of feature cards with dark-mode app screenshots",
+      caption: "Website",
+      width: 3200,
+      height: 2000,
+    },
+  ],
+};
+
+Taste Map is an iOS app I designed, built and shipped to the App Store on my own: a private map of
+every place you have eaten at and every place you want to try. It's written in SwiftUI and
+SwiftData with no backend at all, and a small Next.js site carries the pages the App Store requires.
+
+## Context
+
+I kept a list of restaurants in a notes app for years, and it failed in two ways. Star ratings
+drifted: a four-star place from last spring meant nothing next to a four-star place from last week.
+And the list couldn't answer the one question I actually asked it, which was where to eat tonight.
+
+So the app was built around those two jobs. Ranking replaces rating, so every place has a position
+relative to the others. A *Decide* flow turns the list into a recommendation. Everything else (the
+map, the visit log, the stats) exists to feed those two.
+
+Two constraints came from the start. The app had to work **without an account or a server**, since
+a food diary is personal and I didn't want to run infrastructure for it. And it had to ship in
+**English and Turkish** with both reading naturally, not one translated from the other.
+
+## What I built
+
+- **Head-to-head ranking.** A new place is never given a score. The app asks "which was better?"
+  against places you've already ranked, and a binary search places it in about log₂ n questions,
+  so 14 ranked places take four questions. A "too close to call" answer ends the session early,
+  and the ranks stay dense (1…n) through every insert and delete.
+- **A map that shows what you've been to.** Pins are photo stickers with curved cuisine labels.
+  They scale with zoom, group into clusters and expand into a place card in place. Cafés and
+  restaurants from Apple Maps can be saved with one tap, and filter chips narrow the map by
+  status, list, cuisine or price.
+- **Decide, with on-device notes.** A few quick questions (how far, who's coming, which cuisine)
+  narrow the list to a handful of picks. Where Apple Intelligence is available, each pick comes
+  with a short "why this fits" note generated on the device with the Foundation Models framework.
+  Where it isn't, the picks simply show without a note.
+
+<ImageRow
+  images={[
+    { src: "/projects/tastemap/app-store/en/01.jpg", alt: "App Store screenshot 'Your food map': the map with photo pins and cuisine labels", width: 1320, height: 2868 },
+    { src: "/projects/tastemap/app-store/en/02.jpg", alt: "App Store screenshot 'Rank head-to-head': two restaurants compared with a 'Which was better?' question", width: 1320, height: 2868 },
+    { src: "/projects/tastemap/app-store/en/03.jpg", alt: "App Store screenshot 'Let it decide': three picks for tonight, each with a short reason", width: 1320, height: 2868 },
+  ]}
+/>
+
+- **A visit log.** Each visit records the date, a rating, the dishes, who you went with, what you
+  spent, a note and photos. The logs feed taste stats and a shareable recap of your year in food.
+
+<ImageRow
+  images={[
+    { src: "/projects/tastemap/app-store/en/04.jpg", alt: "App Store screenshot 'Log every visit': a visit with a star rating, dishes, company and spend", width: 1320, height: 2868 },
+    { src: "/projects/tastemap/app-store/en/05.jpg", alt: "App Store screenshot 'Your taste in numbers': visit counts, cuisines, areas and a calendar of when you eat out", width: 1320, height: 2868 },
+    { src: "/projects/tastemap/app-store/en/06.jpg", alt: "App Store screenshot 'Your year in food': a swipeable recap card to share", width: 1320, height: 2868 },
+  ]}
+/>
+
+- **The app outside the app.** "Where to eat?" and "Log a visit" widgets, Siri and Shortcuts
+  actions through App Intents, Spotlight indexing, and a share extension that adds a place shared
+  from Google Maps or Apple Maps. A Google Maps Takeout import brings existing saved places in, and
+  list links open straight into an import sheet.
+
+<ImageRow
+  images={[
+    { src: "/projects/tastemap/app-store/en/09.jpg", alt: "App Store screenshot 'Right on your Home Screen': the Where to eat and Log a visit widgets", width: 1320, height: 2868 },
+    { src: "/projects/tastemap/app-store/en/07.jpg", alt: "App Store screenshot 'Lists worth sharing': a Date spots list shared as a story card", width: 1320, height: 2868 },
+  ]}
+/>
+
+- **iPhone, iPad and Mac.** On iPad the tab bar becomes a sidebar with your saved lists, and the
+  app target also builds natively for macOS.
+- **The website.** A statically generated Next.js 16 site in both languages with the intro, privacy
+  policy, terms and support pages that App Store Connect links to. It also serves the Universal
+  Link files that make shared list links open the app. It has no cookies, no analytics and no
+  forms, and reads fine without JavaScript.
+
+## Decisions and trade-offs
+
+**Native components first.** The rule in the codebase is to reach for `List`, `Form`, `Menu`,
+swipe actions and Liquid Glass before drawing anything custom, and to fix a visual by choosing the
+right system style rather than painting over it. Custom work went where it earned its place: the
+map pins and the ranking flow. Everything else gets accessibility, Dynamic Type and new OS styling
+from the system.
+
+**SwiftData, no server.** Places, visits and lists are SwiftData models on the device. That made
+privacy simple to explain, with no sign-up and nothing leaving the phone unless you export or share
+it, and it cut out a whole layer of infrastructure. The cost is that every cross-device feature
+has to be earned rather than assumed. I accepted that trade.
+
+<ImageRow
+  images={[
+    { src: "/projects/tastemap/app-store/en/10.jpg", alt: "App Store screenshot 'Private by design': no account, no ads, no tracking", width: 1320, height: 2868 },
+  ]}
+/>
+
+**Pure logic outside the views.** Ranking, filtering, the Decide engine, deep-link parsing and
+stats are plain structs and enums, so they can be tested without a model container. 210 Swift
+Testing checks cover that layer. Anything that touches SwiftData gets a throwaway in-memory
+container, never the real store.
+
+**One codebase, one platform abstraction.** Shared code never reaches UIKit directly. A small
+`Platform.swift` layer wraps images, colours, sheet sizing and list styles, so the same screens
+compile for iOS and macOS. Genuinely iOS-only features such as alternate icons and Instagram
+Stories sit behind `#if os(iOS)`.
+
+**Links that don't leak.** A shared list link carries the list in the URL fragment. The fragment
+never reaches the server, and the landing page doesn't read it, so a link can be opened by someone
+without the app and nobody's list is ever logged.
+
+## Challenges
+
+**Turkish that reads like Turkish.** Getting strings translated was the easy part; getting them to
+sound right was not. Several passes went into tone alone: Decide's notes address the user as
+*sen*, plurals use inflection rules instead of string concatenation, and ternaries between string
+literals are banned because they silently skip localization.
+
+**Holding a feature back.** I built optional private iCloud sync, including chunked, checksum-verified
+media transfer, and then hid it before release. Local tests passed, but I hadn't verified
+two-device transfer on real hardware, and I wasn't willing to ship "sync" on a guess. It cost
+something later: a store that had once been mirrored refused a schema migration at launch. The fix
+copies the store aside, clears CloudKit's bookkeeping tables and reopens it without touching a
+single record.
+
+**Shipping is its own project.** Two dozen TestFlight builds, App Store screenshots for three device
+sizes, and listing copy and legal pages in two languages took as much care as the features did.
+That work is why the website exists, and why the pages describe only what the shipped build
+actually does.
+
+**AI-assisted, still reviewed.** I worked with coding agents throughout, guided by a repository
+guide that sets the conventions: design tokens only, a preview for every view, and verification on
+the simulator before a change counts as done. The agents made me faster. Holding every change to
+those rules is what kept the codebase mine.

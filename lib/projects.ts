@@ -9,12 +9,32 @@ export interface ProjectEntry {
   /** Doubles as the URL slug: /projects/<id> */
   id: string;
   year: string;
-  repoUrl: string;
+  /** Omit for private repositories — the source button is then left out. */
+  repoUrl?: string;
   liveUrl?: string;
+  appStoreUrl?: string;
   tech: SkillItem[];
 }
 
 export const PROJECT_ENTRIES: ProjectEntry[] = [
+  {
+    id: "tastemap",
+    year: "2026",
+    appStoreUrl: "https://apps.apple.com/app/id6814514512",
+    liveUrl: "https://tastemapapp.vercel.app",
+    tech: [
+      { name: "Swift", icon: "swift" },
+      { name: "SwiftUI", icon: "apple" },
+      { name: "SwiftData", icon: null },
+      { name: "WidgetKit", icon: null },
+      { name: "App Intents", icon: null },
+      { name: "Foundation Models", icon: null },
+      { name: "Xcode", icon: "xcode" },
+      { name: "Next.js 16", icon: "nextjs" },
+      { name: "Tailwind CSS v4", icon: "tailwind" },
+      { name: "Vercel", icon: "vercel" },
+    ],
+  },
   {
     id: "portfolio-bh",
     year: "2026",
